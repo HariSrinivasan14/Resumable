@@ -1,0 +1,37 @@
+.Logo{
+	width: 150px;
+	height: 100px;
+	margin-left: 30px;
+	margin-top: 15px;
+}
+
+#HomeNavigation {
+	padding: 5px;
+	background-color: white;
+}
+
+#HomeNavigation ul {
+	margin: 0px;
+	padding: 30px;
+	float: right;
+}
+
+.Login{
+	font-size: large;
+	margin-right: 30px;
+	font-weight: bold;
+	list-style: none; 
+	text-align: center;
+	color: #71A89E;
+	display: inline-block;
+}
+
+.SignUP{
+	font-size: large;
+	margin-right: 20px;
+	font-weight: bold;
+	list-style: none; 
+	text-align: center;
+	color: black;
+	display: inline-block;
+}
