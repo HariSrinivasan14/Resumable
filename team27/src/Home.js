@@ -5,7 +5,7 @@ import SignUp from './SignUp';
 import Button from '@material-ui/core/Button';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import teal from '@material-ui/core/colors/teal';
-import landingImage from './landingImage.png';
+import landingImage from './images/landingImage.png';
 
 const buttonTheme = createMuiTheme({
   overrides: {
