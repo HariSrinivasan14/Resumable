@@ -22,6 +22,8 @@ import TextField from '@material-ui/core/TextField';
 import { palette, spacing } from '@material-ui/system';
 import Box from '@material-ui/core/Box';
 import graph from './graph.png'
+import './admin.css'
+import Profile from './profile';
 
 
 
@@ -100,7 +102,7 @@ class App extends React.Component {
               Admin
             </MyButton2 >
 
-            <MyButton variant="outlined">
+            <MyButton variant="outlined" href="Profile">
               Explore
             </MyButton>
 
