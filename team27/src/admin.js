@@ -26,9 +26,6 @@ import './admin.css'
 import Profile from './profile';
 
 
-
-
-
 const MyButton = styled(Button)({
   marginRight: 50,
   color: "white",
@@ -148,7 +145,7 @@ class App extends React.Component {
 
         
       </div>
-
+ 
       )
   }
 }
