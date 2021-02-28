@@ -1,9 +1,10 @@
 
 
 .landingPic{
+    margin-top: 2px;
     float: left;
     width: 100px;
-    height: 75px;
+    height: 63px;
     padding: 0px;
   }
   .logo{
@@ -19,10 +20,7 @@
     line-height: 48px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)), drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
-  body{
-    background-color: AliceBlue;
-  
-  }
+
   .tex{
     margin-top: 200px;
     margin-left: 200px;
@@ -31,8 +29,13 @@
   .graphPic{
     position: absolute;
     height: 350px;
-    left: 240px;
+    left: 510px;
     right: 33px;
     margin-top: 10px;
     border: 2px dotted black;
+  }
+  .iconStyle{
+    display:inline;
+    margin-right: 50px;
+    float: right;
   }
