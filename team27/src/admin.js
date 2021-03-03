@@ -49,10 +49,12 @@ import MailIcon from '@material-ui/icons/Mail';
 import { useTheme } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import {
+  Chart,
   ArgumentAxis,
   ValueAxis,
-  Chart,
   LineSeries,
+  Legend,
+  Title,
 } from '@devexpress/dx-react-chart-material-ui';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -216,7 +218,7 @@ export default function PermanentDrawerLeft() {
         <img className="landingPic" src={resume} />
           </div>
        
-          <Divider />
+          <Divider style={{marginTop: 10}} />
         <List className={classes.list}>
           {['Overview', 'Posts', 'Feed'].map((text, index) => (
             <ListItem button key={text}>
@@ -350,12 +352,13 @@ export default function PermanentDrawerLeft() {
 
     </div>
     <Chart
-    style={{ marginLeft: 100 , marginTop: 20}}
+    style={{ marginLeft: 100 , marginTop: 40}}
       data={data}
       width={1200} height={500}
     >
       <ArgumentAxis />
       <ValueAxis />
+      
 
       <LineSeries valueField="value" argumentField="argument" />
     </Chart>
