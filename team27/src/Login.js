@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './Login.css';
 import React from 'react';
-import {NavSignUp} from './NavBar';
+import {NavLogin} from './NavBar';
 import {OutlinedInput, Button} from '@material-ui/core'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
@@ -47,12 +47,12 @@ const inputBoxTheme = createMuiTheme({
 		}
 	}
 });
-class SignIn extends React.Component{
+class Login extends React.Component{
 	state = {
-		Email: "",
+		Username: "",
 		Password: ""
 	}
-	handleEmailChange = (event) => {
+	handleChange = (event) => {
 		const inputValue = event.target.value;
 		const name = event.target.name
 		this.setState({
@@ -60,29 +60,39 @@ class SignIn extends React.Component{
 		});
 	}
 	
+	loginUser = () => {
+		// request should be made to server to verify if the Username and Password is valid.
+		if(this.state.Username === 'admin' && this.state.Password === 'admin'){
+			this.props.history.push("/Admin");
+			console.log("going to admin");
+		} else if (this.state.Username === 'user' && this.state.Password === 'user'){
+			this.props.history.push("/Explore");
+		}
+		
+	}
 	render(){
 		return(
 			<div>
-				<NavSignUp/>
+				<NavLogin/>
 				<div className = "centerDiv">
 					<h1> Log In</h1>
 					<form>
 						<ThemeProvider theme={inputBoxTheme}>
 							<OutlinedInput 
-								value={this.state.email} 
-								onChange={this.handleEmailChange} 
-								name="Email" 
-								placeholder="Email" 
+								value={this.state.Username} 
+								onChange={this.handleChange} 
+								name="Username" 
+								placeholder="Username" 
 								type= "text"				
 							/>
 							<OutlinedInput 
 								value={this.state.password} 
-								onChange={this.handleEmailChange} 
+								onChange={this.handleChange} 
 								name="Password" 
 								placeholder="Password"
 								type="password"
 							/>
-							<Button size="large" variant="contained"> Sign Up </Button>
+							<Button size="large" variant="contained" onClick={this.loginUser}> Sign Up </Button>
 							<p> Dont have have an account? <Link className="linkCustom" to="/SignUP"> Click Here. </Link></p>
 						</ThemeProvider>
 					</form>
@@ -93,4 +103,4 @@ class SignIn extends React.Component{
 	}
 }
 
-export default SignIn;
+export default Login;
