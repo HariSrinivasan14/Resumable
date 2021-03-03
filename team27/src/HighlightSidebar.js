@@ -16,17 +16,16 @@ function HighlightSidebar({ feedbackItems }) {
             className="feedback-item"
           >
             <div>
-              <strong>{feedbackItem.comment.text}</strong>
+              <strong>{feedbackItem.title.text}</strong>
               <div className="feedback-item-content">
                   {feedbackItem.content.text}
               </div>
                 {feedbackItem.content.image ? (
-            
-                <div className="feedback-item-image">
-                    <img src={feedbackItem.content.image} alt={"No Image Found!"} />
-                </div>
-            
-                ) : null}
+                  <div className="feedback-item-image">
+                      <img src={feedbackItem.content.image} alt={"No Image Found!"} />
+                  </div>
+                  ) : null
+                }
               </div>
             
           </li>

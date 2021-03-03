@@ -1,8 +1,7 @@
 import React from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
 import pdf from './images/sampleResume.pdf'
 import HighlightSidebar from './HighlightSidebar'
-import PdfViewer from './PdfViewer'
+import PdfDisplay from './PdfDisplay'
 import './HighlightFeedback.css';
 import sampleImg from './images/resHeader.JPG'
 
@@ -14,7 +13,7 @@ class HighlightFeedBack extends React.Component{
 					text:"please fix the spelling of...",
 					image: null
 				},
-				comment: {
+				title: {
 					text:"Spelling Mistake",
 				}
 			}, 
@@ -23,7 +22,7 @@ class HighlightFeedBack extends React.Component{
 					text:"consider the following...",
 					image: null
 				},
-				comment: {
+				title: {
 					text:"Sentence Structure",
 				}
 			},
@@ -32,7 +31,7 @@ class HighlightFeedBack extends React.Component{
 					text:"consider the following...",
 					image: sampleImg
 				},
-				comment: {
+				title: {
 					text:"Header...",
 				}
 			}
@@ -40,10 +39,10 @@ class HighlightFeedBack extends React.Component{
 		return(
 			<div className="highlight-feedback-container">
 				<div className="highlight-feedback-sidebar">
-					<HighlightSidebar feedbackItems={feedback} ></HighlightSidebar>
+					<HighlightSidebar feedbackItems={feedback}></HighlightSidebar>
 				</div>
 				<div className="highlight-feedback-document">
-					<PdfViewer url={pdf}></PdfViewer>
+					<PdfDisplay url={pdf}></PdfDisplay>
 				</div>
             </div>
 		);
