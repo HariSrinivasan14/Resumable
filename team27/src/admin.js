@@ -12,6 +12,8 @@ import Image from 'material-ui-image'
 import { withRouter } from "react-router-dom"
 import Typography from '@material-ui/core/Typography'
 import resume from './resume.png'
+import camera from './camera.png'
+import ground from './ground.jpg'
 import TextField from '@material-ui/core/TextField';
 import { palette, spacing } from '@material-ui/system';
 import Box from '@material-ui/core/Box';
@@ -44,40 +46,33 @@ import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem>
-  </div>
-);
+import { useTheme } from '@material-ui/core/styles';
+import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import {
+  ArgumentAxis,
+  ValueAxis,
+  Chart,
+  LineSeries,
+} from '@devexpress/dx-react-chart-material-ui';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Hidden from '@material-ui/core/Hidden';
+function createData(time, amount) {
+  return { time, amount };
+}
+
+const data = [
+  { argument: 1, value: 10 },
+  { argument: 3, value: 20 },
+  { argument: 5, value: 30 },
+  { argument: 7, value: 60 },
+  { argument: 9, value: 50 },
+  { argument: 11, value: 60 },
+];
+
 
 const MyButton = styled(Button)({
   marginRight: 50,
@@ -131,6 +126,7 @@ const drawerWidth = 170;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    backgroundImage: ground
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -158,23 +154,35 @@ const useStyles = makeStyles((theme) => ({
     color: "white"
   },
 
+
+  card: {
+    display: 'flex',
+    backgroundColor: "#71A89E",
+    width: 400,
+    marginLeft: 80
+  },
+  cardDetails: {
+    flex: 1,
+  },
+  cardMedia: {
+    width: 180,
+  },
+  typography: {
+  
+    fontSize: 25,
+  },
+
  
 }));
 export default function PermanentDrawerLeft() {
   const classes = useStyles();
 
-  
 
     return(
-
-      
-      
-     
-        
-        <div  className={classes.root}>
+        <div  className={classes.root}  >
         <AppBar className={classes.appBar} style={{ backgroundColor:'#71A89E'}} position="fixed" >
           <Toolbar>
-          <img className="landingPic" src={resume} />
+          
             <MyButton2 variant="outlined">
               Admin
             </MyButton2 >
@@ -204,10 +212,13 @@ export default function PermanentDrawerLeft() {
         }}
         anchor="left"
       >
-        <div className={classes.toolbar} />
-        <Divider />
+        <div >
+        <img className="landingPic" src={resume} />
+          </div>
+       
+          <Divider />
         <List className={classes.list}>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Overview', 'Posts', 'Feed'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
@@ -216,7 +227,7 @@ export default function PermanentDrawerLeft() {
         </List>
         <Divider />
         <List className={classes.list}>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {['Resumes', 'Trash'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
@@ -234,33 +245,121 @@ export default function PermanentDrawerLeft() {
 
 
 
-    <main className={classes.content}>
+    <main className={classes.content}> 
 
      <h1>Overview</h1>
 
 
   
   
+    <div style={{ display: 'flex' }}>
+   
+    <Grid item xs={12} md={6}>
+      <CardActionArea component="a" href="#">
+        <Card className={classes.card}>
+          <div className={classes.cardDetails}>
+            <CardContent>
+              <Typography component="h2" variant="h5">
+                Number Of Feedbacks
+              </Typography>
+              <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
+              92
+              </Typography>
+              <Typography variant="subtitle1" color="primary">
+                More Details
+              </Typography>
+            </CardContent>
+          </div>
+          <Hidden xsDown>
+            <CardMedia className={classes.cardMedia} image={camera}  />
+          </Hidden>
+        </Card>
+      </CardActionArea>
+    </Grid>
 
-    <Box style={{ marginLeft: 200 }} 
-      display="flex" 
-      justifyContent="left"
-      >
-      <Box alignContent="center" borderRadius={16} {...defaultProps}>Number of Feedbacks</Box>
-      <Box alignContent="center" borderRadius={16} {...defaultProps}>Number of Posts</Box>
-      <Box alignContent="center" borderRadius={16} {...defaultProps}>Number of Current Users</Box>
-      <Box alignContent="center" borderRadius={16} {...defaultProps}>Number of Total Users</Box>
-    </Box> 
-    <Box style={{ marginLeft: 80 }} display="flex" justifyContent="left">
-      <Box alignContent="center" borderRadius={16} {...default1Props}>55</Box>
-      <Box alignContent="center" borderRadius={16} {...default1Props}>255</Box>
-      <Box alignContent="center" borderRadius={16} {...default1Props}>89</Box>
-      <Box alignContent="center" borderRadius={16} {...default1Props}>190</Box>
-    </Box>
+    <Grid item xs={12} md={6} >
+      <CardActionArea component="a" href="#">
+        <Card className={classes.card}>
+          <div className={classes.cardDetails}>
+            <CardContent>
+              <Typography component="h2" variant="h5">
+                Number Of Total Posts
+              </Typography>
+              <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
+              73
+              </Typography>
+              <Typography variant="subtitle1" color="primary">
+                More Details
+              </Typography>
+            </CardContent>
+          </div>
+          <Hidden xsDown>
+            <CardMedia className={classes.cardMedia} image={camera}  />
+          </Hidden>
+        </Card>
+      </CardActionArea>
+    </Grid>
 
-    <img className="graphPic" src={graph} />
+
+    <Grid item xs={12} md={6} >
+      <CardActionArea component="a" href="#">
+        <Card className={classes.card}>
+          <div className={classes.cardDetails}>
+            <CardContent>
+              <Typography component="h2" variant="h5">
+                Number Of Current Users
+              </Typography>
+              <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
+              43
+              </Typography>
+              <Typography variant="subtitle1" color="primary">
+                More Details
+              </Typography>
+            </CardContent>
+          </div>
+          <Hidden xsDown>
+            <CardMedia className={classes.cardMedia} image={camera}  />
+          </Hidden>
+        </Card>
+      </CardActionArea>
+    </Grid>
+
+
+    <Grid item xs={12} md={6} >
+      <CardActionArea component="a" href="#">
+        <Card className={classes.card}>
+          <div className={classes.cardDetails}>
+            <CardContent>
+              <Typography component="h2" variant="h5">
+                Number Of Total Users
+              </Typography>
+              <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
+              64
+              </Typography>
+              <Typography variant="subtitle1" color="primary">
+                More Details
+              </Typography>
+            </CardContent>
+          </div>
+          <Hidden xsDown>
+            <CardMedia className={classes.cardMedia} image={camera}  />
+          </Hidden>
+        </Card>
+      </CardActionArea>
+    </Grid>
+
+    </div>
+    <Chart
+    style={{ marginLeft: 100 , marginTop: 20}}
+      data={data}
+      width={1200} height={500}
+    >
+      <ArgumentAxis />
+      <ValueAxis />
+
+      <LineSeries valueField="value" argumentField="argument" />
+    </Chart>
  
-
 
     </main>
     
