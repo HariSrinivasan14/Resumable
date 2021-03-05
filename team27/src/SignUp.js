@@ -18,15 +18,12 @@ class SignUp extends React.Component{
 		togglePassword: false
 	}
 	handleChange = (event) => {
-		const inputValue = event.target.value;
+		const inputValueSignUp = event.target.value;
 		const inputBoxName = event.target.name;
 		this.setState({
-			[inputBoxName]: inputValue
+			[inputBoxName]: inputValueSignUp
 		});
-		// if (inputValue === ""){
-			// this.state.Toggle = inputBoxName;
-		// }
-		if(inputValue === ""){
+		if(inputValueSignUp === ""){
 			if (inputBoxName === "Username" ){
 				this.state.toggleUsername = true;
 			}else if (inputBoxName === "firstName"){
@@ -52,7 +49,7 @@ class SignUp extends React.Component{
 			}
 		}
 	}
-	handleSubmit = (event) => {
+	signUpUser = (event) => {
 		
 		// make a get request to database and check whether an account in the database has the same email as one that was inputted by the user
 		this.state.bClicked = true;
@@ -62,23 +59,30 @@ class SignUp extends React.Component{
 			this.props.history.push("/Explore");
 			
 		} else{
-			// const inputForm = document.querySelector('.centerDivSignUp').children[1];
-			// let inputBox = undefined;
 			if (this.state.Username === ""){
-				this.state.toggleUsername = true;
-				this.setState({Username: ""});
+				this.setState({
+					toggleUsername: true
+				});
 			}
 			if (this.state.firstName === ""){
-				this.state.toggleFirstname = true;
+				this.setState({
+					toggleFirstname: true
+				});
 			}
 			if (this.state.lastName === ""){
-				this.state.toggleLastname = true;
+				this.setState({
+					toggleLastname: true
+				});
 			}
 			if (this.state.Email === ""){
-				this.state.toggleEmail = true;
+				this.setState({
+					toggleEmail: true
+				});
 			}
 			if (this.state.Password === ""){
-				this.state.togglePassword = true;
+				this.setState({
+					togglePassword: true
+				});
 			}
 			console.log(this.state.Toggle);
 		}
@@ -90,7 +94,7 @@ class SignUp extends React.Component{
 				<NavSignUp />
 				<div className = "centerDivSignUp">
 					<h1> Sign Up</h1>
-					<form>
+					<form id = "signUp">
 						<MainInputBox
 							textBoxName="Username" 
 							placeholderName="Username" 
@@ -133,7 +137,7 @@ class SignUp extends React.Component{
 						/>
 						<MainButton 
 							text = "Sign Up"
-							change = {this.handleSubmit}
+							change = {this.signUpUser}
 						/>
 					</form>
 				</div>	

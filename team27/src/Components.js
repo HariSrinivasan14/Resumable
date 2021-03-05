@@ -30,24 +30,10 @@ const GreenButton = styled(Button)({
 // ------------------------------ Input Start ------------------------------ //
 const InputBox = withStyles({
 	root: {
-		borderRadius: '10px',
-		Textcolor: 'black',
-		Height: '48px',
-		minWidth: '200px',
+		Textcolor: 'red',
 		textTransform: 'capitalize',
 		marginLeft: '50px',
 		marginBottom: '15px',
-		// "&.Mui-focused $notchedOutline": {
-			// borderColor: '#009688',
-			// borderWidth: '2px',
-		// },
-		// "&:hover $notchedOutline": {
-			// borderColor: '#71A89E'
-		// },
-		// '& input:invalid + fieldset': {
-			// borderColor: 'red'
-			// // padding: '4px !important', // override inline-style
-		// }
 		'& .MuiFormLabel-root.Mui-focused': {
 			color: "#009688"
 		},
@@ -68,9 +54,6 @@ const InputBox = withStyles({
 			borderWidth: 2,
 		},
 	},
-	// notchedOutline: {
-		// borderColor: '#71A89E'
-	// },
 })(TextField);
 
  function MainInputBox ({textBoxName, placeholderName, inputType, change, textValue, userInput}){ 
@@ -80,8 +63,6 @@ const InputBox = withStyles({
 			name={textBoxName}
 			placeholder={placeholderName}
 			type = {inputType}
-			// value = {textValue}
-			// required
 			label={placeholderName}
 			variant='outlined'
 			helperText={userInput ? 'This Field is required!': ' '}
