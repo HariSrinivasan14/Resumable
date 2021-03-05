@@ -74,7 +74,7 @@ class Login extends React.Component{
 		return(
 			<div>
 				<NavLogin/>
-				<div className = "centerDiv">
+				<div className = "centerDivLogIn">
 					<h1> Log In</h1>
 					<form>
 						<ThemeProvider theme={inputBoxTheme}>

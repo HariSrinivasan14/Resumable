@@ -1,4 +1,4 @@
-.centerDiv{
+.centerDivLogIn{
 	border:1px solid black;
 	width:320px;
 	height: 420px;
@@ -7,11 +7,11 @@
 	left: 40%;
 	position: absolute;
 }
-.centerDiv h1{
+.centerDivLogIn h1{
 	margin-top: 40px;
 	text-align: center;
 }
-.centerDiv p{
+.centerDivLogIn p{
 	margin-top:10px;
 	margin-left: 50px;
 	margin-bottom: 0px;
