@@ -1,6 +1,5 @@
 import logo, { ReactComponent } from './logo.svg'; 
 import React, { useDebugValue } from 'react';
-import './App.css';
 import Toolbar from '@material-ui/core/Toolbar'
 import AppBar from '@material-ui/core/AppBar'
 import buttonGroup from '@material-ui/core/ButtonGroup'
@@ -62,9 +61,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
-function createData(time, amount) {
-  return { time, amount };
-}
+import sample from './profile';
+
 
 const data = [
   { argument: 1, value: 10 },
@@ -160,14 +158,17 @@ const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     backgroundColor: "#71A89E",
-    width: 400,
-    marginLeft: 80
+    width: 300,
+ 
   },
   cardDetails: {
     flex: 1,
   },
   cardMedia: {
-    width: 180,
+    display: 'flex',
+    width: 100,
+    height: 100,
+    marginTop: 20
   },
   typography: {
   
@@ -176,7 +177,7 @@ const useStyles = makeStyles((theme) => ({
 
  
 }));
-export default function PermanentDrawerLeft() {
+export default function Admin() {
   const classes = useStyles();
 
 
@@ -193,7 +194,7 @@ export default function PermanentDrawerLeft() {
               Profile
             </MyButton>
 
-            <MyButton variant="outlined">
+            <MyButton variant="outlined" href="sample">
               Help
             </MyButton>
 
@@ -215,7 +216,7 @@ export default function PermanentDrawerLeft() {
         anchor="left"
       >
         <div >
-        <img className="landingPic" src={resume} />
+        <img className="landingPic1" src={resume} />
           </div>
        
           <Divider style={{marginTop: 10}} />
@@ -256,13 +257,13 @@ export default function PermanentDrawerLeft() {
   
     <div style={{ display: 'flex' }}>
    
-    <Grid item xs={12} md={6}>
+    <Grid item xs={3} >
       <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                Number Of Feedbacks
+                Feedbacks
               </Typography>
               <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
               92
@@ -279,13 +280,13 @@ export default function PermanentDrawerLeft() {
       </CardActionArea>
     </Grid>
 
-    <Grid item xs={12} md={6} >
+    <Grid item xs={3} >
       <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                Number Of Total Posts
+                Total Posts
               </Typography>
               <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
               73
@@ -303,13 +304,13 @@ export default function PermanentDrawerLeft() {
     </Grid>
 
 
-    <Grid item xs={12} md={6} >
+    <Grid item xs={3}>
       <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                Number Of Current Users
+                Current Users
               </Typography>
               <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
               43
@@ -327,13 +328,13 @@ export default function PermanentDrawerLeft() {
     </Grid>
 
 
-    <Grid item xs={12} md={6} >
+    <Grid item xs={3}>
       <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                Number Of Total Users
+                Total Users
               </Typography>
               <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
               64
