@@ -3,7 +3,6 @@ import './PostBox.css'
 import { Avatar, TextField } from '@material-ui/core'
 import { makeStyles, ThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import { Button } from 'react-bootstrap'
-import axios from 'axios';
 import {Progress} from 'reactstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
