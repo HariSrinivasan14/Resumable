@@ -2,6 +2,8 @@ import './NavBar.css';
 import React from 'react';
 import logo from './images/Logo.png'
 import {Link} from 'react-router-dom';
+import { Divider } from '@material-ui/core';
+import {Navbar, Nav, NavDropdown, Button, Form, FormControl} from 'react-bootstrap'
 
 class NavHome extends React.Component{
 	render(){
@@ -37,4 +39,32 @@ class NavSignUp extends React.Component{
 	}
 }
 
-export {NavHome, NavSignUp};
+class NavExplore extends React.Component{
+	render(){
+		return(
+				<Navbar bg="dark" variant="dark">
+					<Navbar.Brand href="/Explore">
+						<img
+							alt=""
+							src={logo}
+							width="80"
+							height="50"
+							className="d-inline-block align-top"
+							/>{' '}
+					</Navbar.Brand>
+					<Nav className="mr-auto">
+						<Nav.Link href="/Explore">Home</Nav.Link>
+						<Nav.Link href="/Profile">myprofile</Nav.Link>
+						<Nav.Link href="/PostPage">Post Resume</Nav.Link>
+					</Nav>
+					{/* <Form inline>
+						<FormControl type="text" placeholder="Search" className="mr-sm-2" />
+						<Button variant="outline-info">Search</Button>
+					</Form> */}
+					<Button href="/Login" variant="outline-info">Logout</Button>
+				</Navbar>
+
+		);
+	}
+}
+export {NavHome, NavSignUp, NavExplore};
