@@ -1,0 +1,13 @@
+.pic{
+    margin-top: 150px;
+    margin-left: 150px;
+    float: left;
+    width: 200px;
+    height: 200px;
+    padding: 0px;
+  }
+  .App {
+    font-family: sans-serif;
+    margin-top: 200;
+  }
+  

@@ -9,8 +9,8 @@ import Explore from './Explore'
 import PostPage from './PostPage'
 import ResumeView from './ResumeView'
 
-import Admin from './AdminPage'
-
+import Admin from './admin'
+import Profile from './profile'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 class App extends React.Component{
@@ -26,7 +26,7 @@ class App extends React.Component{
 						<Route path="/PostPage" component={PostPage}/>
 						<Route path="/ResumeView" component={ResumeView}/>
 						<Route path="/Admin" component={Admin}/>
-
+						<Route path="/profile" component={Profile}/>
 					</Switch>
 				</div>
 			</Router>
