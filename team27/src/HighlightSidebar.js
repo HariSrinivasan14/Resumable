@@ -14,6 +14,21 @@ function HighlightSidebar({ feedbackItems }) {
           <li
             key={index}
             className="feedback-item"
+            onClick={() => {
+              let idx = feedbackItems.length - index - 1;
+              let highlight = document.getElementById(`highlight-${idx}`);
+              highlight.style.backgroundColor = "#5cdb4b";
+              highlight.style.backgroundImage = "linear-gradient(to right, #5cdb4b 0%, #99fd9e 100%)";
+              highlight.scrollIntoView();
+
+            }}
+
+            onMouseOut = {() => {
+              let idx = feedbackItems.length - index - 1;
+              let highlight = document.getElementById(`highlight-${idx}`);
+              highlight.style.backgroundColor = "#fff2ac";
+              highlight.style.backgroundImage = "linear-gradient(to right, #ffe359 0%, #fff2ac 100%)";
+            }}
           >
             <div>
               <strong>{feedbackItem.title.text}</strong>

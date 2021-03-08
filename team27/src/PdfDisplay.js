@@ -13,29 +13,20 @@ class PdfDisplay extends React.Component{
 
     componentDidMount() {
         const url = this.props.url;
-        console.log(url);
+        // console.log(url);
         let loadingTask =  pdfjs.getDocument(url);
         loadingTask.promise.then(pdf => {
             this.setState({ pdf });
         });
     }
 
-    // getTextSelection(){
-    //     let text = window.getSelection().toString();
-    //     // this.setState({ textSelection: text });
-    //     console.log(text);
-
-    // }
-
 	render(){
-        const pdf = this.state.pdf
-        const pageWidth = 0.69 * window.innerWidth;
-        console.log(pdf);
+        const pageWidth = 0.68 * window.innerWidth;
 		return(
             <div className="pdf-container" onClick={this.getTextSelection}>
                 <Document
                     file={this.props.url}
-                >
+                > 
                 <Page 
                     className="page" 
                     pageNumber={1} 

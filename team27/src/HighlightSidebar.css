@@ -5,7 +5,7 @@
   float: left;
   margin-bottom: -5000px;
   padding-bottom: 5000px;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 30vw;
