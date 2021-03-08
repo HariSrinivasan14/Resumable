@@ -17,7 +17,6 @@ class App extends React.Component{
                         <Route path="/Profile" component={Profile}/>
                         <Route path="/sample" component={Sample}/>
 
-
                     </Switch>
 
 
