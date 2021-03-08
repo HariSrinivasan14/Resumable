@@ -17,6 +17,21 @@ const GreenButton = styled(Button)({
 	}
 });
 
+const HomeGreenButton = styled(Button)({
+	backgroundColor: '#71A89E',
+	borderRadius: '5px',
+	marginLeft: '0px',
+	marginTop: '15px',
+	color: "white",
+	Height: '48px',
+	minWidth: '225px',
+	textTransform: 'capitalize',
+	"&:hover": {
+		backgroundColor: "#009688",
+		color: 'white'
+	}
+});
+
  function MainButton ({text, change}){ 
 	return(
 		<GreenButton variant="contained" onClick={change}>
@@ -24,6 +39,15 @@ const GreenButton = styled(Button)({
 		</GreenButton>
 	);
  }
+ 
+ function HomeButton ({text, buttonType, pageToBeRedirect}){ 
+	return(
+		<HomeGreenButton variant="contained" variant={buttonType} href = {pageToBeRedirect}>
+			{text}
+		</HomeGreenButton>
+	);
+ }
+ 
 
 // ------------------------------ Buttons Ends ------------------------------ //
 
@@ -74,4 +98,4 @@ const InputBox = withStyles({
 // ------------------------------ Input End ------------------------------ //
 
 
-export {MainButton, MainInputBox};
+export {MainButton, HomeButton, MainInputBox};
