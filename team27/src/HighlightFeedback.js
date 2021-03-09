@@ -4,7 +4,8 @@ import HighlightSidebar from './HighlightSidebar';
 // import PdfDisplay from './PdfDisplay';
 import PdfHighlight from './PdfHighlight';
 import './HighlightFeedback.css';
-import sampleImg from './images/resHeader.JPG'
+import { NavExplore } from './NavBar';
+import { Button } from '@material-ui/core';
 
 class HighlightFeedBack extends React.Component{
 	constructor(props) {
@@ -47,18 +48,29 @@ class HighlightFeedBack extends React.Component{
 	addFeedback(newFeedback) {
     	this.setState({ feedback: [newFeedback, ...this.state.feedback] });
 	}
+
+	postFeedback() {
+		return this.state.feedback;
+	}
 	
 	render(){
 
 		return(
-			<div className="highlight-feedback-container">
-				<div className="highlight-feedback-document">
-					<PdfHighlight url={pdf} onFeedbackSubmit={this.addFeedback}></PdfHighlight>
+			<div>
+				{/* <NavExplore/> */}
+				<div className="highlight-feedback-container">
+					<div className="highlight-feedback-document">
+						<PdfHighlight url={pdf} onFeedbackSubmit={this.addFeedback}></PdfHighlight>
+					</div>
+					
+					<div className="highlight-feedback-sidebar">
+						<HighlightSidebar feedbackItems={this.state.feedback}></HighlightSidebar>
+					</div>
+					
 				</div>
-				<div className="highlight-feedback-sidebar">
-					<HighlightSidebar feedbackItems={this.state.feedback}></HighlightSidebar>
-				</div>
-            </div>
+				<button id="feedback-post" onClick={()=>console.log("post")}>Post</button>
+			</div>
+			
 		);
 	}
 }

@@ -1,3 +1,9 @@
 .highlight-feedback-document {
   float: left;
 }
+
+#feedback-post {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+}

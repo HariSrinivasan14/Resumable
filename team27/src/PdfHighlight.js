@@ -11,9 +11,11 @@ class PdfHighlight extends React.Component{
             textSelection: null,
             highlights: [],
             highlightID:0,
+            highlightCoords: [],
             feedbackPopupOpen: false,
             feedbackComment: "",
-            feedbackPopupCoords: null
+            feedbackPopupCoords: null,
+            canvasDim:null
         };
 
         this.handleTextSelection = this.handleTextSelection.bind(this);
@@ -37,38 +39,28 @@ class PdfHighlight extends React.Component{
             this.setState({ feedbackPopupCoords : null });
             let canvas = document.getElementsByClassName("react-pdf__Page__canvas");
             let canvasRect = canvas[0].getBoundingClientRect();
-            console.log(canvasRect);
+            this.setState({canvasDim:canvasRect});
             let text = window.getSelection();
-            let textCpy = text
             console.log(text);
-            if (textCpy) {
-                let textRect = text.getRangeAt(0).getBoundingClientRect();
-                console.log(textRect);
-                let textRectCoords = {
-                    x: textRect.x,
-                    y: textRect.y,
-                    h: textRect.height,
-                    w: textRect.width
-                };
-                this.setState({ textSelection: textCpy.toString() });
-                this.setState({ feedbackPopupCoords : textRectCoords });
-
-                // make the highlight on page
-                this.setState({ highlightID: this.state.highlightID + 1 });
-                console.log(this.state.highlightID);
-                this.setState({ highlights: [...this.state.highlights, <Highlight
-                    key ={this.state.highlightID}
-                    highlightID={this.state.highlightID}
-                    x={textRectCoords.x}
-                    y={textRectCoords.y - canvasRect.y}
-                    h={textRectCoords.h}
-                    w={textRectCoords.w} />]});
-                
-
-                this.setState({ feedbackPopupOpen: true });
+            if (text && text.baseNode) {
+                if (text.baseNode.textContent.trim() !== "" && text.baseNode.length > 0) {
+                    console.log(text.baseNode.length);
+                    let textRect = text.getRangeAt(0).getBoundingClientRect();
+                    console.log(textRect);
+                    if (textRect.x <= canvasRect.width && textRect.y <= canvasRect.height) {
+                        let textRectCoords = {
+                            x: textRect.x,
+                            y: textRect.y,
+                            h: textRect.height,
+                            w: textRect.width
+                        };
+                        this.setState({ textSelection: text.toString() });
+                        this.setState({ feedbackPopupCoords : textRectCoords });
+                        this.setState( {highlightCoords: [...this.state.highlightCoords, textRectCoords] });
+                        this.setState({ feedbackPopupOpen: true });    
+                    }
+                }
             } 
-            
-            
         } else {
             console.log("open");
         }   
@@ -78,9 +70,22 @@ class PdfHighlight extends React.Component{
     handleFeedbackComment(e) {
         // console.log(this.state.textSelection);
         // console.log(e.target.value);
-        console.log(this.state.highlights[this.state.highlights.length - 1]);
-    
+
+        
         if (e.target.value != null && e.target.value != "") {
+            let currHighlightCoord = this.state.highlightCoords[this.state.highlightCoords.length -1]
+            this.setState({ highlightID: this.state.highlightID + 1 });
+
+            console.log(this.state.highlightCoords);
+            this.setState({ highlights: [...this.state.highlights, <Highlight
+                key ={this.state.highlightID}
+                highlightID={this.state.highlightID}
+                x={currHighlightCoord.x}
+                y={currHighlightCoord.y - this.state.canvasDim.y}
+                h={currHighlightCoord.h}
+                w={currHighlightCoord.w} />]});
+
+
             this.setState({feedbackComment: e.target.value});
             let newFeedback = {
                 content: {
@@ -95,8 +100,6 @@ class PdfHighlight extends React.Component{
             this.props.onFeedbackSubmit(newFeedback);
             this.setState({ feedbackPopupOpen: false });
         }
-        
-        
     }
             
     render(){
