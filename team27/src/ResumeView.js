@@ -11,7 +11,7 @@ import resume3 from './images/resume_emma.png'
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
 import { Container, List } from "semantic-ui-react";
-import { Comment, Form, Button as Bt, Header } from 'semantic-ui-react'
+import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react'
 import Avatar from '@material-ui/core/Avatar';
 const App = ({ children }) => (
     <Container style={{ margin: 20 }}>
@@ -39,6 +39,7 @@ function ResumeView(props) {
     const post = props.location.state.data.post
     console.log(post.title)
     const [comment, setComment] = React.useState(comments);
+    const [commentText, setCommentText] = React.useState("");
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
@@ -91,14 +92,14 @@ function ResumeView(props) {
                 let c =   [{
                     author:"User",
                     time:"today",
-                    text: "Perfect resume"
+                    text: commentText
                 }, ...comment]
                 
                 setComment(c)
                 console.log(c)
                     
           }} reply>
-            <Form.TextArea  />
+         
             <Bt content='Add Reply'  secondary />
             <Bt color='teal' href="/highlight-feedback"> Add Highlight </Bt>
           </Form>
@@ -121,6 +122,7 @@ function ResumeView(props) {
               <div className = "feedback-box">
               <App>
                 <CommentSection comment = {comment}/>
+                <textarea value={commentText} onInput={(e)=> setCommentText(e.target.value)}/>
               </App>
               </div>
             </div>
