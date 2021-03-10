@@ -12,9 +12,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import {optionsMenu} from "./optionsMenu"
 import { Link } from 'react-router-dom';
-import ResumeView from './ResumeView';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 500,
@@ -36,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function CardComponent({post, username, title, subtitle, imagesrc, desc, likes}){
+function CardComponent({post}){
   const classes = useStyles();
   // const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);
   // };
   const [isLiked, updateLike] = useState(false);
-  const [count, setCount] = useState(likes);
+  const [count, setCount] = useState(post.likes);
   const [color, setColor] = useState('grey');
 
   const handleLike = () => {
@@ -62,29 +60,29 @@ function CardComponent({post, username, title, subtitle, imagesrc, desc, likes})
       <CardHeader
         avatar={
           <Avatar aria-label="user" className={classes.avatar}>
-            {username.charAt(0)}
+            {post.username.charAt(0)}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title= {title}
-        subheader= {subtitle}
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
+        title= {post.title}
+        subheader= {post.subtitle}
       />
-      <Link to={'/ResumeView'}>
+      <Link to={{pathname: "/ResumeView", state:{test: "sending data over", data: {post}}}} >
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image = {imagesrc}
+            image = {post.image}
             title="resume"
           />
         </CardActionArea>
       </Link>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {desc}
+          {post.desc}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
