@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useMemo} from 'react';
 import {useDropzone} from 'react-dropzone';
+import PdfDisplay from './PdfDisplay'
 
 const baseStyle = {
   flex: 1,
@@ -42,15 +43,15 @@ const thumb = {
   border: '1px solid #eaeaea',
   marginBottom: 8,
   marginRight: 8,
-  width: 300,
-  height: 400,
-  padding: 4,
+  padding: 0,
   boxSizing: 'border-box'
 };
 
 const thumbInner = {
   display: 'flex',
   minWidth: 0,
+  // maxWidth: 500,
+  // maxHeight: 100,
   overflow: 'hidden'
 };
 
@@ -69,7 +70,8 @@ function DropZone(props) {
         isDragAccept,
         isDragReject,
         acceptedFiles} = useDropzone({
-        accept: 'image/*, application/pdf',
+          // image/* // for accepting images as well, 
+        accept: 'application/pdf',
         onDrop: acceptedFiles => {
         setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
@@ -86,14 +88,19 @@ function DropZone(props) {
     isDragReject,
     isDragAccept
   ]);
-
+  const acceptedFileItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
   const thumbs = files.map(file => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
-        <img
+        {/* <img
           src={file.preview}
           style={img}
-        />
+        /> */}
+        <PdfDisplay url={file.preview} width={0.4} ></PdfDisplay>
       </div>
     </div>
   ));
@@ -107,9 +114,10 @@ function DropZone(props) {
     <section className="container">
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Drag 'n' drop your Resume pdf in here, or click to select it</p>
       </div>
       <aside style={thumbsContainer}>
+        <ul>{acceptedFileItems}</ul>
         {thumbs}
       </aside>
     </section>

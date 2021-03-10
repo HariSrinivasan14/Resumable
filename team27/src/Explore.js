@@ -1,16 +1,15 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import "./Explore.css"
 import CardComponent from './CardComponent';
 import { Grid } from "@material-ui/core"
 import {NavExplore} from "./NavBar"
-import logo from './images/Logo.png'
-import PostBox from './PostBox'
+import PostPage from './PostPage'
 import resume1 from './images/resume_samantha.jpg'
 import resume2 from './images/resume_angela.webp'
 import resume3 from './images/resume_emma.png'
-import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import Slide from '@material-ui/core/Slide';
+import Modal from 'react-bootstrap/Modal'
+import {styled} from '@material-ui/core';
 
 
 
@@ -19,6 +18,7 @@ function importAll(r) {
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
     return images;
   }
+
   let posts = [{
             username: "Samantha Jansen",
             title: "My Resume",
@@ -53,10 +53,8 @@ function importAll(r) {
     ]   
 
 
-export default class Explore extends Component {
-    
-    render() {
-        const images = importAll(require.context('./images', false, /\.(gif|jpe?g|svg|png)$/));
+function Explore(){
+    const images = importAll(require.context('./images', false, /\.(gif|jpe?g|svg|png)$/));
         var user = {
             username: 'Parsa Monfared'
         }
@@ -64,14 +62,81 @@ export default class Explore extends Component {
             
         console.log(item, index);
         });
-        const Transition = React.forwardRef(function Transition(props, ref) {
-            return <Slide direction="up" ref={ref} {...props} />;
-          });
+        const [modalShow, setModalShow] = React.useState(false);
 
-        return (
+        const GreenButton_explore = styled(Button)({
+            backgroundColor: '#71A89E',
+            borderRadius: '5px',
+            marginLeft: '50px',
+            marginTop: '15px',
+            color: "white",
+            Height: '48px',
+            minWidth: '225px',
+            textTransform: 'capitalize',
+            "&:hover": {
+                backgroundColor: "#009688",
+                color: 'white'
+            }
+        });
+        function postit(){
+            setModalShow(false)
+            posts.unshift(
+                {
+                    likes: 0,
+                    username: "user",
+                    title: "my best resume",
+                    subtitle: "best resume ever",
+                    date: "march 10, 2021",
+                    imagesrc: './images/resume_emma.png',
+                    image: resume3,
+                    desc: " I made this resume for software engineering in google."
+                    
+                }
+
+            )  
+            
+        }
+        function MyVerticallyCenteredModal(props) {
+
+            return (
+              <Modal 
+                {...props}
+                size='xl'
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">
+                    Post Your Resume
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <PostPage/>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button color= 'secondary'  onClick={props.onHide}>Close</Button>
+                  <Button color= "primary"  onClick={postit}>
+                    Post
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            );
+          }
+
+    return(
             <div className="feed">
                 <NavExplore/>
+                {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
+                    Create a Post
+                </Button> */}
+                <GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
+			        {'create post'}
+		        </GreenButton_explore>
 
+                <MyVerticallyCenteredModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                />
                 <div className="resumes">
                     <img src={images['images/landingImage.png']}/>
                     <Grid container 
@@ -83,47 +148,18 @@ export default class Explore extends Component {
                                  {posts.map((item,index)=>{
                                     return <Grid item xs = {12}>
                                                 <CardComponent 
-                                                post= {{item}}
-                                                username= {item.username}
-                                                title= {item.title}
-                                                subtitle = {item.subtitle}
-                                                date= {item.date}
-                                                imagesrc= {item.image}
-                                                desc = {item.desc}
-                                                likes= {item.likes}/>
+                                                post= {item}
+                                                />
                                             </Grid> 
                                 })}
                     </Grid> 
 
-                    {/* <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-                        <AppBar className={classes.appBar}>
-                        <Toolbar>
-                            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                            <CloseIcon />
-                            </IconButton>
-                            <Typography variant="h6" className={classes.title}>
-                            Sound
-                            </Typography>
-                            <Button autoFocus color="inherit" onClick={handleClose}>
-                            save
-                            </Button>
-                        </Toolbar>
-                        </AppBar>
-                        <List>
-                        <ListItem button>
-                            <ListItemText primary="Phone ringtone" secondary="Titania" />
-                        </ListItem>
-                        <Divider />
-                        <ListItem button>
-                            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-                        </ListItem>
-                        </List>
-                    </Dialog>    */}
                 </div>
                    
                 
                  </div>
             
-        )
-    }
+        
+    )
 }
+export default Explore;
