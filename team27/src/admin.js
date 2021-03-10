@@ -47,12 +47,20 @@ const data = [
 const MyButton = styled(Button)({
   marginRight: 50,
   color: "white",
+  "&:hover": {
+		backgroundColor: "#009688",
+		color: 'white'
+	}
 });
 
 const MyButton2 = styled(Button)({
   marginRight: 50,
   marginLeft: 200,
   color: 'white',
+  "&:hover": {
+		backgroundColor: "#009688",
+		color: 'white'
+	}
 });
 
 const MyButton3 = styled(Button)({
@@ -60,6 +68,10 @@ const MyButton3 = styled(Button)({
   right: 30,
   color: 'white',
   width: 120,
+  "&:hover": {
+		backgroundColor: "#009688",
+		color: 'white'
+	}
   
 });
 
@@ -164,18 +176,13 @@ export default function Admin() {
         <div >
         <img className="landingPic1" src={resume} />
           </div>
-          <Divider />
+
+          <Divider style={{marginTop: 10}}/>
 
     
-          <ButtonGroup
-        orientation="vertical"
-        color="primary"
-        aria-label="vertical outlined primary button group"
-        variant="text"
-      >
-            <button id='b'>Overview</button>
+      
+            <MyButton id='b'>Overview</MyButton>
           
-          </ButtonGroup>
        
       </Drawer>
 
@@ -293,17 +300,18 @@ export default function Admin() {
 
     </div>
     <Chart
-    style={{ marginLeft: 100 , marginTop: 40}}
+    style={{ marginLeft: 150 , marginTop: 40}}
       data={data}
       width={1200} height={500}
     >
       <ArgumentAxis />
       <ValueAxis />
       
-
+      
       <LineSeries valueField="value" argumentField="argument" />
+      
     </Chart>
- 
+
 
     </main>
     

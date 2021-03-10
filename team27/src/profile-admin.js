@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './profile.css';
+import './profile-admin.css';
 
 import { styled, withTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
