@@ -1,4 +1,4 @@
-import React, { Profiler } from 'react';
+import React, { useState } from 'react';
 import './profile.css';
 import Toolbar from '@material-ui/core/Toolbar'
 import AppBar from '@material-ui/core/AppBar'
@@ -6,9 +6,8 @@ import { styled, withTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import resume from './resume.png'
-import ground from './ground.jpg'
-import acount from './acount.png'
+import ground from './images/ground.jpg'
+import acount from './images/acount.png'
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -16,12 +15,41 @@ import CardContent from '@material-ui/core/CardContent';
 import SinglePagePDFViewer from "./pdf-viewer";
 /* This is required only if the project file is located 
 inside the app. Otherwise you can use the external link of the pdf file*/
-import samplePDF from "./resume.pdf";
-
+import samplePDF from "./images/resume.pdf";
+import {NavExplore} from "./NavBar"
+import CardComponent from './CardComponent';
+import resume1 from './images/resume_samantha.jpg'
+import resume2 from './images/resume_angela.webp'
+import resume3 from './images/resume_emma.png'
 import "./styles.css";
+import Modal from 'react-bootstrap/Modal'
+import PostPage from './PostPage'
+import newPDF from './images/sampleResume.pdf'
+import { object } from 'prop-types';
 
+let posts = [{
+	username: "Samantha Jansen",
+	title: "My Resume",
+	subtitle: "for Product Manager at Amazon",
+	date: "Septermber 23, 2020",
+	imagesrc: './images/resume_samantha.jpg',
+	image: resume1,
+	desc: " help me to fix my resume please!",
+	likes: 10
+	
+},
+{
+	username: "Angela Wilkinson",
+	title: "Recent Resume",
+	subtitle: "for Administrative Assistant",
+	date: "october 11, 2020",
+	imagesrc: './images/resume_angela.webp',
+	image: resume2,
+	desc: "help me to improve my resume!",
+	likes: 9
+},
 
-
+] 
 const MyButton = styled(Button)({
 	marginRight: 50,
 	color: "white",
@@ -54,12 +82,26 @@ const MyButton = styled(Button)({
 	color: 'white',
 	width: 150,
   });
+  const GreenButton_explore = styled(Button)({
+	backgroundColor: '#71A89E',
+	borderRadius: '5px',
+	marginLeft: '50px',
+	marginTop: '15px',
+	color: "white",
+	Height: '48px',
+	minWidth: '225px',
+	textTransform: 'capitalize',
+	"&:hover": {
+		backgroundColor: "#009688",
+		color: 'white'
+	}
+});
 
  
   const drawerWidth = 170;
   const useStyles2 = makeStyles((theme) => ({
 	root: {
-		display: 'flex',
+		flex: 1,
 		backgroundImage: ground
 	  },
 	  toolbar: theme.mixins.toolbar,
@@ -73,21 +115,24 @@ const MyButton = styled(Button)({
 
 	  but:{
 		top: 10,
-		background: '#83C2B7',   
+		left: 130,
+		background: 'linear-gradient(to top, #818b94, #808c9a, #7f8d9f, #808da5, #828daa, #818aa9, #8087a8, #8084a7, #7b7ea0, #767899, #717393, #6c6d8c)',
 		borderRadius: 3,
 		border: 0,
 		color: 'black',
 		height: 48,
 		marginLeft: 10,
-		width: 235
+		width: 235,
+		color: '#C6D8D7'
 	  },
 	
 	  card: {
 		display: 'flex',
 		width: 400,
-		marginTop: 400,
+		marginTop: 250,
 		marginLeft: 50,
-		background: 'linear-gradient(to top, #e9e9ff, #d6e4fb, #c4e0f3, #b4dbe7, #a8d6d8, #a1d0cd, #9bcac2, #96c4b7, #8dbdb1, #84b6aa, #7aafa4, #71a89e)',		padding: '0 30px',
+		background: 'linear-gradient(to top, #818b94, #808c9a, #7f8d9f, #808da5, #828daa, #818aa9, #8087a8, #8084a7, #7b7ea0, #767899, #717393, #6c6d8c)',
+		padding: '0 30px',
 	  },
 	  cardDetails: {
 		flex: 1,
@@ -98,6 +143,7 @@ const MyButton = styled(Button)({
 	  typography: {
 	    textAlign: 'center',
 		fontSize: 25,
+		color: '#C6D8D7'
 	  },
 	  pdf:{
 		  left: 400,
@@ -111,43 +157,69 @@ const MyButton = styled(Button)({
 		  height:60
 	  }
 }));
-
+function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    return images;
+  }
+const images = importAll(require.context('./images', false, /\.(gif|jpe?g|svg|png)$/));
 
 export default function Profile1(){
 	const classes = useStyles2();
+	const [modalShow, setModalShow] = React.useState(false);
+	const [post, setPost] = React.useState(false);
+
+	function postit(){
+		setPost(true);
+	   setModalShow(false);
+	   
+	}
+	function afterPost(){
+		return(
+			<div className="Apps">
+			<h4>Resume</h4>
+		 <SinglePagePDFViewer pdf={newPDF} />
+		 </div>
+		   )
+	}
+	function MyVerticallyCenteredModal(props) {
+
+		return (
+		  <Modal 
+			{...props}
+			size='xl'
+			aria-labelledby="contained-modal-title-vcenter"
+			centered
+		  >
+			<Modal.Header closeButton>
+			  <Modal.Title id="contained-modal-title-vcenter">
+				Post Your Resume
+			  </Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<PostPage/>
+			</Modal.Body>
+			<Modal.Footer>
+			  <Button color= 'secondary'  onClick={props.onHide}>Close</Button>
+			  <Button color= "primary"  onClick={() => {
+				postit();
+				afterPost();
+
+				}} >
+				Post
+			  </Button>
+			</Modal.Footer>
+		  </Modal>
+		);
+	  }
+
 		return(
 			
 		<div className={classes.root} >
-			<AppBar className={classes.appBar} style={{ backgroundColor:'#71A89E'}} position="fixed" >
-          		<Toolbar>
-				  <img className={classes.image} src={resume} />
-						<MyButton2 variant="outlined"  href="/Admin">
-							Admin
-						</MyButton2 >
+		
+			<NavExplore/>
 
-						<MyButton variant="outlined" >
-							Feed
-						</MyButton>
-
-						<MyButton variant="outlined">
-							Help
-						</MyButton>
-
-						<MyButton3 variant="outlined">
-							Log out
-						</MyButton3>
-
-						<MyButton4 variant="outlined">
-							Ban User
-						</MyButton4>
-
-						<MyButton5 variant="outlined">
-							Unban User
-						</MyButton5>
-				</Toolbar>
-			</AppBar>
-
-			<div >
+			<div id="info">
         		<img className="pic" src={acount} />
 				<Grid item xs={12} md={6}>
 					<CardActionArea component="a" href="#">
@@ -168,20 +240,34 @@ export default function Profile1(){
 					</CardActionArea>
 				</Grid>
 				<buttonGroup>
-					<Button className={classes.but} variant="outlined" href="postPage">
-						Add New Resume
-					</Button>
-					<Button className={classes.but} variant="outlined">
-						Edit Profile
-					</Button>
+				<GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
+			        {'upload resume'}
+		        </GreenButton_explore>
 				</buttonGroup>
-
-          	</div>
-		 <div className="App">
-			 <h4>Resume</h4>
-          <SinglePagePDFViewer pdf={samplePDF} />
-		  </div>
-		
+				<MyVerticallyCenteredModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                />
+				</div>
+				<div className="oldPosts">
+					<h4>Old Posts</h4>
+                    <img src={images['images/landingImage.png']}/>
+                    <Grid container 
+                        spacing={10}
+                        p = {1}
+                        direction="column"
+                        alignItems="center"
+                        justify="flex-end">
+                                 {posts.map((item,index)=>{
+                                    return <Grid item xs = {12}>
+                                                <CardComponent 
+                                                post= {item}
+                                                />
+                                            </Grid> 
+                                })}
+                    </Grid> 
+				</div>
+		{post ? afterPost(): null}
 			</div>
 			
 

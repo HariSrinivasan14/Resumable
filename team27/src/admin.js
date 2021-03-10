@@ -6,8 +6,8 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import resume from './resume.png'
-import camera from './camera.png'
-import ground from './ground.jpg'
+import camera from './images/camera.png'
+import ground from './images/ground.jpg'
 import './admin.css'
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -31,9 +31,11 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
+import Explore from './Explore';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 const data = [
-  { argument: 1, value: 10 },
+  { argument: 1, value: 25 },
   { argument: 3, value: 20 },
   { argument: 5, value: 30 },
   { argument: 7, value: 60 },
@@ -97,7 +99,9 @@ const useStyles1 = makeStyles((theme) => ({
     backgroundColor:'#71A89E'
   },
   list:{
-    color: "white"
+    color: "white",
+    marginTop: 10,
+    display: 'block'
   },
 
 
@@ -132,15 +136,11 @@ export default function Admin() {
         <AppBar className={classes.appBar} style={{ backgroundColor:'#71A89E'}} position="fixed" >
           <Toolbar>
           
-            <MyButton2 variant="outlined">
-              Admin
+            <MyButton2 variant="outlined" href="Explore">
+              Explore
             </MyButton2 >
 
-            <MyButton variant="outlined" href="Profile">
-              Profile
-            </MyButton>
-
-            <MyButton variant="outlined">
+            <MyButton variant="outlined" >
               Help
             </MyButton>
 
@@ -164,25 +164,19 @@ export default function Admin() {
         <div >
         <img className="landingPic1" src={resume} />
           </div>
+          <Divider />
+
+    
+          <ButtonGroup
+        orientation="vertical"
+        color="primary"
+        aria-label="vertical outlined primary button group"
+        variant="text"
+      >
+            <button id='b'>Overview</button>
+          
+          </ButtonGroup>
        
-          <Divider style={{marginTop: 10}} />
-        <List className={classes.list}>
-          {['Overview', 'Posts', 'Feed'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List className={classes.list}>
-          {['Resumes', 'Trash'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
 
 

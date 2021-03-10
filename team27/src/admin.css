@@ -45,3 +45,9 @@
   body{
     background-color:lavender;
   }
+#b{
+  background-color: #71A89E;
+  margin: 10px;
+  border: 1px solid #000000;
+  margin-top: 20px;
+}
