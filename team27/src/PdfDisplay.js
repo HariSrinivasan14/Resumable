@@ -21,7 +21,7 @@ class PdfDisplay extends React.Component{
     }
 
 	render(){
-        const pageWidth = 0.68 * window.innerWidth;
+        const pageWidth = this.props.width * window.innerWidth;
 		return(
             <div className="pdf-container" onClick={this.getTextSelection}>
                 <Document
