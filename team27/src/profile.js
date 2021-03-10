@@ -86,7 +86,7 @@ const MyButton = styled(Button)({
 		display: 'flex',
 		width: 400,
 		marginTop: 400,
-		marginLeft: 20,
+		marginLeft: 50,
 		background: 'linear-gradient(to top, #e9e9ff, #d6e4fb, #c4e0f3, #b4dbe7, #a8d6d8, #a1d0cd, #9bcac2, #96c4b7, #8dbdb1, #84b6aa, #7aafa4, #71a89e)',		padding: '0 30px',
 	  },
 	  cardDetails: {
@@ -121,7 +121,7 @@ export default function Profile1(){
 			<AppBar className={classes.appBar} style={{ backgroundColor:'#71A89E'}} position="fixed" >
           		<Toolbar>
 				  <img className={classes.image} src={resume} />
-						<MyButton2 variant="outlined"  href="/">
+						<MyButton2 variant="outlined"  href="/Admin">
 							Admin
 						</MyButton2 >
 
@@ -168,7 +168,7 @@ export default function Profile1(){
 					</CardActionArea>
 				</Grid>
 				<buttonGroup>
-					<Button className={classes.but} variant="outlined" href="Profile">
+					<Button className={classes.but} variant="outlined" href="postPage">
 						Add New Resume
 					</Button>
 					<Button className={classes.but} variant="outlined">
