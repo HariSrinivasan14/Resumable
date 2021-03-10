@@ -17,7 +17,7 @@ class FeedbackModal extends React.Component{
         console.log(this.props.position.y);
         console.log(this.props.position.x);
         const modalStyle = {
-            backgroundColor: "#71a89e",
+            backgroundColor: "#333333",
             width: "250px",
             height: "80px",
             border: "1px solid #000",
