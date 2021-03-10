@@ -105,7 +105,7 @@ class PdfHighlight extends React.Component{
     render(){
 		return(
             <div className="pdf-container" onMouseUp={this.handleTextSelection}>
-                <PdfDisplay url={this.props.url}></PdfDisplay>
+                <PdfDisplay url={this.props.url} width={0.68}></PdfDisplay>
                 {this.state.textSelection ? 
                     <FeedbackModal 
                         position = {this.state.feedbackPopupCoords}
