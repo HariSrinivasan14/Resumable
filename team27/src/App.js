@@ -25,7 +25,9 @@ class App extends React.Component{
 						<Route path="/SignUp" component={SignUp}/>
 						<Route path="/Explore" component={Explore}/>
 						<Route path="/PostPage" component={PostPage}/>
-						<Route path="/ResumeView" component={ResumeView}/>
+						<Route path="/ResumeView" component={ResumeView}>
+							
+						</Route>
 						<Route path="/Admin" component={Admin}/>
 						<Route path="/profile" component={Profile}/>
 						<Route path="/highlight-feedback" component={HighlightFeedBack} />

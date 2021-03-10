@@ -13,6 +13,7 @@ import {styled} from '@material-ui/core';
 
 
 
+
 function importAll(r) {
     let images = {};
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
@@ -58,10 +59,6 @@ function Explore(){
         var user = {
             username: 'Parsa Monfared'
         }
-        posts.forEach(function (item, index) {
-            
-        console.log(item, index);
-        });
         const [modalShow, setModalShow] = React.useState(false);
 
         const GreenButton_explore = styled(Button)({

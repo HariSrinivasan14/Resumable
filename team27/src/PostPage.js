@@ -1,11 +1,7 @@
 import React from 'react';
 import './PostPage.css';
-import {NavExplore} from "./NavBar";
-import PostBox from './PostBox';
 import Dropzone from './Dropzone';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from "@material-ui/core/styles";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 
 
@@ -44,7 +40,7 @@ function PostPage() {
     return (
         <div>
             
-            <NavExplore />
+            {/* <NavExplore /> */}
             {/* <div className = 'postResume'>
                 <Dropzone />
             </div> */}

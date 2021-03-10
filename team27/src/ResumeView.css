@@ -1,0 +1,42 @@
+#resume-image{
+    float: left;
+
+}
+#resume-title{
+    margin-left: 100px;
+    margin-bottom: 40px;
+
+}
+#resume-header{
+    margin-top: 10px;
+    margin-left: 100px;
+    margin-bottom: 20px;
+}
+#resume-button{
+    float: left;
+}
+.border-box{
+    border: 1px solid black;
+    margin-top: 30px;
+    margin-left: 100px;
+    margin-bottom: 10px;
+}
+#photo {
+    height: 600px;
+    width: 500px; 
+}
+.pp{
+    padding: 20px;
+}
+.hh{
+    margin-top: 10px;
+    margin-left: 100px;
+}
+
+.feedback-box{
+    float: right;
+    top: 78px;
+    margin-top: 65px;
+    margin-right: 150px;
+    max-width: 500px;
+}
