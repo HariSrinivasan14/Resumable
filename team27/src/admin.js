@@ -140,7 +140,7 @@ export default function Admin() {
               Profile
             </MyButton>
 
-            <MyButton variant="outlined" href="sample">
+            <MyButton variant="outlined">
               Help
             </MyButton>
 
