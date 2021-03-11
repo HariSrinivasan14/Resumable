@@ -122,7 +122,10 @@ function ResumeView(props) {
               <div className = "feedback-box">
               <App>
                 <CommentSection comment = {comment}/>
-                <textarea value={commentText} onInput={(e)=> setCommentText(e.target.value)}/>
+                <textarea 
+                  id="comment-text-area" 
+                  value={commentText} 
+                  onInput={(e)=> setCommentText(e.target.value)}/>
               </App>
               </div>
             </div>
