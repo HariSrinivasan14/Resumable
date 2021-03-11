@@ -14,11 +14,11 @@
 ## Login Credentials
 
 ### For Admin:
-**Username:** admin//
+**Username:** admin<br />
 **Password:** admin
 
 ### For User:
-**Username:** user//
+**Username:** user<br />
 **Password:** user
 
 ## Instructions
