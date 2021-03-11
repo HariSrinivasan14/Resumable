@@ -33,6 +33,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Explore from './Explore';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Login from './Login'
 
 const data = [
   { argument: 1, value: 25 },
@@ -156,7 +157,7 @@ export default function Admin() {
               Help
             </MyButton>
 
-            <MyButton3 variant="outlined">
+            <MyButton3 variant="outlined" href="Login">
               Log out
             </MyButton3>
            
@@ -205,7 +206,6 @@ export default function Admin() {
     <div style={{ display: 'flex' }}>
    
     <Grid item xs={3} >
-      <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
@@ -224,11 +224,9 @@ export default function Admin() {
             <CardMedia className={classes.cardMedia} image={camera}  />
           </Hidden>
         </Card>
-      </CardActionArea>
     </Grid>
 
     <Grid item xs={3} >
-      <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
@@ -247,12 +245,10 @@ export default function Admin() {
             <CardMedia className={classes.cardMedia} image={camera}  />
           </Hidden>
         </Card>
-      </CardActionArea>
     </Grid>
 
 
     <Grid item xs={3}>
-      <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
@@ -271,12 +267,10 @@ export default function Admin() {
             <CardMedia className={classes.cardMedia} image={camera}  />
           </Hidden>
         </Card>
-      </CardActionArea>
     </Grid>
 
 
     <Grid item xs={3}>
-      <CardActionArea component="a" href="#">
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
@@ -295,7 +289,6 @@ export default function Admin() {
             <CardMedia className={classes.cardMedia} image={camera}  />
           </Hidden>
         </Card>
-      </CardActionArea>
     </Grid>
 
     </div>
