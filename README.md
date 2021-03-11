@@ -71,9 +71,9 @@ A user can easily return to the Explore page by clicking the home button that is
 ### Step 4:
 **Resume View**
 
-If a user clicks on a post it will redirect them to the Resume View page.In our resume view page, the user sees the full resume, a description of what the owner of the resume is looking for and the comment section where the user can view other peoples comments on the post and add their own comments if they wish to do so. To leave a comment, the user can type whatever they want in the textbox provided under the comment section and then press “Add reply” which then would add their comment to the top of the comment section. The user can also click on the “Add Highlight” button which would take them to the Highlight Feedback View. For a description on the Highlight Feedback View page, look under step 5.
+If a user clicks on a post it will redirect them to the Resume View page.In our resume view page, the user sees the full resume, a description of what the owner of the resume is looking for and the comment section where the user can view other peoples comments on the post and add their own comments if they wish to do so. To leave a comment, the user can type whatever they want in the textbox provided under the comment section and then press “Add reply” which then would add their comment to the top of the comment section. The user can also click on the “Add Highlight” button which would take them to the Highlight Feedback View. For a description on the Highlight Feedback View page, look under step 6.
 
-### Step 4:
+### Step 5:
 **Profile**
 
 The user can view their profile by clicking on the my profile button in the explore page. When the user is in the profile page, they can first see their personal information such as their name, birthday, contacts and ect. They can also view some of the posts that they have posted in the past. They can press on each post just like they would on the explore page and would take them to the comment section of the post. Another feature of this page is that a user is able to upload a general resume not for a particular post but for it to be shown when another user visits their profile page. They can do this by clicking the upload resume button which would then open a pop up on the screen. The pop up allows the user to upload a pdf file from their pc by drag and drop or by click to select. They also have the option to give the file a title, subtitle and a description if they want. After that a preview of their file will be shown to them to make sure that they can upload the right file and then they can just press on the post button for the resume to be posted onto their page. 
@@ -85,7 +85,7 @@ Under our team27 folder, proceed under images and pick the pdf file with the tit
 Then click on post.
 
 
-### Step 5:
+### Step 6:
 ### User/Admin View:
 **Highlight Feedback View**
 
