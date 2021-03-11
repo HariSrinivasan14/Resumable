@@ -17,7 +17,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 class App extends React.Component{
 	render(){
 		return(
-			<Router>
+			<Router >
 				<div>
 					<Switch>
 						<Route path="/" exact component={Home}/>

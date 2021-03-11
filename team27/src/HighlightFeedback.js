@@ -4,8 +4,8 @@ import HighlightSidebar from './HighlightSidebar';
 // import PdfDisplay from './PdfDisplay';
 import PdfHighlight from './PdfHighlight';
 import './HighlightFeedback.css';
-import { NavExplore } from './NavBar';
-import { Button } from '@material-ui/core';
+
+
 
 class HighlightFeedBack extends React.Component{
 	constructor(props) {
@@ -54,7 +54,7 @@ class HighlightFeedBack extends React.Component{
 	}
 	
 	render(){
-
+		let history = this.useHistory;
 		return(
 			<div>
 				{/* <NavExplore/> */}
@@ -68,7 +68,8 @@ class HighlightFeedBack extends React.Component{
 					</div>
 					
 				</div>
-				<button id="feedback-post" onClick={()=>console.log("post")}>Post</button>
+					<button id="feedback-post" onClick={() => this.props.history.goBack()}>Back to Resume</button>
+				
 			</div>
 			
 		);
