@@ -30,7 +30,6 @@ To start the web application type npm start in the console. The website should s
 ### Step 1:
 ### User View:
 **Sign Up**
-
  	If the user does not have an account they can sign up by clicking the sign up button. This will redirect the user to sign up page where they have to fill out the required text box and click the sign up button. Once a user clicks on the sign up button a new account will be created based on the information provided (does not create a new user right now but will create a new user when the website is connected to the our database) and will redirect the user to the Explore page.
 
 **Login**
@@ -69,7 +68,6 @@ A user can easily return to the Explore page by clicking the home button that is
 ### Step 4:
 **Resume View**
 	If a user clicks on a post it will redirect them to the Resume View page.
-
 	In our resume view page, the user sees the full resume, a description of what the owner of the resume is looking for and the comment section where the user can view other peoples comments on the post and add their own comments if they wish to do so. To leave a comment, the user can type whatever they want in the textbox provided under the comment section and then press “Add reply” which then would add their comment to the top of the comment section. The user can also click on the “Add Highlight” button which would take them to the Highlight Feedback View. For a description on the Highlight Feedback View page, look under step 5.
 
 ### Step 4:
