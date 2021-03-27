@@ -18,6 +18,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "chroma-js": "^2.1.1",
+    "cors": "^2.8.5",
+    "mongoose": "^5.12.2",
     "pdfjs-dist": "^2.6.347",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
