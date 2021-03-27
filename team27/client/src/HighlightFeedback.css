@@ -1,0 +1,22 @@
+.highlight-feedback-document {
+  float: left;
+}
+
+#feedback-post {
+  position: fixed;
+  border: none;
+  top: 15px;
+  right: 30px;
+  background-color: #71A89E;
+  color: white;
+  border-radius: 10px;
+  min-height: 40px;
+
+}
+
+#feedback-post:hover {
+  background-color:#009688;
+
+}
+
+
