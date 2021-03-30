@@ -52,8 +52,10 @@ app.post('/addUser', (req, res) => {
 
 	// Create a new student using the Student mongoose model
 	const newUser = new User({
+		Username: req.body.Username,
 		firstName: req.body.firstName,
-		lastName: req.body.lastName
+		lastName: req.body.lastName,
+		Password: req.body.Password
 	})
 
 
@@ -69,7 +71,7 @@ app.post('/addUser', (req, res) => {
 	})
 
 })
-app.get('/', (req, res) => {
+app.get('/getUser', (req, res) => {
 	
 	if (mongoose.connection.readyState != 1) {
 		log('Issue with mongoose connection')
