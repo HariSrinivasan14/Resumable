@@ -33,7 +33,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Explore from './Explore';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Login from './Login'
+import Login from './Login/Login'
 
 const data = [
   { argument: 1, value: 25 },

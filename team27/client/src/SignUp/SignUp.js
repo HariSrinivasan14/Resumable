@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './SignUp.css';
 import React from 'react';
-import {NavSignUp} from './NavBar.js';
-import {MainButton, MainInputBox} from './Components.js';
+import {NavSignUp} from '../NavBar.js';
+import {MainButton, MainInputBox} from '../Components/Components.js';
 
 class SignUp extends React.Component{
 	state = {

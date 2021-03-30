@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
-import Login from './Login'
-import SignUp from './SignUp'
-import Home from './Home'
+import Login from './Login/Login'
+import SignUp from './SignUp/SignUp'
+import Home from './Home/Home'
 import NavHome from './NavBar'
 import HighlightFeedBack from './HighlightFeedback'
 
