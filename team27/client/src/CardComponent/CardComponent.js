@@ -13,6 +13,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from 'react-router-dom';
+import PdfDisplay from '../PdfDisplay'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 500,
@@ -60,7 +61,7 @@ function CardComponent({post}){
       <CardHeader
         avatar={
           <Avatar aria-label="user" className={classes.avatar}>
-            {post.username.charAt(0)}
+            {post.Username.charAt(0)}
           </Avatar>
         }
         // action={
@@ -72,12 +73,15 @@ function CardComponent({post}){
         subheader= {post.subtitle}
       />
       <Link to={{pathname: "/ResumeView", state:{test: "sending data over", data: {post}}}} >
-        <CardActionArea>
-          <CardMedia
+        <CardActionArea >
+          {/* <CardMedia
             className={classes.media}
             image = {post.image}
+            imagesrc={post.image}
             title="resume"
-          />
+          /> */}
+          {/* <PdfDisplay url={post.fileurl} height={0.7} width={0.3} ></PdfDisplay> */}
+          <h1>{post.fileurl}</h1>
         </CardActionArea>
       </Link>
       <CardContent>

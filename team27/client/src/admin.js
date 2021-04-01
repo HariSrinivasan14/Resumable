@@ -31,7 +31,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
-import Explore from './Explore';
+import Explore from './Explore/Explore';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Login from './Login'
 

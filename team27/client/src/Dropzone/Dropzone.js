@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useMemo} from 'react';
 import {useDropzone} from 'react-dropzone';
-import PdfDisplay from './PdfDisplay'
+import PdfDisplay from '../PdfDisplay'
 
 const baseStyle = {
   flex: 1,
@@ -104,11 +104,15 @@ function DropZone(props) {
       </div>
     </div>
   ));
-
-  useEffect(() => () => {
-    // Make sure to revoke the data uris to avoid memory leaks
-    files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, [files]);
+  const Droped = files.map(file => (
+      props.onImageDrop(file),
+      console.log(file.preview)
+    ));
+  
+  // useEffect(() => () => {
+  //   // Make sure to revoke the data uris to avoid memory leaks
+  //   files.forEach(file => URL.revokeObjectURL(file.preview));
+  // }, [files]);
 
   return (
     <section className="container">

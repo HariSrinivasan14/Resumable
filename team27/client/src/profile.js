@@ -15,17 +15,17 @@ import SinglePagePDFViewer from "./pdf-viewer";
 /* This is required only if the project file is located 
 inside the app. Otherwise you can use the external link of the pdf file*/
 import {NavExplore} from "./NavBar"
-import CardComponent from './CardComponent';
+import CardComponent from './CardComponent/CardComponent';
 import resume1 from './images/resume_samantha.jpg'
 import resume2 from './images/resume_angela.webp'
 import resume3 from './images/resume_emma.png'
 import "./styles.css";
 import Modal from 'react-bootstrap/Modal'
-import PostPage from './PostPage'
+import PostPage from './Postpage/PostPage'
 import newPDF from './images/sampleResume.pdf'
 
 let posts = [{
-	username: "Samantha Jansen",
+	Username: "Samantha Jansen",
 	title: "My Resume",
 	subtitle: "for Product Manager at Amazon",
 	date: "Septermber 23, 2020",
@@ -36,7 +36,7 @@ let posts = [{
 	
 },
 {
-	username: "Angela Wilkinson",
+	Username: "Angela Wilkinson",
 	title: "Recent Resume",
 	subtitle: "for Administrative Assistant",
 	date: "october 11, 2020",

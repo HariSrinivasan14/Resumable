@@ -22,3 +22,25 @@
     align-items: center;
     margin-top: 30px;
   }
+  .Title_input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+.Subtitle_input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+.Desc_input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin-bottom: 100px;
+  }
+.posts_empty{
+  text-align:center
+}

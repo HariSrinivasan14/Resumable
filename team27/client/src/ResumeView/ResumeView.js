@@ -1,15 +1,6 @@
 import './ResumeView.css'
 import React, {useState} from 'react'
-import {NavExplore} from "./NavBar"
-import CardMedia from '@material-ui/core/CardMedia';
-import { makeStyles } from '@material-ui/core/styles';
-import HighlightSidebar from './HighlightSidebar';
-import PostPage from './PostPage'
-import resume1 from './images/resume_samantha.jpg'
-import resume2 from './images/resume_angela.webp'
-import resume3 from './images/resume_emma.png'
-import Button from '@material-ui/core/Button';
-import Modal from 'react-bootstrap/Modal'
+import {NavExplore} from "../NavBar"
 import { Container, List } from "semantic-ui-react";
 import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react'
 import Avatar from '@material-ui/core/Avatar';

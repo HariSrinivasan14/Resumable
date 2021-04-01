@@ -20,6 +20,7 @@ if (env !== 'production') { app.use(cors()) }
 
 // import the mongoose models
 const { User } = require('./models/user')
+const { Post } = require('./models/post')
 
 // to validate object IDs
 const { ObjectID } = require('mongodb')
@@ -80,6 +81,59 @@ app.get('/', (req, res) => {
 	User.find().then((temp) => {
 		// res.send(students) // just the array
 		res.send({ temp }) // can wrap students in object if want to add more properties
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+
+app.post('/addPost', (req, res) => {
+	// log(req.body)
+
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}  
+
+	// Create a new student using the Student mongoose model
+	const newPost = new Post({
+		Username: req.body.Username,
+		subtitle: req.body.subtitle,
+		date: req.body.date,
+		fileurl: req.body.fileurl,
+		desc: req.body.desc,
+		likes: req.body.likes
+	})
+
+
+	newPost.save().then((result) => {
+		res.send(result)
+	}).catch((error) => {
+		log(error) // log server error to the console, not to the client.
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+		}
+	})
+
+})
+
+app.get('/getPost', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	
+	Post.find().then((temp) => {
+		// res.send(students) // just the array
+		res.send(temp)
 	})
 	.catch((error) => {
 		log(error)

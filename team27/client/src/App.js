@@ -6,9 +6,9 @@ import Home from './Home'
 import NavHome from './NavBar'
 import HighlightFeedBack from './HighlightFeedback'
 
-import Explore from './Explore'
-import PostPage from './PostPage'
-import ResumeView from './ResumeView'
+import Explore from './Explore/Explore'
+import PostPage from './Postpage/PostPage'
+import ResumeView from './ResumeView/ResumeView'
 
 import Admin from './admin'
 import Profile from './profile'
