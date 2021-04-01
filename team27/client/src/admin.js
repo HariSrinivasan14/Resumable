@@ -33,7 +33,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Explore from './Explore/Explore';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Login from './Login'
+import Login from './Login/Login'
+import {NavExplore} from "./NavBar"
 
 const data = [
   { argument: 1, value: 25 },
@@ -45,48 +46,12 @@ const data = [
 ];
 
 
-const MyButton = styled(Button)({
-  marginRight: 50,
-  color: "white",
-  "&:hover": {
-		backgroundColor: "#009688",
-		color: 'white'
-	}
-});
-
-const MyButton2 = styled(Button)({
-  marginRight: 50,
-  marginLeft: 200,
-  color: 'white',
-  "&:hover": {
-		backgroundColor: "#009688",
-		color: 'white'
-	}
-});
-
-const MyButton3 = styled(Button)({
-  position: "absolute",
-  right: 30,
-  color: 'white',
-  width: 120,
-  "&:hover": {
-		backgroundColor: "#009688",
-		color: 'white'
-	}
-  
-});
-
-
-
-
-
-
 const drawerWidth = 170;
 
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+   
     backgroundImage: ground
   },
   toolbar: theme.mixins.toolbar,
@@ -118,12 +83,7 @@ const useStyles1 = makeStyles((theme) => ({
   },
 
 
-  card: {
-    display: 'flex',
-    backgroundColor: "#71A89E",
-    width: 300,
- 
-  },
+
   cardDetails: {
     flex: 1,
   },
@@ -134,7 +94,7 @@ const useStyles1 = makeStyles((theme) => ({
     marginTop: 20
   },
   typography: {
-  
+    color: "white",
     fontSize: 25,
   },
 
@@ -146,27 +106,10 @@ export default function Admin() {
 
     return(
         <div  className={classes.root}  >
-        <AppBar className={classes.appBar} style={{ backgroundColor:'#71A89E'}} position="fixed" >
-          <Toolbar>
-          
-            <MyButton2 variant="outlined" href="Explore">
-              Explore
-            </MyButton2 >
-
-            <MyButton variant="outlined" >
-              Help
-            </MyButton>
-
-            <MyButton3 variant="outlined" href="Login">
-              Log out
-            </MyButton3>
-           
-          </Toolbar>
-        </AppBar>
+          <NavExplore className="nav"/>
 
 
-
-        <Drawer
+        {/* <Drawer
         className={classes.drawer}
         variant="permanent"
         classes={{
@@ -174,18 +117,13 @@ export default function Admin() {
         }}
         anchor="left"
       >
-        <div >
-        <img className="landingPic1" src={resume} />
+           <div >
+             <img className="landingPic1" src={resume} />
           </div>
 
           <Divider style={{marginTop: 10}}/>
-
-    
-      
             <MyButton id='b'>Overview</MyButton>
-          
-       
-      </Drawer>
+      </Drawer> */}
 
 
 
@@ -206,7 +144,7 @@ export default function Admin() {
     <div style={{ display: 'flex' }}>
    
     <Grid item xs={3} >
-        <Card className={classes.card}>
+        <Card id="car" className="bg-dark text-white" >
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
@@ -227,7 +165,7 @@ export default function Admin() {
     </Grid>
 
     <Grid item xs={3} >
-        <Card className={classes.card}>
+        <Card id="car" className="bg-dark text-white">
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
@@ -249,7 +187,7 @@ export default function Admin() {
 
 
     <Grid item xs={3}>
-        <Card className={classes.card}>
+        <Card id="car" className="bg-dark text-white">
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
@@ -271,7 +209,7 @@ export default function Admin() {
 
 
     <Grid item xs={3}>
-        <Card className={classes.card}>
+        <Card id="car" className="bg-dark text-white">
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">

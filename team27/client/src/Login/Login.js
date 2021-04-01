@@ -1,18 +1,18 @@
-import logo from './logo.svg';
 import './Login.css';
 import React from 'react';
-import {NavLogin} from './NavBar';
+import {NavLogin} from '../NavBar';
 import {OutlinedInput, Button} from '@material-ui/core'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
-import {MainButton, MainInputBox} from './Components.js';
+import {MainButton, MainInputBox} from '../Components/Components.js';
+import {loginAccount} from '../actions/user.js';
 
 class Login extends React.Component{
 	state = {
 		Username: "",
 		Password: "",
-		toggleUsername: false,
-		toggleUsername: false
+		toggleUsername: 0,
+		togglePassword: 0
 	}
 	handleChange = (event) => {
 		const inputValueLogin = event.target.value;
@@ -22,15 +22,15 @@ class Login extends React.Component{
 		});
 		if(inputValueLogin === ""){
 			if (inputBoxNameLogin === "Username"){
-				this.state.toggleUsername = true;
+				this.state.toggleUsername = 1;
 			}else if (inputBoxNameLogin === "Password"){
-				this.state.togglePassword = true;
+				this.state.togglePassword = 1;
 			}
 		}else{ // to reset 
 			if (inputBoxNameLogin === "Username" ){
-				this.state.toggleUsername = false;
+				this.state.toggleUsername = 0;
 			}else if (inputBoxNameLogin === "Password"){
-				this.state.togglePassword = false;
+				this.state.togglePassword = 0;
 			}
 		}
 	}
@@ -39,19 +39,27 @@ class Login extends React.Component{
 		// request should be made to server to verify if the Username and Password is valid.
 		if(this.state.Username === ""){
 			this.setState({
-				toggleUsername: true
+				toggleUsername: 1
 			});
 		}
 		if(this.state.Password === ""){
 			this.setState({
-				togglePassword: true
+				togglePassword: 1
 			});
 		}
-		if(this.state.Username === 'admin' && this.state.Password === 'admin'){
-			this.props.history.push("/Admin");
-			console.log("going to admin");
-		} else if (this.state.Username === 'user' && this.state.Password === 'user'){
-			this.props.history.push("/Explore");
+		if(this.state.Password !== "" && this.state.Username !== ""){
+			
+			const newAccountInfo = {
+					Username: this.state.Username,
+					Password: this.state.Password,
+			}
+			loginAccount(newAccountInfo, this);
+			// if(this.state.Username === 'admin' && this.state.Password === 'admin'){
+			
+				// console.log("going to admin");
+			// } else if (this.state.Username === 'user' && this.state.Password === 'user'){
+				// this.props.history.push("/Explore");
+			// }
 		}
 		
 	}
@@ -69,6 +77,7 @@ class Login extends React.Component{
 							change = {this.handleChange}
 							textValue = {this.state.Username}
 							userInput = {this.state.toggleUsername}
+							app = {this}
 						/>
 						<MainInputBox 
 							textBoxName = "Password" 
@@ -77,6 +86,7 @@ class Login extends React.Component{
 							change = {this.handleChange}
 							textValue = {this.state.Password}
 							userInput = {this.state.togglePassword}
+							app = {this}
 						/>
 						<MainButton 
 							text = "Login"
