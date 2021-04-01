@@ -56,7 +56,7 @@ const InputBox = withStyles({
 		Textcolor: 'red',
 		textTransform: 'capitalize',
 		marginLeft: '50px',
-		marginBottom: '15px',
+		marginBottom: '13px',
 		'& .MuiFormLabel-root.Mui-focused': {
 			color: "#009688"
 		},
@@ -79,7 +79,32 @@ const InputBox = withStyles({
 	},
 })(TextField);
 
- function MainInputBox ({textBoxName, placeholderName, inputType, change, textValue, userInput}){ 
+ function evaluateState(code, app){
+	 if(code === 1){
+		 return 'This Field is required!';
+	 }else if(code === 2){
+		 return 'Username is taken';
+	 }else if(code === 3){
+			app.props.history.push("/Explore");
+	 }else if(code === 4){
+			app.props.history.push("/Admin");
+	 }else if(code === 5){
+		 return 'Username or Password is incorrect';
+	 }else{
+		return ' ';
+	 }
+	 
+ }
+ 
+ function isError(code){
+	 if(code !== 0){
+		 return true;
+	 }else{
+		return false;
+	 }
+ }
+ 
+ function MainInputBox ({textBoxName, placeholderName, inputType, change, textValue, userInput, app}){ 
 	return(
 		<InputBox
 			onChange = {change}
@@ -88,12 +113,14 @@ const InputBox = withStyles({
 			type = {inputType}
 			label={placeholderName}
 			variant='outlined'
-			helperText={userInput ? 'This Field is required!': ' '}
-			error={userInput}
+			helperText={evaluateState(userInput, app)}
+			error={isError(userInput)}
 			autoComplete="on"
 		/>
 	);
  }
+ 
+
 // ------------------------------ Input End ------------------------------ //
 
 
