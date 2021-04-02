@@ -1,7 +1,7 @@
 
 const API_HOST = 'http://localhost:5000';
 
-export const newAccount = (account, app) => {
+export const newAccount = (account, signUp, app) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/addUser`, {
         method: "post",
@@ -13,27 +13,34 @@ export const newAccount = (account, app) => {
     });
 
     fetch(request)
-        .then(reponse => {
-			if(reponse.status === 200){
-				console.log("got here false");
-				app.setState({
-					toggleUsername: 2
+        .then(res => {
+			if(res.status === 200){
+				return res.json();
+			}
+        })
+		.then(json => {
+			if (json.userFound === false){
+                app.setState({
+                    currentUser: account.Username
+                });
+				signUp.setState({
+					toggleUsername: 3 //made a new account so redirect the user
 				});
 				return;
 			}else{
-				console.log("got here true");
-				app.setState({
-					toggleUsername: 3
-				});
-				return;
+                signUp.setState({
+                    toggleUsername: 2 // Username taken
+                });
+ 			    return;
 			}
         })
         .catch(error => {
             console.log(error);
         });
+    
 };
 
-export const loginAccount = (account, app) => {
+export const loginAccount = (account, loginPage, app) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/loginUser`, {
         method: "post",
@@ -53,19 +60,24 @@ export const loginAccount = (account, app) => {
 		.then(json => {
 			console.log(json);
 			if (json.currentUser !== undefined){
+                app.setState({
+                    currentUser: json.currentUser
+                });
 				if(json.currentUser === 'admin'){
-					app.setState({
-						toggleUsername: 4
+					loginPage.setState({
+						toggleUsername: 4 // to redirct to admin page
 					});
 				}else{
-					app.setState({
-						toggleUsername: 3
+					loginPage.setState({
+						toggleUsername: 3 // to redirct to Explore page
 					});
 				}
+
 				return;
 			}else{
-				app.setState({
-					toggleUsername: 5
+				loginPage.setState({
+					toggleUsername: 5, // if the password or username is incorrect
+                    togglePassword: 5
 				});
 			}
         })
@@ -74,9 +86,9 @@ export const loginAccount = (account, app) => {
         });
 };
 
-export const checkUserSession = (website) => {
+export const checkUserSession = (app) => {
     const url = `${API_HOST}/users/checkSession`;
-
+    console.log("logging current user in react", app.state.currentUser);
     fetch(url)
 		.then(res => {
             if (res.status === 200) {
@@ -85,7 +97,8 @@ export const checkUserSession = (website) => {
         })
         .then(json => {
             if (json && json.currentUser) {
-                website.setState({ currentUser: json.currentUser });
+                console.log("got here!!!!");
+                app.setState({ currentUser: json.currentUser });
             }
         })
         .catch(error => {

@@ -56,7 +56,8 @@ const InputBox = withStyles({
 		Textcolor: 'red',
 		textTransform: 'capitalize',
 		marginLeft: '50px',
-		marginBottom: '13px',
+		marginBottom: '15px',
+		width: '232px',
 		'& .MuiFormLabel-root.Mui-focused': {
 			color: "#009688"
 		},

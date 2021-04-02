@@ -46,11 +46,11 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 6000,
+            expires: 600000,
             httpOnly: true
         },
         // store the sessions on the database in production
-        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net'})
+        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'})
     })
 );
 
@@ -75,6 +75,9 @@ const authenticate = (req, res, next) => {
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.get("/users/checkSession", (req, res) => {
+
+	console.log("logging user in session", req.body);
+	console.log("logging user in session", req.session);
     if (req.session.user) {
         res.send({ currentUser: req.session.Username });
     } else {
@@ -97,9 +100,7 @@ app.post('/loginUser', (req, res) => {
 	
 	User.findByUsernamePassword(username, password)
         .then(userToLogin => {
-			console.log("made it here no server error");
 			if(userToLogin !== null){
-				console.log(userToLogin.Username);
 				req.session.user = userToLogin._id;
 				req.session.Username = userToLogin.Username;
 				res.send({currentUser: userToLogin.Username, success: true});
@@ -107,9 +108,7 @@ app.post('/loginUser', (req, res) => {
 				res.send({currentUser: undefined, success: false});
 			}
         })
-        .catch(error => {
-			console.log("made it here server error", error);
-			
+        .catch(error => {			
             res.status(400).send()
 		});
 		
@@ -136,7 +135,7 @@ app.post('/addUser', (req, res) => {
 			})
 
 			newUser.save().then((result) => {
-				res.status(404).send('User added');
+				res.send({userFound: false});
 			}).catch((error) => {
 				if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
 					res.status(500).send('Internal server error')
