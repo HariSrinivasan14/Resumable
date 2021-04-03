@@ -127,9 +127,6 @@ app.post('/loginUser', (req, res) => {
 	User.findByUsernamePassword(username, password)
         .then(userToLogin => {
 			if(userToLogin !== null){
-
-				loggedInUser = userToLogin.Username;
-
 				req.session.user = userToLogin._id;
 				req.session.Username = userToLogin.Username;
 				res.send({currentUser: userToLogin.Username, success: true});
