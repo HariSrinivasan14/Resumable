@@ -50,8 +50,15 @@ class App extends React.Component{
                         )}
                     />
 						<Route path="/" exact component={Home} {...this.props} app={this}/>
-						<Route path="/PostPage" component={PostPage} {...this.props} app={this}/>
-						<Route path="/ResumeView" component={ResumeView} {...this.props} app={this}/>
+						<Route path="/PostPage" component={PostPage} {...this.props} app={this}	/>
+						<Route path="/ResumeView" 
+							render={ props => (
+								<div className="app">
+								{ /* Different componenets rendered depending on if someone is logged in. */}
+									{this.state.currentUser ? <ResumeView {...props} app={this} /> : <SignUp {...props} app={this} />}
+								</div> 
+							)}
+						/>
 						<Route
 							path="/profile"
 							render={ props => (
