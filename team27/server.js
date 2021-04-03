@@ -105,8 +105,6 @@ app.use(express.static(path.join(__dirname, '/public')))
 
 app.get("/users/checkSession", (req, res) => {
 
-	console.log("logging user in session", req.body);
-	console.log("logging user in session", req.session);
     if (req.session.user) {
         res.send({ currentUser: req.session.Username });
     } else {
@@ -144,6 +142,17 @@ app.post('/loginUser', (req, res) => {
 		
 })
 
+app.get("/users/logout", (req, res) => {
+    console.log("logging user out......");
+    req.session.destroy(error => {
+        if (error) {
+            res.status(500).send(error);
+        } else {
+            res.send()
+        }
+    });
+});
+
 app.post('/addUser', (req, res) => {
 
 	// check mongoose connection established.
@@ -164,7 +173,9 @@ app.post('/addUser', (req, res) => {
 			})
 
 			newUser.save().then((result) => {
-				res.send({userFound: false});
+				req.session.user = result._id;
+				req.session.Username = result.Username;
+				res.send({Username:req.body.Username, userFound: false});
 			}).catch((error) => {
 				if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
 					res.status(500).send('Internal server error')
@@ -173,7 +184,7 @@ app.post('/addUser', (req, res) => {
 				}
 			})
 		}else{
-			res.send({userFound: true});
+			res.send({Username:null, userFound: true});
 		}
 	}).catch((error) => {
 		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
@@ -228,7 +239,6 @@ app.get('/getPost', (req, res) => {
 	}
 	
 	Post.find().then((temp) => {
-		// res.send(students) // just the array
 		res.send(temp)
 	})
 	.catch((error) => {
@@ -237,6 +247,19 @@ app.get('/getPost', (req, res) => {
 	})
 	
 })
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+    const goodPageRoutes = ["/", "/Login",  "/PostPage", "/ResumeView", "/Admin", "/Profile", "/highlight-feedback", "/Explore", "/SignUP"];
+    if (!goodPageRoutes.includes(req.url)) {
+        res.status(404);
+    }
+
+    // send index.html
+    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
+
 
 
 /*************************************************/

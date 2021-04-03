@@ -21,15 +21,8 @@ class App extends React.Component{
 	}
 		
 	state = {
-		currentUser: null
-	}
-	redirectUser(props){
-		if(this.state.currentUser === null){
-			return <Login {...props} app={this} />
-		}else{
-			console.log(<Explore {...props} app={this} />);
-			return <Explore {...props} app={this} />
-		}
+		currentUser: null,
+		adminCounter: 0
 	}
 	
 	render(){
@@ -39,27 +32,64 @@ class App extends React.Component{
                 <Switch>
 
                     <Route
-                        exact path={["/Login",  "/PostPage", "/ResumeView", "/Admin", "/profile", "/highlight-feedback"]}
+                        exact path="/Login"
                         render={ props => (
                             <div className="app">
                                 { /* Different componenets rendered depending on if someone is logged in. */}
-                                {!currentUser ? <Login {...props} app={this} /> : (currentUser === 'admin'? <Admin {...props} app={this} /> : <Explore {...props} app={this} />)}
+                                {!this.state.currentUser ? <Login {...props} app={this} /> : (this.state.currentUser === 'admin'? <Admin {...props} app={this} /> : <Explore {...props} app={this} />)}
                             </div>                   // ... spread operator - provides all of the props in the props object
                         )}
                     />
-
-
-
-						{/* https://github.com/csc309-winter-2021/react-express-authentication/blob/master/client/src/App.js */}
-
-
+					<Route
+                        exact path="/SignUp"
+                        render={ props => (
+							<div className="app">
+							{ /* Different componenets rendered depending on if someone is logged in. */}
+								{this.state.currentUser ? <Explore {...props} app={this} /> : <SignUp {...props} app={this} />}
+							</div> 
+                        )}
+                    />
 						<Route path="/" exact component={Home} {...this.props} app={this}/>
-						<Route path="/SignUp" component={SignUp} {...this.props} app={this}/>
 						<Route path="/PostPage" component={PostPage} {...this.props} app={this}/>
 						<Route path="/ResumeView" component={ResumeView} {...this.props} app={this}/>
-						<Route path="/profile" component={Profile} {...this.props} app={this}/>
-						<Route path="/highlight-feedback" component={HighlightFeedBack} {...this.props} app={this}/>
-						<Route path="/Explore" component={Explore} {...this.props} app={this}/>
+						<Route
+							path="/profile"
+							render={ props => (
+								<div className="app">
+								{ /* Different componenets rendered depending on if someone is logged in. */}
+									{this.state.currentUser ? <Profile {...props} app={this} /> : <Login {...props} app={this} />}
+								</div> 
+							)}
+                    	/>
+						<Route
+							path="/Admin"
+							render={ props => (
+								<div className="app">
+								{ /* Different componenets rendered depending on if someone is logged in. */}
+									{this.state.currentUser ? <Admin {...props} app={this} /> : <Login {...props} app={this} />}
+								</div> 
+							)}
+                    	/>
+
+						<Route 
+							path="/highlight-feedback" 
+							render={ props => (
+								<div className="app">
+								{ /* Different componenets rendered depending on if someone is logged in. */}
+									{this.state.currentUser ? <HighlightFeedBack {...props} app={this} /> : <Login {...props} app={this} />}
+								</div> 
+							)}
+						
+						/>
+						<Route
+							path="/Explore"
+							render={ props => (
+								<div className="app">
+								{ /* Different componenets rendered depending on if someone is logged in. */}
+									{this.state.currentUser ? <Explore {...props} app={this} /> : <Login {...props} app={this} />}
+								</div> 
+							)}
+                    	/>
 
                     { /* 404 if URL isn't expected. */}
                     <Route render={() => <div>404 Not found</div>} />

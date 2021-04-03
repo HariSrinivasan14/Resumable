@@ -21,11 +21,8 @@ export const newAccount = (account, signUp, app) => {
 		.then(json => {
 			if (json.userFound === false){
                 app.setState({
-                    currentUser: account.Username
+                    currentUser: json.Username
                 });
-				signUp.setState({
-					toggleUsername: 3 //made a new account so redirect the user
-				});
 				return;
 			}else{
                 signUp.setState({
@@ -63,16 +60,15 @@ export const loginAccount = (account, loginPage, app) => {
                 app.setState({
                     currentUser: json.currentUser
                 });
-				if(json.currentUser === 'admin'){
-					loginPage.setState({
-						toggleUsername: 4 // to redirct to admin page
-					});
-				}else{
-					loginPage.setState({
-						toggleUsername: 3 // to redirct to Explore page
-					});
-				}
-
+				// if(json.currentUser === 'admin'){
+				// 	loginPage.setState({
+				// 		toggleUsername: 4 // to redirct to admin page
+				// 	});
+				// }else{
+				// 	loginPage.setState({
+				// 		toggleUsername: 3 // to redirct to Explore page
+				// 	});
+				// }
 				return;
 			}else{
 				loginPage.setState({
@@ -104,4 +100,18 @@ export const checkUserSession = (app) => {
         .catch(error => {
             console.log(error);
         });
+};
+
+export const logoutUser = (app) => {
+    const url = `${API_HOST}/users/logout`;
+    console.log("logging out user", app)
+    fetch(url)
+        .then(res => {
+            app.setState({
+                currentUser: null,
+            });
+        })
+        .catch(error => {
+            console.log(error);
+    });
 };
