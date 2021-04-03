@@ -77,10 +77,11 @@ function GetPosts(user){
 }
 function Explore(props){
     var username = props.app.state.currentUser;
-    console.log(username)
+
     var user = {
         Username: username
     }
+    console.log(user.Username)
         // const history = useHistory();
         // history.push("/Explore");
 
