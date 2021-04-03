@@ -58,7 +58,6 @@ class SignUp extends React.Component{
 					Password: this.state.Password,
 				}
 				const {app} = this.props;
-				console.log(app);
 				newAccount(newAccountInfo, this, app);
 		} else{
 			if (this.state.Username === ""){

@@ -1,5 +1,6 @@
 
-const API_HOST = 'http://localhost:5000';
+import ENV from './../config.js'
+const API_HOST = ENV.api_host
 
 export const newAccount = (account, signUp, app) => {
     // Create our request constructor with all the parameters we need
@@ -55,20 +56,11 @@ export const loginAccount = (account, loginPage, app) => {
 			}
         })
 		.then(json => {
-			console.log(json);
+			console.log("login Account", json);
 			if (json.currentUser !== undefined){
                 app.setState({
                     currentUser: json.currentUser
                 });
-				// if(json.currentUser === 'admin'){
-				// 	loginPage.setState({
-				// 		toggleUsername: 4 // to redirct to admin page
-				// 	});
-				// }else{
-				// 	loginPage.setState({
-				// 		toggleUsername: 3 // to redirct to Explore page
-				// 	});
-				// }
 				return;
 			}else{
 				loginPage.setState({
@@ -84,24 +76,27 @@ export const loginAccount = (account, loginPage, app) => {
 
 export const checkUserSession = (app) => {
     const url = `${API_HOST}/users/checkSession`;
-    console.log("logging current user in react", app.state.currentUser);
-    fetch(url)
+    console.log("logging current user in react", ENV.use_frontend_test_user);
+
+    if(!ENV.use_frontend_test_user){
+        fetch(url)
 		.then(res => {
             if (res.status === 200) {
                 return res.json();
             }
         })
         .then(json => {
-           
-            
             if (json && json.currentUser) {
-                console.log("got here!!!!");
                 app.setState({ currentUser: json.currentUser });
             }
         })
         .catch(error => {
             console.log(error);
         });
+    }else{
+        app.setState({ currentUser: ENV.user });
+    }
+    
 };
 
 export const updateUserInfo = (website) => {

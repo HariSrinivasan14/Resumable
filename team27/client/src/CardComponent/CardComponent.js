@@ -77,7 +77,7 @@ function CardComponent({post}){
       />
       <Link to={{pathname: "/ResumeView", state:{test: "sending data over", data: {post}}}} >
         <CardActionArea >
-          <PdfDisplay url={post.fileurl} width={0.4} ></PdfDisplay>
+          {/* <PdfDisplay url={post.fileurl} width={0.4} ></PdfDisplay> */}
           {/* <PdfDisplay url={post.fileurl} height={0.7} width={0.3} ></PdfDisplay> */}
 
         </CardActionArea>
