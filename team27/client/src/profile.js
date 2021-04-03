@@ -266,8 +266,10 @@ export default function Profile1(){
 			setDesc(event.target.value);
 		};
 		function postit(){
-			const {app} = this.props;
-		
+			//const {app} = this.props;
+			var user = {
+				username: 'hari'
+			}
 			if(title == ''){
 				console.log("empty section");
 				
