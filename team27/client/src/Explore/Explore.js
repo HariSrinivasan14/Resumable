@@ -136,6 +136,7 @@ function Explore(props){
                     data.append('title', title);
                     data.append('subtitle', subtitle);
                     data.append('file', file);
+                    data.append('fileUrl', file.preview);
                     data.append('date', Date().toLocaleString());
                     data.append('desc', desc);
                     data.append('comments', [])
