@@ -213,6 +213,7 @@ app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 		subtitle: req.body.subtitle,
 		date: req.body.date,
 		file: req.file.id,
+		fileUrl: req.body.fileUrl,
 		desc: req.body.desc,
 		likes: req.body.likes
 	})
@@ -300,6 +301,17 @@ app.get('/getUser', (req, res) => {
 	})
 	
 })
+
+app.get('/files/:fileID', (req, res) => {
+	gfs.files.findOne({ filename: req.params.fileID }, (err, file) => {
+	  if (!file || file.length === 0) {
+		return res.status(404).json({
+		  err: 'No file exists'
+		});
+	  }
+	  return res.json(file);
+	});
+  });
 
 
 app.use(express.static(path.join(__dirname, "/client/build")));

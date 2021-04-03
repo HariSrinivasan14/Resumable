@@ -8,6 +8,7 @@ const postSchema = new mongoose.Schema({
     subtitle: String,
     date: String,
     file: mongoose.Schema.Types.ObjectId,
+    fileUrl: String,
     desc: String,
     likes: Number
 });

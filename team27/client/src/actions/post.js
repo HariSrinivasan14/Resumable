@@ -64,10 +64,6 @@ export const newPosti = (data) => {
         method: "POST",
         body: data,
     });
-  //   headers: {
-  //     Accept: "application/json, text/plain, */*",
-  //     "Content-Type": "application/json"
-  // }
 
     fetch(request)
         .then(res => {

@@ -128,8 +128,11 @@ function Explore(){
                     data.append('title', title);
                     data.append('subtitle', subtitle);
                     data.append('file', file);
+                    data.append('fileUrl', file.preview);
                     data.append('date', Date().toLocaleString());
                     data.append('desc', desc);
+
+                    console.log(file.preview);
     
                     newPosti(data);
 
