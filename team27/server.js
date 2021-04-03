@@ -166,6 +166,8 @@ app.post('/addUser', (req, res) => {
 	User.findOne({Username: req.body.Username}).then((foundUser) => {
 		if(!foundUser){
 			const newUser = new User({
+				dateOfBirth: "",
+				Program: "",
 				Username: req.body.Username,
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
@@ -209,11 +211,13 @@ app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 	// Create a new student using the Student mongoose model
 	const newPost = new Post({
 		Username: req.body.Username,
+		title: req.body.title,
 		subtitle: req.body.subtitle,
 		date: req.body.date,
 		file: req.file.id,
 		desc: req.body.desc,
-		likes: req.body.likes
+		likes: req.body.likes,
+		comments: []
 	})
 
 
@@ -227,6 +231,34 @@ app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 			res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
 		}
 	})
+
+})
+app.post('/addPost/:id', (req, res) => {
+	// log(req.body)
+
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}  
+
+	// Create a new student using the Student mongoose model
+	Post.findOne({_id:req.params.id}).then((p)=>{  
+        // add the requested reservation to the restaurant  
+        p.comments.push(req.body)  
+        p.save().then((rest)=> {  
+            res.send({  
+                    comment: rest.comments[rest.comments.length-1],  
+                    post: rest  
+                })  
+        }).catch((error) =>{  
+            res.status(500).send(error)  
+        })  
+  
+    }).catch((error)=>{  
+        res.status(500).send(error)  
+    })  
 
 })
 
@@ -247,6 +279,77 @@ app.get('/getPost', (req, res) => {
 	})
 	
 })
+app.get('/getPost/:id', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	
+	Post.findOne({_id: req.params.id}).then((temp) => {
+		// res.send(students) // just the array
+		res.send({comments: temp.comments})
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+
+app.put('/updateInfo', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+
+	console.log("anything")
+	let dateOfBirth= req.body.dateOfBirth
+	let Program= req.body.Program
+
+	User.findOne({Username: req.body.Username}).then((temp) => {
+		if (!temp) {  
+			res.status(404).send('Resource not found')  
+		} else {  
+		temp.dateOfBirth = dateOfBirth;
+		temp.Program = Program;
+	
+		temp.save().then((r) => {
+			res.send(r)
+		}).catch((error) => {
+			log(error)
+			res.status(500).send("Internal Server Error")
+		})
+		}
+	}).catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+	
+})
+app.get('/getUser', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	User.find().then((temp) => {
+
+		// res.send(students) // just the array
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
