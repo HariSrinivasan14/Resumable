@@ -11,7 +11,7 @@ const express = require('express')
 const app = express();
 
 // mongoose and mongo connection
-const { mongoose } = require('./db/mongoose')
+const { mongoose, mongoURI } = require('./db/mongoose')
 mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
 
 const cors = require('cors')
@@ -25,6 +25,12 @@ const { Post } = require('./models/post')
 // to validate object IDs
 const { ObjectID } = require('mongodb')
 
+// File upload/retreival from db using multer and GridFS
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const crypto = require('crypto');
+
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require('body-parser') 
 app.use(bodyParser.json())
@@ -33,6 +39,29 @@ app.use(bodyParser.json())
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
 	return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
+
+let gfs;
+const gfsCollectionName = 'uploads'
+
+// GridFS stream
+// Reference: https://github.com/aheckmann/gridfs-stream
+mongoose.connection.once('open', () => {
+  gfs = Grid(mongoose.connection.db, mongoose.mongo);
+  gfs.collection(gfsCollectionName);
+});
+
+// GridFS storage engine
+// Reference: https://github.com/devconcept/multer-gridfs-storage
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return {
+      filename: file.originalname,
+	  bucketName: gfsCollectionName
+    }
+  }
+});
+const gfsUpload = multer({ storage });
 
 
 const session = require("express-session");
@@ -155,7 +184,7 @@ app.post('/addUser', (req, res) => {
 	})
 })
 
-app.post('/addPost', (req, res) => {
+app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 	// log(req.body)
 
 	// check mongoose connection established.
@@ -164,13 +193,14 @@ app.post('/addPost', (req, res) => {
 		res.status(500).send('Internal server error')
 		return;
 	}  
+	console.log("ADD POST REQUEST", req);
 
 	// Create a new student using the Student mongoose model
 	const newPost = new Post({
 		Username: req.body.Username,
 		subtitle: req.body.subtitle,
 		date: req.body.date,
-		fileurl: req.body.fileurl,
+		file: req.file.id,
 		desc: req.body.desc,
 		likes: req.body.likes
 	})

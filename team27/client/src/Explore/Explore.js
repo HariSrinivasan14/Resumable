@@ -122,19 +122,16 @@ function Explore(){
                     setModalShow(false)
                     console.log(pdfjs.getDocument(file.preview))
 
-                    const np = {
-                        likes: 0,
-                        Username: user.username,
-                        title: title,
-                        subtitle: subtitle,
-                        // fileurl: pdfjs.getDocument(file.preview),
-                        fileurl: file.preview,
-                        date: Date().toLocaleString(),
-                        desc: desc
-                    }
-                    console.log(np)
+                    let data = new FormData()
+                    data.append('likes', 0);
+                    data.append('Username', user.username);
+                    data.append('title', title);
+                    data.append('subtitle', subtitle);
+                    data.append('file', file);
+                    data.append('date', Date().toLocaleString());
+                    data.append('desc', desc);
     
-                    newPosti(np);
+                    newPosti(data);
 
                 }
 
