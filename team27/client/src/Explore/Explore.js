@@ -57,12 +57,13 @@ function GetPosts(){
                         direction="column"
                         alignItems="center"
                         justify="flex-end">
-                            {got_posts.map((item,index)=>{
-                                return <Grid key={index} item xs = {12}>
+                            {got_posts.slice(0).reverse().map((item,index)=>{
+                                return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
                                             />
-                                        </Grid> 
+                                        </Grid>)
+                                         
                                 })}
                             </Grid>
                         )}
@@ -73,7 +74,7 @@ function GetPosts(){
 }
 function Explore(){
         var user = {
-            username: 'Parsa Monfared'
+            username: 'hari'
         }
         const [modalShow, setModalShow] = React.useState(false);
 
@@ -130,11 +131,15 @@ function Explore(){
                         // fileurl: pdfjs.getDocument(file.preview),
                         fileurl: file.preview,
                         date: Date().toLocaleString(),
-                        desc: desc
+                        desc: desc,
+                        comments: [{Username: "Jedd",
+                                    time: Date().toLocaleString(),
+                                    text: "work more on your resume"}]
                     }
                     console.log(np)
     
                     newPosti(np);
+                    window.location.reload(false);
 
                 }
 

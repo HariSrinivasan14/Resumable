@@ -38,7 +38,8 @@ function isMongoError(error) { // checks for first error returned by promise rej
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 
-
+// const multer = require("multer");
+// const upload = multer({dest: '/uploads/'});
 // for session
 app.use(
     session({
@@ -169,11 +170,13 @@ app.post('/addPost', (req, res) => {
 	// Create a new student using the Student mongoose model
 	const newPost = new Post({
 		Username: req.body.Username,
+		title: req.body.title,
 		subtitle: req.body.subtitle,
 		date: req.body.date,
 		fileurl: req.body.fileurl,
 		desc: req.body.desc,
-		likes: req.body.likes
+		likes: req.body.likes,
+		comments: []
 	})
 
 
@@ -189,6 +192,34 @@ app.post('/addPost', (req, res) => {
 	})
 
 })
+app.post('/addPost/:id', (req, res) => {
+	// log(req.body)
+
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}  
+
+	// Create a new student using the Student mongoose model
+	Post.findOne({_id:req.params.id}).then((p)=>{  
+        // add the requested reservation to the restaurant  
+        p.comments.push(req.body)  
+        p.save().then((rest)=> {  
+            res.send({  
+                    comment: rest.comments[rest.comments.length-1],  
+                    post: rest  
+                })  
+        }).catch((error) =>{  
+            res.status(500).send(error)  
+        })  
+  
+    }).catch((error)=>{  
+        res.status(500).send(error)  
+    })  
+
+})
 
 app.get('/getPost', (req, res) => {
 	
@@ -201,6 +232,24 @@ app.get('/getPost', (req, res) => {
 	Post.find().then((temp) => {
 		// res.send(students) // just the array
 		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+app.get('/getPost/:id', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	
+	Post.findOne({_id: req.params.id}).then((temp) => {
+		// res.send(students) // just the array
+		res.send({comments: temp.comments})
 	})
 	.catch((error) => {
 		log(error)
