@@ -48,7 +48,6 @@ class SignUp extends React.Component{
 	signUpUser = (event) => {
 		
 		// make a get request to database and check whether an account in the database has the same email as one that was inputted by the user
-		this.state.bClicked = true;
 		if(this.state.Username !== '' && this.state.firstName !== '' && this.state.lastName !== '' && this.state.Password !== ''){
 			
 			// make a post request to the database to create a new entry for the new user
@@ -58,7 +57,9 @@ class SignUp extends React.Component{
 					lastName: this.state.lastName,
 					Password: this.state.Password,
 				}
-				newAccount(newAccountInfo, this);
+				const {app} = this.props;
+				console.log(app);
+				newAccount(newAccountInfo, this, app);
 		} else{
 			if (this.state.Username === ""){
 				this.setState({

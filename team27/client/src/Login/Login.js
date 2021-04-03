@@ -53,7 +53,8 @@ class Login extends React.Component{
 					Username: this.state.Username,
 					Password: this.state.Password,
 			}
-			loginAccount(newAccountInfo, this);
+			const {app} = this.props;
+			loginAccount(newAccountInfo, this, app);
 			// if(this.state.Username === 'admin' && this.state.Password === 'admin'){
 			
 				// console.log("going to admin");

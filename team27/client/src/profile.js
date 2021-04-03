@@ -190,7 +190,7 @@ export default function Profile1(){
 
 	function postit(){
 		setPost(true);
-	   setModalShow(false);
+	    setModalShow(false);
 	   
 	}
 	function afterUpdate(){

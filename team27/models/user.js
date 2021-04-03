@@ -40,7 +40,7 @@ userSchema.statics.findByUsernamePassword = function(username, password) {
 	// First find the user by their email
 	return User.findOne({ Username: username }).then((user) => {
 		if (!user) {
-			return Promise.reject()  // a rejected promise
+			return Promise.resolve(null)  // a rejected promise
 		}
 		// if the user exists, make sure their password is correct
 		return new Promise((resolve, reject) => {
