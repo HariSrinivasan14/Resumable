@@ -32,7 +32,7 @@ class App extends React.Component{
                 <Switch>
 
                     <Route
-                        exact path="/Login"
+                        exact path={["/Login", "/Explore"]}
                         render={ props => (
                             <div className="app">
                                 { /* Different componenets rendered depending on if someone is logged in. */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react'
+import { useHistory } from "react-router"
 import "./Explore.css"
 import CardComponent from '../CardComponent/CardComponent';
 import { Grid } from "@material-ui/core"
@@ -72,9 +73,14 @@ function GetPosts(){
     );
     
 }
-function Explore(){
+function Explore(props){
+        // const history = useHistory();
+        // history.push("/Explore");
+        var username = props.app.state.currentUser;
+        console.log(username)
+        // props.history.push("/Explore")
         var user = {
-            username: 'hari'
+            username: username
         }
         const [modalShow, setModalShow] = React.useState(false);
 
