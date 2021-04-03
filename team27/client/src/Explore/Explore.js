@@ -41,7 +41,7 @@ const inputBoxTheme = createMuiTheme({
 	}
 });
 
-function GetPosts(){
+function GetPosts(user){
     const got_posts = resource.posts.read();
     console.log(got_posts)
     return(
@@ -59,9 +59,11 @@ function GetPosts(){
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
+                                if(item.Username != user.Username)
                                 return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
+                                                user = {user.Username}
                                             />
                                         </Grid>)
                                          
@@ -74,14 +76,16 @@ function GetPosts(){
     
 }
 function Explore(props){
+    var username = props.app.state.currentUser;
+    console.log(username)
+    var user = {
+        Username: username
+    }
         // const history = useHistory();
         // history.push("/Explore");
-        var username = props.app.state.currentUser;
-        console.log(username)
+
         // props.history.push("/Explore")
-        var user = {
-            username: username
-        }
+
         const [modalShow, setModalShow] = React.useState(false);
 
 
@@ -239,7 +243,7 @@ function Explore(props){
                     onHide={() => setModalShow(false)}
                 />
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
-                    <GetPosts/>
+                    <GetPosts user={user}/>
                 </Suspense>
                    
                 

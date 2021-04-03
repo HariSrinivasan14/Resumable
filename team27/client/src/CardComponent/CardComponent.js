@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function CardComponent({post}){
+function CardComponent({post, user}){
   const classes = useStyles();
   // const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
@@ -72,7 +72,7 @@ function CardComponent({post}){
         title= {post.title}
         subheader= {post.subtitle}
       />
-      <Link to={{pathname: "/ResumeView", state:{test: "sending data over", data: {post}}}} >
+      <Link to={{pathname: "/ResumeView", state:{user: user, data: {post}}}} >
         <CardActionArea >
           {/* <CardMedia
             className={classes.media}

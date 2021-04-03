@@ -42,12 +42,12 @@ const App = ({ children }) => (
           // cvc.map((pst)=>
             
           // );
-          cvc.slice(0).reverse().map((item,index)=>{
-            if(item._id = post._id)
-            return (item.comments.map((item,index)=>{
+          cvc.slice(0).reverse().map((i,index)=>{
+            if(i._id == post._id)
+            return (i.comments.map((item,index)=>{
               return <Comment key={index}>
                   <Comment.Avatar src={<Avatar aria-label="user" >
-                                      {item.Username.charAt(0)}
+                                      {i.Username.charAt(0)}
                                       </Avatar>} />
                   <Comment.Content>
                   <Comment.Author as='a'>{item.Username}</Comment.Author>
@@ -75,7 +75,7 @@ function ResumeView(props) {
 
     
     post = props.location.state.data.post
-
+    var user = props.location.state.user
     const [comment, setComment] = React.useState(comments);
     const [commentText, setCommentText] = React.useState("");
     const handleCommentChange = (event) => {
@@ -115,16 +115,11 @@ function ResumeView(props) {
 
 
           <Form onSubmit={(e)=>{
-                let c =   [{
-                    author:"User",
-                    time:"today",
-                    text: commentText
-                }, ...comment]
                 
-                setComment(c)
-                console.log(c)
+                // setComment(c)
+
                 let nComment = {
-                  Username: "hari",
+                  Username: user,
                   text: commentText,
                   time: "today"
               };
