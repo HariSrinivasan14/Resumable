@@ -226,7 +226,7 @@ function Explore(props){
 
     return(
             <div className="feed">
-                <NavExplore/>
+                <NavExplore app = {props.app}/>
                 {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
                     Create a Post
                 </Button> */}

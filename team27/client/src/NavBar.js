@@ -4,6 +4,7 @@ import logo from './images/Logo.png'
 import {Link} from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import {Navbar, Nav, NavDropdown, Button, Form, FormControl} from 'react-bootstrap'
+import {logoutUser} from './actions/user.js';
 
 class NavHome extends React.Component{
 	render(){
@@ -59,6 +60,10 @@ class NavSignUp extends React.Component{
 }
 
 class NavExplore extends React.Component{
+	handleChangeLogoutUser = (event) => {
+		console.log("logging out");
+		logoutUser(this.props.app);
+	}
 	render(){
 		return(
 				<Navbar bg="dark" variant="dark">
@@ -80,7 +85,7 @@ class NavExplore extends React.Component{
 						<FormControl type="text" placeholder="Search" className="mr-sm-2" />
 						<Button variant="outline-info">Search</Button>
 					</Form> */}
-					<Button href="/Login" variant="outline-info">Logout</Button>
+					<Button onClick={this.handleChangeLogoutUser} variant="outline-info">Logout</Button>
 				</Navbar>
 		);
 	}
