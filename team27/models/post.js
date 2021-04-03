@@ -3,14 +3,21 @@
 
 const mongoose = require('mongoose');
 
+const CommentSchema = new mongoose.Schema({
+   Username: String,
+   text: String,
+   time: String
+});
 const postSchema = new mongoose.Schema({
     Username: String,
+    title: String,
     subtitle: String,
     date: String,
     file: mongoose.Schema.Types.ObjectId,
     fileUrl: String,
     desc: String,
-    likes: Number
+    likes: Number,
+    comments: [CommentSchema]
 });
 
 

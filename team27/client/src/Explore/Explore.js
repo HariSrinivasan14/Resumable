@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react'
+import { useHistory } from "react-router"
 import "./Explore.css"
 import CardComponent from '../CardComponent/CardComponent';
 import { Grid } from "@material-ui/core"
@@ -57,12 +58,13 @@ function GetPosts(){
                         direction="column"
                         alignItems="center"
                         justify="flex-end">
-                            {got_posts.map((item,index)=>{
-                                return <Grid key={index} item xs = {12}>
+                            {got_posts.slice(0).reverse().map((item,index)=>{
+                                return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
                                             />
-                                        </Grid> 
+                                        </Grid>)
+                                         
                                 })}
                             </Grid>
                         )}
@@ -71,9 +73,14 @@ function GetPosts(){
     );
     
 }
-function Explore(){
+function Explore(props){
+        // const history = useHistory();
+        // history.push("/Explore");
+        var username = props.app.state.currentUser;
+        console.log(username)
+        // props.history.push("/Explore")
         var user = {
-            username: 'hari'
+            username: username
         }
         const [modalShow, setModalShow] = React.useState(false);
 
@@ -122,6 +129,7 @@ function Explore(){
                     setModalShow(false)
                     console.log(pdfjs.getDocument(file.preview))
 
+
                     let data = new FormData()
                     data.append('likes', 0);
                     data.append('Username', user.username);
@@ -131,10 +139,11 @@ function Explore(){
                     data.append('fileUrl', file.preview);
                     data.append('date', Date().toLocaleString());
                     data.append('desc', desc);
-
-                    console.log(file.preview);
+                    data.append('comments', [])
     
                     newPosti(data);
+
+                    window.location.reload(false);
 
                 }
 
