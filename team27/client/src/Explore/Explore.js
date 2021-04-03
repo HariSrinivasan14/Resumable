@@ -140,6 +140,7 @@ function Explore(props){
                     data.append('title', title);
                     data.append('subtitle', subtitle);
                     data.append('file', file);
+                    data.append('fileUrl', file.preview);
                     data.append('date', Date().toLocaleString());
                     data.append('desc', desc);
                     data.append('comments', [])
@@ -230,7 +231,7 @@ function Explore(props){
 
     return(
             <div className="feed">
-                <NavExplore/>
+                <NavExplore app = {props.app}/>
                 {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
                     Create a Post
                 </Button> */}
