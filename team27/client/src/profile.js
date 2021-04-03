@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,  Suspense} from 'react';
 import './profile.css';
 
 import { styled, withTheme } from '@material-ui/core/styles';
@@ -22,31 +22,37 @@ import resume3 from './images/resume_emma.png'
 import "./styles.css";
 import Modal from 'react-bootstrap/Modal'
 import PostPage from './Postpage/PostPage'
+import UpdateInfo from './updateInfo/updateInfo'
 import newPDF from './images/sampleResume.pdf'
+import {newPosti, fetchPostsData} from './actions/post.js';
+import {updateUserInfo, getUser} from './actions/user.js';
+import {TextField, OutlinedInput, Box} from '@material-ui/core';
+import Dropzone from './Dropzone/Dropzone';
+import { Document, Page, pdfjs } from 'react-pdf';
 
-let posts = [{
-	Username: "Samantha Jansen",
-	title: "My Resume",
-	subtitle: "for Product Manager at Amazon",
-	date: "Septermber 23, 2020",
-	imagesrc: './images/resume_samantha.jpg',
-	image: resume1,
-	desc: " help me to fix my resume please!",
-	likes: 10
+// let posts = [{
+// 	Username: "Samantha Jansen",
+// 	title: "My Resume",
+// 	subtitle: "for Product Manager at Amazon",
+// 	date: "Septermber 23, 2020",
+// 	imagesrc: './images/resume_samantha.jpg',
+// 	image: resume1,
+// 	desc: " help me to fix my resume please!",
+// 	likes: 10
 	
-},
-{
-	Username: "Angela Wilkinson",
-	title: "Recent Resume",
-	subtitle: "for Administrative Assistant",
-	date: "october 11, 2020",
-	imagesrc: './images/resume_angela.webp',
-	image: resume2,
-	desc: "help me to improve my resume!",
-	likes: 9
-},
+// },
+// {
+// 	Username: "Angela Wilkinson",
+// 	title: "Recent Resume",
+// 	subtitle: "for Administrative Assistant",
+// 	date: "october 11, 2020",
+// 	imagesrc: './images/resume_angela.webp',
+// 	image: resume2,
+// 	desc: "help me to improve my resume!",
+// 	likes: 9
+// },
 
-] 
+// ] 
 
   const GreenButton_explore = styled(Button)({
 	backgroundColor: '#71A89E',
@@ -55,7 +61,7 @@ let posts = [{
 	marginTop: '15px',
 	color: "white",
 	Height: '48px',
-	minWidth: '225px',
+	minWidth: '150px',
 	textTransform: 'capitalize',
 	"&:hover": {
 		backgroundColor: "#009688",
@@ -129,16 +135,66 @@ function importAll(r) {
     return images;
   }
 const images = importAll(require.context('./images', false, /\.(gif|jpe?g|svg|png)$/));
+const resource = fetchPostsData();
+function GetPosts(){
+    const got_posts = resource.posts.read();
+    console.log(got_posts)
+    return(
+        <div className="oldPosts">
+			
+            {got_posts.length === 0 ?(
+                <h5 className="posts_empty">No Posts Yet</h5>
+            ) :
+            (
+               
+                    <Grid container 
+                        spacing={10}
+                        p = {1}
+                        direction="column"
+                        alignItems="center"
+                        justify="flex-end">
+                            {got_posts.map((item,index)=>{
+								if(item.Username == "hari")
+                                return(
+								
+								
+									<Grid key={index} item xs = {12}>
+											
+											
+                                            <CardComponent 
+                                                post= {item}
+                                            />
+											
+                                        </Grid>
+								
+								)
+							})}
+                            </Grid>
+                        )}
 
+        </div>
+    );
+    
+}
 export default function Profile1(){
+	
 	const classes = useStyles2();
 	const [modalShow, setModalShow] = React.useState(false);
+	const [update, setUpdate] = React.useState(false);
 	const [post, setPost] = React.useState(false);
+
+
+
+    
+
 
 	function postit(){
 		setPost(true);
 	   setModalShow(false);
 	   
+	}
+	function afterUpdate(){
+		setUpdate(false);
 	}
 	function afterPost(){
 		return(
@@ -147,6 +203,15 @@ export default function Profile1(){
 				<SinglePagePDFViewer pdf={newPDF} />
 		 	</div>
 		   )
+	}
+	function updateInfo1(){
+	
+	}
+
+	function userInfo(){
+	
+		let a = getUser();
+		console.log(a)
 	}
 	function MyVerticallyCenteredModal(props) {
 
@@ -159,7 +224,7 @@ export default function Profile1(){
 		  >
 			<Modal.Header closeButton>
 			  <Modal.Title id="contained-modal-title-vcenter">
-				Post Your Resume
+				post resume
 			  </Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
@@ -172,12 +237,119 @@ export default function Profile1(){
 				afterPost();
 
 				}} >
-				Post
+				post
 			  </Button>
 			</Modal.Footer>
 		  </Modal>
 		);
 	  }
+
+
+	  function UpdateInterface(props) {
+		const [file, setFile] = React.useState('');
+		const handleFileChange = (f) => {
+			console.log(f);
+			setFile(f);
+		};
+		const [title, setTitle] = React.useState('');
+		const handleTitleChange = (event) => {
+			setTitle(event.target.value);
+		};
+		
+		const [subtitle, setSubtitle] = React.useState('');
+		const handleSubtitleChange = (event) => {
+			setSubtitle(event.target.value);
+		};
+	
+		const [desc, setDesc] = React.useState('');
+		const handleDescChange = (event) => {
+			setDesc(event.target.value);
+		};
+		function postit(){
+			// const {app} = this.props;
+			if(title == ''){
+				console.log("empty section");
+				
+			}else{
+				setModalShow(false)
+				const np = {
+					
+					Username: user.username,
+					Program: title,
+					dateOfBirth: subtitle,
+					
+					
+				}
+				console.log(np)
+			
+
+				updateUserInfo(np);
+
+			}
+
+			
+		}
+		return (
+		  <Modal 
+			{...props}
+			size='xl'
+			aria-labelledby="contained-modal-title-vcenter"
+			centered
+		  >
+			<Modal.Header closeButton>
+			  <Modal.Title id="contained-modal-title-vcenter">
+				update info
+			  </Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+			<div>
+		
+		{/* <NavExplore /> */}
+		{/* <div className = 'postResume'>
+			<Dropzone />
+		</div> */}
+
+		<div className='Title_input'>     
+
+			<OutlinedInput
+				id="outlined-name"
+				name="Program*"
+				value={title}
+				placeholder="Program"
+				onChange={handleTitleChange}
+				variant="outlined"/>    
+		   
+
+		</div>
+		<div className='Subtitle_input'>
+			<Box width={500}>
+				<TextField
+					id="subtitle-textarea"
+					name="Date of Birth"
+					value={subtitle}
+					placeholder="Date of Birth"
+					onChange={handleSubtitleChange}
+					variant="outlined"
+					fullWidth
+				/>
+			</Box>
+
+		</div>
+		
+
+	</div>
+			</Modal.Body>
+			<Modal.Footer>
+			  <Button color= 'secondary'  onClick={props.onHide}>Close</Button>
+			  <Button color= "primary"  onClick={postit}>
+				update
+			  </Button>
+			</Modal.Footer>
+		  </Modal>
+		);
+	  }
+
+	  
 
 		return(
 			
@@ -190,10 +362,9 @@ export default function Profile1(){
 						<Card className={classes.card}>
 							<div className={classes.cardDetails}>
 								<CardContent>
-									<Typography className={classes.typography}>First Name, Last Name</Typography>
+									<Typography className={classes.typography}>Hari</Typography>
 									<Typography className={classes.typography}>Birthday</Typography>
-									<Typography className={classes.typography}>Contacts</Typography>
-									<Typography className={classes.typography}>Occupation</Typography>
+									<Typography className={classes.typography}>hari@gmail.com</Typography>
 									<Typography className={classes.typography}>Major/Program</Typography>
 									<Typography className={classes.typography}>About</Typography>
 									<Typography className={classes.typography} color="primary">More Info</Typography>
@@ -206,31 +377,25 @@ export default function Profile1(){
 				<buttonGroup>
 				<GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
 			        {'upload resume'}
-		        </GreenButton_explore>		
+		        </GreenButton_explore>	
+				<GreenButton_explore variant="contained" onClick={() => setUpdate(true)}>
+			        {'update info'}
+		        </GreenButton_explore>	
 				</buttonGroup>
+
 				<MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 />
+
+				<UpdateInterface
+                    show={update}
+                    onHide={() => setUpdate(false)}
+                />
 				</div>
-				<div className="oldPosts">
-					<h4>Old Posts</h4>
-                    <img src={images['images/landingImage.png']}/>
-                    <Grid container 
-                        spacing={10}
-                        p = {1}
-                        direction="column"
-                        alignItems="center"
-                        justify="flex-end">
-                                 {posts.map((item,index)=>{
-                                    return <Grid item xs = {12}>
-                                                <CardComponent 
-                                                post= {item}
-                                                />
-                                            </Grid> 
-                                })}
-                    </Grid> 
-				</div>
+				<Suspense fallback={<h2>Loading Posts...</h2>}>
+                    <GetPosts/>
+                </Suspense>
 					{post ? afterPost(): null}
 				</div>
 			

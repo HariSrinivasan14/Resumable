@@ -73,7 +73,7 @@ function GetPosts(){
 }
 function Explore(){
         var user = {
-            username: 'Parsa Monfared'
+            username: 'hari'
         }
         const [modalShow, setModalShow] = React.useState(false);
 

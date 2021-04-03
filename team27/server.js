@@ -38,7 +38,6 @@ function isMongoError(error) { // checks for first error returned by promise rej
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 
-
 // for session
 app.use(
     session({
@@ -46,11 +45,11 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 6000,
+            expires: 600000,
             httpOnly: true
         },
         // store the sessions on the database in production
-        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net'})
+        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'})
     })
 );
 
@@ -99,7 +98,7 @@ app.post('/loginUser', (req, res) => {
         .then(userToLogin => {
 			console.log("made it here no server error");
 			if(userToLogin !== null){
-				console.log(userToLogin.Username);
+				loggedInUser = userToLogin.Username;
 				req.session.user = userToLogin._id;
 				req.session.Username = userToLogin.Username;
 				res.send({currentUser: userToLogin.Username, success: true});
@@ -129,6 +128,8 @@ app.post('/addUser', (req, res) => {
 	User.findOne({Username: req.body.Username}).then((foundUser) => {
 		if(!foundUser){
 			const newUser = new User({
+				dateOfBirth: "",
+				Program: "",
 				Username: req.body.Username,
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
@@ -208,6 +209,60 @@ app.get('/getPost', (req, res) => {
 	})
 	
 })
+
+app.put('/updateInfo', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+
+	console.log("anything")
+	let dateOfBirth= req.body.dateOfBirth
+	let Program= req.body.Program
+
+	User.findOne({Username: req.body.Username}).then((temp) => {
+		if (!temp) {  
+			res.status(404).send('Resource not found')  
+		} else {  
+		temp.dateOfBirth = dateOfBirth;
+		temp.Program = Program;
+	
+		temp.save().then((r) => {
+			res.send(r)
+		}).catch((error) => {
+			log(error)
+			res.status(500).send("Internal Server Error")
+		})
+		}
+	}).catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+	
+})
+app.get('/getUser', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	User.find().then((temp) => {
+
+		// res.send(students) // just the array
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+
+
 
 
 /*************************************************/

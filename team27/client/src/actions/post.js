@@ -80,3 +80,30 @@ export const newPosti = (post) => {
             console.log(error);
         });
 };
+
+
+
+export const fetchPostsByUsername = (posts) => {
+//   let posts = []
+const request = `${API_HOST}/getPostByUsername`
+console.log("Fetch Posts...");
+fetch(request)
+    .then(res => {
+        if (res.status === 200) {
+            return res.json();
+        } else {
+            alert("Could not get posts");
+        }
+    })
+    .then(json => {
+        // the resolved promise with the JSON body
+        // post = json[0];
+        console.log(json)
+        posts = json;
+        console.log(json)
+        return json;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+  }
