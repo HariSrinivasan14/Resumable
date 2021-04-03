@@ -92,6 +92,8 @@ export const checkUserSession = (app) => {
             }
         })
         .then(json => {
+           
+            
             if (json && json.currentUser) {
                 console.log("got here!!!!");
                 app.setState({ currentUser: json.currentUser });
@@ -102,6 +104,45 @@ export const checkUserSession = (app) => {
         });
 };
 
+export const updateUserInfo = (website) => {
+
+    const request = new Request(`${API_HOST}/updateInfo`, {
+        method: "put",
+        body: JSON.stringify(website),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+    fetch(request)
+		.then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .catch(error => {
+            console.log("error PUT");
+            console.log(error);
+        });
+};
+
+export const getUser = () => {
+
+    const request = new Request(`${API_HOST}/getUser`, {
+        method: "get"
+       
+    });
+    fetch(request)
+		.then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .catch(error => {
+            console.log("error PUT");
+            console.log(error);
+        });
+    }
 export const logoutUser = (app) => {
     const url = `${API_HOST}/users/logout`;
     console.log("logging out user", app)

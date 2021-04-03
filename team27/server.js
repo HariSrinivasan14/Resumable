@@ -67,8 +67,7 @@ const gfsUpload = multer({ storage });
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 
-// const multer = require("multer");
-// const upload = multer({dest: '/uploads/'});
+
 // for session
 app.use(
     session({
@@ -167,6 +166,8 @@ app.post('/addUser', (req, res) => {
 	User.findOne({Username: req.body.Username}).then((foundUser) => {
 		if(!foundUser){
 			const newUser = new User({
+				dateOfBirth: "",
+				Program: "",
 				Username: req.body.Username,
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
@@ -296,6 +297,59 @@ app.get('/getPost/:id', (req, res) => {
 	})
 	
 })
+
+app.put('/updateInfo', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+
+	console.log("anything")
+	let dateOfBirth= req.body.dateOfBirth
+	let Program= req.body.Program
+
+	User.findOne({Username: req.body.Username}).then((temp) => {
+		if (!temp) {  
+			res.status(404).send('Resource not found')  
+		} else {  
+		temp.dateOfBirth = dateOfBirth;
+		temp.Program = Program;
+	
+		temp.save().then((r) => {
+			res.send(r)
+		}).catch((error) => {
+			log(error)
+			res.status(500).send("Internal Server Error")
+		})
+		}
+	}).catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+	
+})
+app.get('/getUser', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	User.find().then((temp) => {
+
+		// res.send(students) // just the array
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
