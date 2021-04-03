@@ -11,7 +11,7 @@ const express = require('express')
 const app = express();
 
 // mongoose and mongo connection
-const { mongoose } = require('./db/mongoose')
+const { mongoose, mongoURI } = require('./db/mongoose')
 mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
 
 const cors = require('cors')
@@ -25,6 +25,12 @@ const { Post } = require('./models/post')
 // to validate object IDs
 const { ObjectID } = require('mongodb')
 
+// File upload/retreival from db using multer and GridFS
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const crypto = require('crypto');
+
 // body-parser: middleware for parsing HTTP JSON body into a usable object
 const bodyParser = require('body-parser') 
 app.use(bodyParser.json())
@@ -33,6 +39,29 @@ app.use(bodyParser.json())
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
 	return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
+
+let gfs;
+const gfsCollectionName = 'uploads'
+
+// GridFS stream
+// Reference: https://github.com/aheckmann/gridfs-stream
+mongoose.connection.once('open', () => {
+  gfs = Grid(mongoose.connection.db, mongoose.mongo);
+  gfs.collection(gfsCollectionName);
+});
+
+// GridFS storage engine
+// Reference: https://github.com/devconcept/multer-gridfs-storage
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return {
+      filename: file.originalname,
+	  bucketName: gfsCollectionName
+    }
+  }
+});
+const gfsUpload = multer({ storage });
 
 
 const session = require("express-session");
@@ -47,11 +76,11 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 6000,
+            expires: 600000,
             httpOnly: true
         },
         // store the sessions on the database in production
-        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net'})
+        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'})
     })
 );
 
@@ -76,6 +105,7 @@ const authenticate = (req, res, next) => {
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.get("/users/checkSession", (req, res) => {
+
     if (req.session.user) {
         res.send({ currentUser: req.session.Username });
     } else {
@@ -98,9 +128,7 @@ app.post('/loginUser', (req, res) => {
 	
 	User.findByUsernamePassword(username, password)
         .then(userToLogin => {
-			console.log("made it here no server error");
 			if(userToLogin !== null){
-				console.log(userToLogin.Username);
 				req.session.user = userToLogin._id;
 				req.session.Username = userToLogin.Username;
 				res.send({currentUser: userToLogin.Username, success: true});
@@ -108,14 +136,23 @@ app.post('/loginUser', (req, res) => {
 				res.send({currentUser: undefined, success: false});
 			}
         })
-        .catch(error => {
-			console.log("made it here server error", error);
-			
+        .catch(error => {			
             res.status(400).send()
 		});
 		
 		
 })
+
+app.get("/users/logout", (req, res) => {
+    console.log("logging user out......");
+    req.session.destroy(error => {
+        if (error) {
+            res.status(500).send(error);
+        } else {
+            res.send()
+        }
+    });
+});
 
 app.post('/addUser', (req, res) => {
 
@@ -137,7 +174,9 @@ app.post('/addUser', (req, res) => {
 			})
 
 			newUser.save().then((result) => {
-				res.status(404).send('User added');
+				req.session.user = result._id;
+				req.session.Username = result.Username;
+				res.send({Username:req.body.Username, userFound: false});
 			}).catch((error) => {
 				if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
 					res.status(500).send('Internal server error')
@@ -146,7 +185,7 @@ app.post('/addUser', (req, res) => {
 				}
 			})
 		}else{
-			res.send({userFound: true});
+			res.send({Username:null, userFound: true});
 		}
 	}).catch((error) => {
 		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
@@ -157,7 +196,7 @@ app.post('/addUser', (req, res) => {
 	})
 })
 
-app.post('/addPost', (req, res) => {
+app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 	// log(req.body)
 
 	// check mongoose connection established.
@@ -166,6 +205,7 @@ app.post('/addPost', (req, res) => {
 		res.status(500).send('Internal server error')
 		return;
 	}  
+	console.log("ADD POST REQUEST", req);
 
 	// Create a new student using the Student mongoose model
 	const newPost = new Post({
@@ -173,7 +213,7 @@ app.post('/addPost', (req, res) => {
 		title: req.body.title,
 		subtitle: req.body.subtitle,
 		date: req.body.date,
-		fileurl: req.body.fileurl,
+		file: req.file.id,
 		desc: req.body.desc,
 		likes: req.body.likes,
 		comments: []
@@ -230,7 +270,6 @@ app.get('/getPost', (req, res) => {
 	}
 	
 	Post.find().then((temp) => {
-		// res.send(students) // just the array
 		res.send(temp)
 	})
 	.catch((error) => {
@@ -257,6 +296,19 @@ app.get('/getPost/:id', (req, res) => {
 	})
 	
 })
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+    const goodPageRoutes = ["/", "/Login",  "/PostPage", "/ResumeView", "/Admin", "/Profile", "/highlight-feedback", "/Explore", "/SignUP"];
+    if (!goodPageRoutes.includes(req.url)) {
+        res.status(404);
+    }
+
+    // send index.html
+    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
+
 
 
 /*************************************************/

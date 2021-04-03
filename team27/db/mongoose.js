@@ -14,4 +14,4 @@ mongoose.connect(mongoURI,
 	})
 ;
 
-module.exports = { mongoose }  // Export the active connection.
+module.exports = { mongoose, mongoURI }  // Export the active connection.

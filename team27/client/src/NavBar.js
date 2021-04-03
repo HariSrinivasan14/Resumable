@@ -82,7 +82,6 @@ class NavExplore extends React.Component{
 					</Form> */}
 					<Button href="/Login" variant="outline-info">Logout</Button>
 				</Navbar>
-
 		);
 	}
 }

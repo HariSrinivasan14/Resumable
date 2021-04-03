@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema({
     title: String,
     subtitle: String,
     date: String,
-    fileurl: String,
+    file: mongoose.Schema.Types.ObjectId,
     desc: String,
     likes: Number,
     comments: [CommentSchema]

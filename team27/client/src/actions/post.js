@@ -70,17 +70,16 @@ function fetchPosts() {
   });
 }
 
-
-export const newPosti = (post) => {
+export const newPosti = (data) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/addPost`, {
-        method: "post",
-        body: JSON.stringify(post),
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
+        method: "POST",
+        body: data,
     });
+  //   headers: {
+  //     Accept: "application/json, text/plain, */*",
+  //     "Content-Type": "application/json"
+  // }
 
     fetch(request)
         .then(res => {
