@@ -100,15 +100,16 @@ import { Document, Page, pdfjs } from 'react-pdf';
 	
 	  card: {
 		display: 'flex',
-		width: 200,
+		width: 400,
 		marginTop: 250,
-		marginLeft: 50,
+		marginLeft: 25,
 		background: 'linear-gradient(to top, #818b94, #808c9a, #7f8d9f, #808da5, #828daa, #818aa9, #8087a8, #8084a7, #7b7ea0, #767899, #717393, #6c6d8c)',
 		padding: '0 30px',
 	  },
 	  cardDetails: {
-		width: 120,
 		flex: 1,
+		width: 350,
+	
 	  },
 	  cardMedia: {
 		width: 180,
@@ -136,9 +137,13 @@ function importAll(r) {
     return images;
   }
 const images = importAll(require.context('./images', false, /\.(gif|jpe?g|svg|png)$/));
-const resource = fetchPostsData();
-function GetPosts(){
+
+
+export default function Profile1(propss){
+	const resource = fetchPostsData();
+	function GetPosts(){
     const got_posts = resource.posts.read();
+	const user = propss.app.state.currentUser;
     return(
         <div className="oldPosts">
 			
@@ -154,7 +159,7 @@ function GetPosts(){
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.map((item,index)=>{
-								if(item.Username == "hari")
+								if(item.Username == user)
                                 return(
 								
 								
@@ -176,9 +181,6 @@ function GetPosts(){
     );
     
 }
-
-export default function Profile1(propss){
-	
 	const resour = fetchUsersData();
 	function GetUsers(){ 
 		const classes = useStyles2();
@@ -207,7 +209,7 @@ export default function Profile1(propss){
 			<div>
 			
 				
-			<div className="oldPosts">
+			<div>
 				
 				{got_posts.length === 0 ?(
 					<h5 className="posts_empty">No Posts Yet</h5>
@@ -247,11 +249,11 @@ export default function Profile1(propss){
 			<Card className={classes.card}>
 								<div className={classes.cardDetails}>
 									<CardContent>
-										<Typography className={classes.typography}>{username}</Typography>
-										<Typography className={classes.typography}>{firstName}</Typography>
-										<Typography className={classes.typography}>{lastName}</Typography>
-										<Typography className={classes.typography}>{birthday}</Typography>
-										<Typography className={classes.typography}>{program}</Typography>
+										<Typography className={classes.typography}>Username: {username}</Typography>
+										<Typography className={classes.typography}>First Name: {firstName}</Typography>
+										<Typography className={classes.typography}>Last Name: {lastName}</Typography>
+										<Typography className={classes.typography}>Date of Birth: {birthday}</Typography>
+										<Typography className={classes.typography}>Program: {program}</Typography>
 										<Typography className={classes.typography} color="primary">More Info</Typography>
 										<CardActionArea>
 										<Typography className={classes.typography}>...</Typography>
@@ -367,7 +369,7 @@ export default function Profile1(propss){
 			
 
 				updateUserInfo(np);
-
+				window.location.reload(false);
 			}
 
 			

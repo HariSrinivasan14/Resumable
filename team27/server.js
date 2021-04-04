@@ -132,7 +132,7 @@ app.get("/users/checkSession", (req, res) => {
 
 
 app.post('/loginUser', (req, res) => {
-	
+	console.log(env)
 	if (mongoose.connection.readyState != 1) {
 		log('Issue with mongoose connection')
 		res.status(500).send('Internal mongoose server error');

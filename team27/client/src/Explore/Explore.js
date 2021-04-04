@@ -149,6 +149,7 @@ function Explore(props){
                     newPosti(data);
 
                     window.location.reload(false);
+                    window.location.reload(false);
 
                 }
 
