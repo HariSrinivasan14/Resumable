@@ -5,6 +5,10 @@ const path = require('path')
 
 const env = process.env.NODE_ENV
 
+const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON 
+const TEST_USER_ID = '6068f6e62b019d37f898628c'
+const TEST_USER_USERNAME = 'test'
+
 
 const express = require('express')
 // starting the express server
@@ -12,7 +16,7 @@ const app = express();
 
 // mongoose and mongo connection
 const { mongoose, mongoURI } = require('./db/mongoose')
-mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
+mongoose.set('bufferCommands', false); 
 
 const cors = require('cors')
 if (env !== 'production') { app.use(cors()) }
@@ -79,11 +83,17 @@ app.use(
             httpOnly: true
         },
         // store the sessions on the database in production
-        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'})
+		store: env === 'production' ? MongoStore.create({
+				mongoUrl: process.env.MONGODB_URI || 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'
+			}) : null
     })
 );
 
 const authenticate = (req, res, next) => {
+	if (env !== 'production' && USE_TEST_USER)
+        req.session.user = TEST_USER_ID
+
+		
     if (req.session.user) {
         User.findById(req.session.user).then((user) => {
             if (!user) {
@@ -104,6 +114,13 @@ const authenticate = (req, res, next) => {
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.get("/users/checkSession", (req, res) => {
+	if (env !== 'production' && USE_TEST_USER) {
+		console.log("in production"); 
+        req.session.user = TEST_USER_ID;
+        req.session.Username = TEST_USER_USERNAME;
+        res.send({ currentUser: TEST_USER_USERNAME })
+        return;
+    }
 
     if (req.session.user) {
         res.send({ currentUser: req.session.Username });
