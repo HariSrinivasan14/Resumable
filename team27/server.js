@@ -5,6 +5,10 @@ const path = require('path')
 
 const env = process.env.NODE_ENV
 
+const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON 
+const TEST_USER_ID = '6068f6e62b019d37f898628c'
+const TEST_USER_USERNAME = 'test'
+
 
 const express = require('express')
 // starting the express server
@@ -12,7 +16,7 @@ const app = express();
 
 // mongoose and mongo connection
 const { mongoose, mongoURI } = require('./db/mongoose')
-mongoose.set('bufferCommands', false);  // don't buffer db requests if the db server isn't connected - minimizes http requests hanging if this is the case.
+mongoose.set('bufferCommands', false); 
 
 const cors = require('cors')
 if (env !== 'production') { app.use(cors()) }
@@ -67,6 +71,7 @@ const gfsUpload = multer({ storage });
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 
+
 // for session
 app.use(
     session({
@@ -78,11 +83,17 @@ app.use(
             httpOnly: true
         },
         // store the sessions on the database in production
-        store: MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'})
+		store: env === 'production' ? MongoStore.create({
+				mongoUrl: process.env.MONGODB_URI || 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'
+			}) : null
     })
 );
 
 const authenticate = (req, res, next) => {
+	if (env !== 'production' && USE_TEST_USER)
+        req.session.user = TEST_USER_ID
+
+		
     if (req.session.user) {
         User.findById(req.session.user).then((user) => {
             if (!user) {
@@ -103,6 +114,13 @@ const authenticate = (req, res, next) => {
 app.use(express.static(path.join(__dirname, '/public')))
 
 app.get("/users/checkSession", (req, res) => {
+	if (env !== 'production' && USE_TEST_USER) {
+		console.log("in production"); 
+        req.session.user = TEST_USER_ID;
+        req.session.Username = TEST_USER_USERNAME;
+        res.send({ currentUser: TEST_USER_USERNAME })
+        return;
+    }
 
     if (req.session.user) {
         res.send({ currentUser: req.session.Username });
@@ -210,11 +228,14 @@ app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 	// Create a new student using the Student mongoose model
 	const newPost = new Post({
 		Username: req.body.Username,
+		title: req.body.title,
 		subtitle: req.body.subtitle,
 		date: req.body.date,
 		file: req.file.id,
+		fileUrl: req.body.fileUrl,
 		desc: req.body.desc,
-		likes: req.body.likes
+		likes: req.body.likes,
+		comments: []
 	})
 
 
@@ -230,6 +251,34 @@ app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 	})
 
 })
+app.post('/addPost/:id', (req, res) => {
+	// log(req.body)
+
+	// check mongoose connection established.
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal server error')
+		return;
+	}  
+
+	// Create a new student using the Student mongoose model
+	Post.findOne({_id:req.params.id}).then((p)=>{  
+        // add the requested reservation to the restaurant  
+        p.comments.push(req.body)  
+        p.save().then((rest)=> {  
+            res.send({  
+                    comment: rest.comments[rest.comments.length-1],  
+                    post: rest  
+                })  
+        }).catch((error) =>{  
+            res.status(500).send(error)  
+        })  
+  
+    }).catch((error)=>{  
+        res.status(500).send(error)  
+    })  
+
+})
 
 app.get('/getPost', (req, res) => {
 	
@@ -241,6 +290,24 @@ app.get('/getPost', (req, res) => {
 	
 	Post.find().then((temp) => {
 		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+app.get('/getPost/:id', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	
+	Post.findOne({_id: req.params.id}).then((temp) => {
+		// res.send(students) // just the array
+		res.send({comments: temp.comments})
 	})
 	.catch((error) => {
 		log(error)
@@ -300,6 +367,17 @@ app.get('/getUser', (req, res) => {
 	})
 	
 })
+
+app.get('/files/:fileID', (req, res) => {
+	gfs.files.findOne({ filename: req.params.fileID }, (err, file) => {
+	  if (!file || file.length === 0) {
+		return res.status(404).json({
+		  err: 'No file exists'
+		});
+	  }
+	  return res.json(file);
+	});
+  });
 
 
 app.use(express.static(path.join(__dirname, "/client/build")));

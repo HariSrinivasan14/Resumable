@@ -8,6 +8,10 @@ import {MainButton, MainInputBox} from '../Components/Components.js';
 import {loginAccount} from '../actions/user.js';
 
 class Login extends React.Component{
+	
+	constructor(props) {
+        super(props);
+    }
 	state = {
 		Username: "",
 		Password: "",

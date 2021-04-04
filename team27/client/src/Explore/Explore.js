@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense } from 'react'
+import { useHistory } from "react-router"
 import "./Explore.css"
 import CardComponent from '../CardComponent/CardComponent';
 import { Grid } from "@material-ui/core"
@@ -40,7 +41,7 @@ const inputBoxTheme = createMuiTheme({
 	}
 });
 
-function GetPosts(){
+function GetPosts(user){
     const got_posts = resource.posts.read();
     console.log(got_posts)
     return(
@@ -57,12 +58,15 @@ function GetPosts(){
                         direction="column"
                         alignItems="center"
                         justify="flex-end">
-                            {got_posts.map((item,index)=>{
-                                return <Grid key={index} item xs = {12}>
+                            {got_posts.slice(0).reverse().map((item,index)=>{
+                                if(item.Username != user.Username)
+                                return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
+                                                user = {user.Username}
                                             />
-                                        </Grid> 
+                                        </Grid>)
+                                         
                                 })}
                             </Grid>
                         )}
@@ -71,10 +75,18 @@ function GetPosts(){
     );
     
 }
-function Explore(){
-        var user = {
-            username: 'hari'
-        }
+function Explore(props){
+    var username = props.app.state.currentUser;
+
+    var user = {
+        Username: username
+    }
+    console.log(user.Username)
+        // const history = useHistory();
+        // history.push("/Explore");
+
+        // props.history.push("/Explore")
+
         const [modalShow, setModalShow] = React.useState(false);
 
 
@@ -120,18 +132,23 @@ function Explore(){
                     
                 }else{
                     setModalShow(false)
-                    console.log(pdfjs.getDocument(file.preview))
+                    // console.log(pdfjs.getDocument(file.preview))
+
 
                     let data = new FormData()
                     data.append('likes', 0);
-                    data.append('Username', user.username);
+                    data.append('Username', user.Username);
                     data.append('title', title);
                     data.append('subtitle', subtitle);
                     data.append('file', file);
+                    data.append('fileUrl', file.preview);
                     data.append('date', Date().toLocaleString());
                     data.append('desc', desc);
+                    data.append('comments', [])
     
                     newPosti(data);
+
+                    window.location.reload(false);
 
                 }
 
@@ -215,7 +232,7 @@ function Explore(){
 
     return(
             <div className="feed">
-                <NavExplore/>
+                <NavExplore app = {props.app}/>
                 {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
                     Create a Post
                 </Button> */}
@@ -228,7 +245,7 @@ function Explore(){
                     onHide={() => setModalShow(false)}
                 />
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
-                    <GetPosts/>
+                    <GetPosts user={user}/>
                 </Suspense>
                    
                 
