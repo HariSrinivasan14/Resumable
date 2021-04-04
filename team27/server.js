@@ -375,6 +375,27 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
+app.patch('/updatePost/:id/:like', (req, res) => {  
+	const postId = req.params.id;
+    // check mongoose connection established.  
+    if (mongoose.connection.readyState != 1) {  
+        log('Issue with mongoose connection')  
+        res.status(500).send('Internal server error')  
+        return;  
+    }   
+    Post.findOne({_id:postId}).then((rest)=>{ 
+		console.log('found post in likes')
+		console.log(req.params.like)
+        rest.likes = (parseInt(rest.likes) + parseInt(req.params.like)).toString();
+        rest.save().then((rest_patch)=>{  
+            res.send({  
+            })
+        })  
+    }).catch((error)=>{  
+        res.status(500).send(error)  
+    })  
+  
+})  
 
 
 /*************************************************/

@@ -59,13 +59,13 @@ function GetPosts(user){
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
-                                if(item.Username != user.Username)
+                                if(item.Username != user.Username){
                                 return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
                                                 user = {user.Username}
                                             />
-                                        </Grid>)
+                                        </Grid>)}
                                          
                                 })}
                             </Grid>
