@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
 import '../actions/files'
 import { getFileById } from '../actions/files';
+import {updateLikes, fetchPostsData} from '../actions/post.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,16 +48,21 @@ function CardComponent({post, user}){
   const [isLiked, updateLike] = useState(false);
   const [count, setCount] = useState(post.likes);
   const [color, setColor] = useState('grey');
-
+  let likee;
   const handleLike = () => {
     if (!isLiked) {
       updateLike(true);
       setCount(count+1);
       setColor('red');
+      likee = 1
+      updateLikes(likee, post._id)
+
     }else{
       updateLike(false);
       setCount(count-1);
       setColor('grey');
+      likee = -1
+      updateLikes(likee, post._id)
     }
   };
   return (
