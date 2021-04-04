@@ -24,8 +24,8 @@ import Modal from 'react-bootstrap/Modal'
 import PostPage from './Postpage/PostPage'
 import UpdateInfo from './updateInfo/updateInfo'
 import newPDF from './images/sampleResume.pdf'
-import {newPosti, fetchPostsData} from './actions/post.js';
-import {updateUserInfo, getUser} from './actions/user.js';
+import {fetchPostsData} from './actions/post.js';
+import {updateUserInfo, fetchUsersData} from './actions/user.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
 import Dropzone from './Dropzone/Dropzone';
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -100,13 +100,14 @@ import { Document, Page, pdfjs } from 'react-pdf';
 	
 	  card: {
 		display: 'flex',
+		width: 200,
 		marginTop: 250,
 		marginLeft: 50,
 		background: 'linear-gradient(to top, #818b94, #808c9a, #7f8d9f, #808da5, #828daa, #818aa9, #8087a8, #8084a7, #7b7ea0, #767899, #717393, #6c6d8c)',
 		padding: '0 30px',
 	  },
 	  cardDetails: {
-		width: 50,
+		width: 120,
 		flex: 1,
 	  },
 	  cardMedia: {
@@ -138,7 +139,6 @@ const images = importAll(require.context('./images', false, /\.(gif|jpe?g|svg|pn
 const resource = fetchPostsData();
 function GetPosts(){
     const got_posts = resource.posts.read();
-    console.log(got_posts)
     return(
         <div className="oldPosts">
 			
@@ -176,8 +176,93 @@ function GetPosts(){
     );
     
 }
-export default function Profile1(){
+
+export default function Profile1(propss){
 	
+	const resour = fetchUsersData();
+	function GetUsers(){ 
+		const classes = useStyles2();
+		const user = propss.app.state.currentUser;
+		
+		// const [username, setUsername] = React.useState('');
+		// const [firstName, setFirstName] = React.useState('');
+		// const [lastName, setLastName] = React.useState('');
+		// const [birthday, setBirthday] = React.useState('');
+		// const [program, setProgram] = React.useState('');
+
+		var username = "";
+		var firstName = "";
+		var lastName = "";
+		var birthday = "";
+		var program = "";
+		// if (birthday == null){
+		// 	setBirthday("")
+		// }
+		// if (program == null){
+		// 	setProgram("")
+		// }
+
+		const got_posts = resour.posts.read();
+		return(
+			<div>
+			
+				
+			<div className="oldPosts">
+				
+				{got_posts.length === 0 ?(
+					<h5 className="posts_empty">No Posts Yet</h5>
+				) :
+				(
+				
+						<Grid container 
+							spacing={10}
+							p = {1}
+							direction="column"
+							alignItems="center"
+							justify="flex-end">
+								{got_posts.map((item)=>{
+									if(item.Username == user){
+									// setUsername(item.Username);
+									// setFirstName(item.firstName);
+									// setLastName(item.lastName);
+									// setBirthday(item.dateOfBirth);
+									// setProgram(item.program);
+									 username = item.Username
+									 console.log(username)
+									 firstName = item.firstName
+									 console.log(firstName)
+									 lastName = item.lastName
+									 console.log(lastName)
+									 birthday = item.dateOfBirth
+									 console.log(birthday)
+									 program = item.Program
+									 console.log(program)
+									}
+
+								})}
+								</Grid>
+							)}
+
+			</div>
+			<Card className={classes.card}>
+								<div className={classes.cardDetails}>
+									<CardContent>
+										<Typography className={classes.typography}>{username}</Typography>
+										<Typography className={classes.typography}>{firstName}</Typography>
+										<Typography className={classes.typography}>{lastName}</Typography>
+										<Typography className={classes.typography}>{birthday}</Typography>
+										<Typography className={classes.typography}>{program}</Typography>
+										<Typography className={classes.typography} color="primary">More Info</Typography>
+										<CardActionArea>
+										<Typography className={classes.typography}>...</Typography>
+										</CardActionArea>
+									</CardContent>
+								</div>
+							</Card>
+			</div>
+		);
+		
+	}
 	const classes = useStyles2();
 	const [modalShow, setModalShow] = React.useState(false);
 	const [update, setUpdate] = React.useState(false);
@@ -204,14 +289,10 @@ export default function Profile1(){
 		 	</div>
 		   )
 	}
-	function updateInfo1(){
 	
-	}
-
 	function userInfo(){
 	
-		let a = getUser();
-		console.log(a)
+
 	}
 	function MyVerticallyCenteredModal(props) {
 
@@ -266,10 +347,9 @@ export default function Profile1(){
 			setDesc(event.target.value);
 		};
 		function postit(){
-			//const {app} = this.props;
-			var user = {
-				username: 'hari'
-			}
+			
+			const user = propss.app.state.currentUser;
+			console.log(user)
 			if(title == ''){
 				console.log("empty section");
 				
@@ -277,7 +357,7 @@ export default function Profile1(){
 				setModalShow(false)
 				const np = {
 					
-					Username: user.username,
+					Username: user,
 					Program: title,
 					dateOfBirth: subtitle,
 					
@@ -344,7 +424,10 @@ export default function Profile1(){
 			</Modal.Body>
 			<Modal.Footer>
 			  <Button color= 'secondary'  onClick={props.onHide}>Close</Button>
-			  <Button color= "primary"  onClick={postit}>
+			  <Button color= "primary"  onClick={() => {
+				  postit();
+				  afterUpdate();
+			}}>
 				update
 			  </Button>
 			</Modal.Footer>
@@ -357,26 +440,15 @@ export default function Profile1(){
 		return(
 			
 		<div className={classes.root} >
+			
 		
 			<NavExplore/>
 
 			<div id="info">
         		<img className="pic" src={acount} />
-						<Card className={classes.card}>
-							<div className={classes.cardDetails}>
-								<CardContent>
-									<Typography className={classes.typography}>Hari</Typography>
-									<Typography className={classes.typography}>Birthday</Typography>
-									<Typography className={classes.typography}>hari@gmail.com</Typography>
-									<Typography className={classes.typography}>Major/Program</Typography>
-									<Typography className={classes.typography}>About</Typography>
-									<Typography className={classes.typography} color="primary">More Info</Typography>
-									<CardActionArea>
-									<Typography className={classes.typography}>...</Typography>
-									</CardActionArea>
-								</CardContent>
-							</div>
-						</Card>
+				<Suspense fallback={<h2>Loading users...</h2>}>
+				<GetUsers/>
+            	</Suspense>
 				<buttonGroup>
 				<GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
 			        {'upload resume'}

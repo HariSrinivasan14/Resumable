@@ -126,23 +126,23 @@ export const updateUserInfo = (website) => {
         });
 };
 
-export const getUser = () => {
+// export const getUser = () => {
 
-    const request = new Request(`${API_HOST}/getUser`, {
-        method: "get"
+//     const request = new Request(`${API_HOST}/getUser`, {
+//         method: "get"
        
-    });
-    fetch(request)
-		.then(res => {
-            if (res.status === 200) {
-                return res.json();
-            }
-        })
-        .catch(error => {
-            console.log("error PUT");
-            console.log(error);
-        });
-    }
+//     });
+//     fetch(request)
+// 		.then(res => {
+//             if (res.status === 200) {
+//                 return res.json();
+//             }
+//         })
+//         .catch(error => {
+//             console.log("error PUT");
+//             console.log(error);
+//         });
+//     }
 export const logoutUser = (app) => {
     const url = `${API_HOST}/users/logout`;
     console.log("logging out user", app)
@@ -156,3 +156,61 @@ export const logoutUser = (app) => {
             console.log(error);
     });
 };
+
+export function fetchUsersData() {
+    let postsPromise = fetchUsers();
+    return {
+      posts: wrapPromise(postsPromise)
+    };
+  }
+
+function wrapPromise(promise) {
+    let status = "pending";
+    let result;
+    let suspender = promise.then(
+      r => {
+        status = "success";
+        result = r;
+      },
+      e => {
+        status = "error";
+        result = e;
+      }
+    );
+    return {
+      read() {
+        if (status === "pending") {
+          throw suspender;
+        } else if (status === "error") {
+          throw result;
+        } else if (status === "success") {
+          return result;
+        }
+      }
+    };
+  }
+
+function fetchUsers() {
+//   let posts = []
+  const request = `${API_HOST}/getUser`
+  console.log("Fetch Posts...");
+  return new Promise(resolve => {
+      resolve(fetch(request)
+      .then(res => {
+          if (res.status === 200) {
+              return res.json();
+          } else {
+              alert("Could not get students");
+          }
+      })
+      .then(json => {
+          // the resolved promise with the JSON body
+          // post = json[0];
+          console.log(json)
+          return json
+      })
+      .catch(error => {
+          console.log(error);
+      }));
+  });
+}
