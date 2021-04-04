@@ -14,8 +14,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
-import '../actions/files'
-import { getFileById } from '../actions/files';
+import pdf from '../images/sampleResume.pdf'
+import {getFileById} from '../actions/files'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,10 +76,19 @@ function CardComponent({post}){
         subheader= {post.subtitle}
       />
       <Link to={{pathname: "/ResumeView", state:{test: "sending data over", data: {post}}}} >
+        
         <CardActionArea >
-          <PdfDisplay url={post.fileurl} width={0.4} ></PdfDisplay>
-          {/* <PdfDisplay url={post.fileurl} height={0.7} width={0.3} ></PdfDisplay> */}
-
+          {/* <CardMedia
+            className={classes.media}
+            image = {post.image}
+            imagesrc={post.image}
+            title="resume"
+          /> */}
+          {/* <PdfDisplay url={post.fileUrl} width={0.4} ></PdfDisplay> */}
+          {console.log("cardcomponent", getFileById(post.file))}
+          <PdfDisplay url={pdf} width={0.4} ></PdfDisplay>
+          {/* <PdfDisplay url={post.fileUrl} width={0.4} ></PdfDisplay> */}
+          {/* <h1>{post.fileUrl}</h1> */}
         </CardActionArea>
       </Link>
       <CardContent>

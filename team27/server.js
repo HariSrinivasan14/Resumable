@@ -351,14 +351,18 @@ app.get('/getUser', (req, res) => {
 	
 })
 
-app.get('/files/:fileID', (req, res) => {
-	gfs.files.findOne({ filename: req.params.fileID }, (err, file) => {
-	  if (!file || file.length === 0) {
-		return res.status(404).json({
-		  err: 'No file exists'
-		});
-	  }
-	  return res.json(file);
+app.get('/files/:id', (req, res) => {
+	gfs.files.findOne({ _id: ObjectID(req.params.id) }, (err, file) => {
+		// Check if file
+		if (!file || file.length === 0) {
+			return res.status(404).json({
+			err: 'No file exists'
+			});
+		}
+		// return res.json(file);
+		const readstream = gfs.createReadStream(file.filename);
+		readstream.pipe(res);
+
 	});
   });
 
