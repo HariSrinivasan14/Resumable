@@ -41,7 +41,7 @@ const inputBoxTheme = createMuiTheme({
 	}
 });
 
-function GetPosts(){
+function GetPosts(user){
     const got_posts = resource.posts.read();
     console.log(got_posts)
     return(
@@ -59,11 +59,13 @@ function GetPosts(){
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
+                                if(item.Username != user.Username){
                                 return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
+                                                user = {user.Username}
                                             />
-                                        </Grid>)
+                                        </Grid>)}
                                          
                                 })}
                             </Grid>
@@ -74,14 +76,17 @@ function GetPosts(){
     
 }
 function Explore(props){
+    var username = props.app.state.currentUser;
+
+    var user = {
+        Username: username
+    }
+    console.log(user.Username)
         // const history = useHistory();
         // history.push("/Explore");
-        var username = props.app.state.currentUser;
-        console.log(username)
+
         // props.history.push("/Explore")
-        var user = {
-            username: username
-        }
+
         const [modalShow, setModalShow] = React.useState(false);
 
 
@@ -127,12 +132,12 @@ function Explore(props){
                     
                 }else{
                     setModalShow(false)
-                    console.log(pdfjs.getDocument(file.preview))
+                    // console.log(pdfjs.getDocument(file.preview))
 
 
                     let data = new FormData()
                     data.append('likes', 0);
-                    data.append('Username', user.username);
+                    data.append('Username', user.Username);
                     data.append('title', title);
                     data.append('subtitle', subtitle);
                     data.append('file', file);
@@ -227,7 +232,7 @@ function Explore(props){
 
     return(
             <div className="feed">
-                <NavExplore/>
+                <NavExplore app = {props.app}/>
                 {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
                     Create a Post
                 </Button> */}
@@ -240,7 +245,7 @@ function Explore(props){
                     onHide={() => setModalShow(false)}
                 />
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
-                    <GetPosts/>
+                    <GetPosts user={user}/>
                 </Suspense>
                    
                 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -16,6 +16,9 @@ import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
 import pdf from '../images/sampleResume.pdf'
 import {getFileById} from '../actions/files'
+import {updateLikes, fetchPostsData} from '../actions/post.js';
+import { get } from 'mongoose';
+import "./CardComponent.css"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,27 +41,34 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function CardComponent({post}){
+function CardComponent({post, user}){
   const classes = useStyles();
   // const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);
   // };
+
   const [isLiked, updateLike] = useState(false);
   const [count, setCount] = useState(post.likes);
   const [color, setColor] = useState('grey');
-
+  let likee;
   const handleLike = () => {
     if (!isLiked) {
       updateLike(true);
       setCount(count+1);
       setColor('red');
+      likee = 1
+      updateLikes(likee, post._id)
+
     }else{
       updateLike(false);
       setCount(count-1);
       setColor('grey');
+      likee = -1
+      updateLikes(likee, post._id)
     }
   };
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -75,21 +85,13 @@ function CardComponent({post}){
         title= {post.title}
         subheader= {post.subtitle}
       />
-      <Link to={{pathname: "/ResumeView", state:{test: "sending data over", data: {post}}}} >
-        
-        <CardActionArea >
-          {/* <CardMedia
-            className={classes.media}
-            image = {post.image}
-            imagesrc={post.image}
-            title="resume"
-          /> */}
-          {/* <PdfDisplay url={post.fileUrl} width={0.4} ></PdfDisplay> */}
-          {console.log("cardcomponent", getFileById(post.file))}
-          <PdfDisplay url={pdf} width={0.4} ></PdfDisplay>
-          {/* <PdfDisplay url={post.fileUrl} width={0.4} ></PdfDisplay> */}
-          {/* <h1>{post.fileUrl}</h1> */}
+      <Link to={{pathname: "/ResumeView", state:{user: user, data: {post}}}} >
+        <CardActionArea className="preview">
+   
+            <PdfDisplay url={`http://localhost:5000/files/${post.file}`} width={0.3} ></PdfDisplay>
+          
         </CardActionArea>
+        
       </Link>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
