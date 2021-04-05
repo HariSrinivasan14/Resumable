@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -14,10 +14,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
-import '../actions/files'
-import { getFileById } from '../actions/files';
+import pdf from '../images/sampleResume.pdf'
+import {getFileById} from '../actions/files'
 import {updateLikes, fetchPostsData} from '../actions/post.js';
 import { Document, Page, pdfjs } from 'react-pdf';
+import { get } from 'mongoose';
+import "./CardComponent.css"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +48,7 @@ function CardComponent({post, user}){
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);
   // };
+
   const [isLiked, updateLike] = useState(false);
   const [count, setCount] = useState(post.likes);
   const [color, setColor] = useState('grey');
@@ -66,6 +69,7 @@ function CardComponent({post, user}){
       updateLikes(likee, post._id)
     }
   };
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -83,13 +87,13 @@ function CardComponent({post, user}){
         subheader= {post.subtitle}
       />
       <Link to={{pathname: "/ResumeView", state:{user: user, data: {post}}}} >
-        <CardActionArea >
-          {/* <PdfDisplay url={post.fileurl} width={0.4} ></PdfDisplay> */}
-          {/* <PdfDisplay url={post.fileurl} height={0.7} width={0.3} ></PdfDisplay> */}
-          <div>       
-            <PdfDisplay url={post.fileurl} height={0.7} width={0.3} ></PdfDisplay>
-          </div>
+
+        <CardActionArea className="preview">
+   
+            <PdfDisplay url={`http://localhost:5000/files/${post.file}`} width={0.3} ></PdfDisplay>
+          
         </CardActionArea>
+        
       </Link>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

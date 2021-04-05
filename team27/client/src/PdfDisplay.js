@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@material-ui/styles';
 import React from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import './PdfDisplay.css';
@@ -31,7 +32,8 @@ class PdfDisplay extends React.Component{
                     className="page" 
                     pageNumber={1} 
                     renderTextLayer={true} 
-                    width={pageWidth} />
+                    width={pageWidth}
+                   />
                 </Document>
             </div>
 		);
