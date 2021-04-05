@@ -78,7 +78,7 @@ class NavExplore extends React.Component{
 					</Navbar.Brand>
 					<Nav className="mr-auto">
 						<Nav.Link href="/Explore">Home</Nav.Link>
-						<Nav.Link href="/Profile">myprofile</Nav.Link>
+						<Nav.Link href="/Profile">My Profile</Nav.Link>
 						{/* <Nav.Link href="/PostPage">Post Resume</Nav.Link> */}
 					</Nav>
 					{/* <Form inline>

@@ -105,8 +105,7 @@ function DropZone(props) {
     </div>
   ));
   const Droped = files.map(file => (
-      props.onImageDrop(file),
-      console.log(file.preview)
+      props.onImageDrop(file)
     ));
   
   // useEffect(() => () => {

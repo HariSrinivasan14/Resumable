@@ -17,6 +17,7 @@ import PdfDisplay from '../PdfDisplay'
 import '../actions/files'
 import { getFileById } from '../actions/files';
 import {updateLikes, fetchPostsData} from '../actions/post.js';
+import { Document, Page, pdfjs } from 'react-pdf';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,7 +86,9 @@ function CardComponent({post, user}){
         <CardActionArea >
           {/* <PdfDisplay url={post.fileurl} width={0.4} ></PdfDisplay> */}
           {/* <PdfDisplay url={post.fileurl} height={0.7} width={0.3} ></PdfDisplay> */}
-
+          <div>       
+            <PdfDisplay url={post.fileurl} height={0.7} width={0.3} ></PdfDisplay>
+          </div>
         </CardActionArea>
       </Link>
       <CardContent>

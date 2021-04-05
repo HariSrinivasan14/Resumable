@@ -68,7 +68,7 @@ function GetPosts(user){
                                         </Grid>)}
                                          
                                 })}
-                            </Grid>
+                    </Grid>
                         )}
 
         </div>
@@ -81,7 +81,6 @@ function Explore(props){
     var user = {
         Username: username
     }
-    console.log(user.Username)
         // const history = useHistory();
         // history.push("/Explore");
 
@@ -145,7 +144,8 @@ function Explore(props){
                     data.append('date', Date().toLocaleString());
                     data.append('desc', desc);
                     data.append('comments', [])
-    
+                    
+                    // window.localStorage.setItem('file', file)
                     newPosti(data);
 
                     window.location.reload(false);

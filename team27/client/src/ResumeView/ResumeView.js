@@ -31,40 +31,40 @@ const App = ({ children }) => (
       
     // const gotComments = resource(post._id).comments.read(); 
     const cvc = res.posts.read();
-    console.log(cvc)
     // console.log(gotComments);
 
          return(
            <div>
-          {comments.length === 0 ?(
-            <h5 className="posts_empty">No Comments Yet</h5>
-        ) :(
-          // cvc.map((pst)=>
-            
-          // );
-          cvc.slice(0).reverse().map((i,index)=>{
-            if(i._id == post._id)
-            return (i.comments.map((item,index)=>{
-              return <Comment key={index}>
-                  <Comment.Avatar src={<Avatar aria-label="user" >
-                                      {i.Username.charAt(0)}
-                                      </Avatar>} />
-                  <Comment.Content>
-                  <Comment.Author as='a'>{item.Username}</Comment.Author>
-                  <Comment.Metadata>
-                      <div>{item.time}</div>
-                  </Comment.Metadata>
-                  <Comment.Text>{item.text}</Comment.Text>
-                  <Comment.Actions>
-                  <Comment.Action>Reply</Comment.Action>
-                  </Comment.Actions>
-                  </Comment.Content>
-              </Comment> 
-          }))
-                     
-            })
-          
-        )}
+              {false ?(
+                <h5 className="posts_empty">No Comments Yet</h5>
+            ) :(
+              cvc.slice(0).reverse().map((i,index)=>{
+                    if(i._id == post._id)
+                      if(i.comments.length>0){
+                        return (i.comments.map((item,index)=>{
+                          return <Comment key={index}>
+                              <Comment.Avatar src={<Avatar aria-label="user" >
+                                                  {i.Username.charAt(0)}
+                                                  </Avatar>} />
+                              <Comment.Content>
+                              <Comment.Author as='a'>{i.Username}</Comment.Author>
+                              <Comment.Metadata>
+                                  <div>{item.time}</div>
+                              </Comment.Metadata>
+                              <Comment.Text>{item.text}</Comment.Text>
+                              <Comment.Actions>
+                              <Comment.Action>Reply</Comment.Action>
+                              </Comment.Actions>
+                              </Comment.Content>
+                          </Comment> 
+                      }))}
+                      else{
+                        <h5 className="posts_empty">No Comments Yet</h5>
+                      }
+                        
+                })
+              
+            )}
         </div>
           )
 
@@ -121,7 +121,7 @@ function ResumeView(props) {
                 let nComment = {
                   Username: user,
                   text: commentText,
-                  time: "today"
+                  time: Date().toLocaleString()
               };
                 newComment(post._id, nComment)
                 window.location.reload(false);  
