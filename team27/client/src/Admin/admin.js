@@ -102,6 +102,7 @@ const useStyles1 = makeStyles((theme) => ({
  
 }));
 export default function Admin() {
+  console.log("welcome to BHD")
   const classes = useStyles1();
   const history = useHistory();
   useEffect(() =>{
