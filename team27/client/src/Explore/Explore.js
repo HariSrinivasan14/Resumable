@@ -15,33 +15,10 @@ import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const resource = fetchPostsData();
-const inputBoxTheme = createMuiTheme({
-	overrides: {
-		MuiOutlinedInput: {
-			root: {
-				borderRadius: '10px',
-				Textcolor: 'black',
-				Height: '48px',
-				minWidth: '500px',
-				textTransform: 'capitalize',
-				marginLeft: '50px',
-				marginBottom: '10px',
-				'&$focused $notchedOutline': {
-					borderColor: '#009688',
-					borderWidth: '2px',
-				},
-				"&:hover $notchedOutline": {
-					borderColor: '#71A89E'
-				}
-			},
-			notchedOutline: {
-				borderColor: '#71A89E'
-			},
-		},
-	}
-});
 
 function GetPosts(user){
+    if(!user)
+        return
     const got_posts = resource.posts.read();
     console.log(got_posts)
     return(
@@ -77,6 +54,7 @@ function GetPosts(user){
 }
 function Explore(props){
     const username = props.app.state.currentUser;
+    // props.
     const history = useHistory();
     useEffect(() =>{
         history.push('/Explore');
@@ -85,7 +63,7 @@ function Explore(props){
         Username: username
     }
 
-        const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow, setModalShow] = React.useState(false);
 
 
 

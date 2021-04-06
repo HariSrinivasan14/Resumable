@@ -16,14 +16,17 @@ import {checkUserSession} from './actions/user.js';
 
 class App extends React.Component{
 	
-	componentDidMount(){
-		checkUserSession(this);
-	}
-		
 	state = {
 		currentUser: null,
+		currpage: 'home',
+		adminCounter: 0
 	}
-	
+	componentWillMount(prev){
+		// if(this.state.currpage !== prev.state.currpage){
+			checkUserSession(this);
+		// }
+	}
+		
 	render(){
 		const {currentUser} = this.state;
 		return (

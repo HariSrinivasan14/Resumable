@@ -252,7 +252,8 @@ app.post('/addPost', gfsUpload.single('file'),authenticate, (req, res) => {
 	})
 
 })
-app.post('/addPost/:id',authenticate, (req, res) => {
+// app.post('/addPost/:id',authenticate, (req, res) => {
+app.post('/addPost/:id',(req, res) => {
 	// log(req.body)
 
 	// check mongoose connection established.
@@ -281,7 +282,8 @@ app.post('/addPost/:id',authenticate, (req, res) => {
 
 })
 
-app.get('/getPost', authenticate, (req, res) => {
+// app.get('/getPost', authenticate, (req, res) => {
+app.get('/getPost', (req, res) => {
 	
 	if (mongoose.connection.readyState != 1) {
 		log('Issue with mongoose connection')
@@ -314,7 +316,8 @@ app.get('/getSession', (req, res) => {
 	})
 	
 })
-app.get('/getPost/:id', authenticate, (req, res) => {
+// app.get('/getPost/:id', authenticate, (req, res) => {
+	app.get('/getPost/:id', (req, res) => {
 	
 	if (mongoose.connection.readyState != 1) {
 		log('Issue with mongoose connection')
@@ -414,6 +417,7 @@ app.get("*", (req, res) => {
 });
 
 app.patch('/updatePost/:id/:like', authenticate, (req, res) => {  
+// app.patch('/updatePost/:id/:like', (req, res) => {  
 	const postId = req.params.id;
     // check mongoose connection established.  
     if (mongoose.connection.readyState != 1) {  
