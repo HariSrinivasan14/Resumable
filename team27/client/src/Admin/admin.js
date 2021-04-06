@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import Toolbar from '@material-ui/core/Toolbar'
 import AppBar from '@material-ui/core/AppBar'
 import { styled, withTheme } from '@material-ui/core/styles';
@@ -35,6 +35,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import {NavExplore} from "../NavBar"
 import {newPosti, fetchPostsData} from '../actions/post.js';
 import {fetchSessions, fetchUsersData} from '../actions/user.js';
+import { useHistory } from "react-router"
 
 const data = [
   { argument: 1, value: 25 },
@@ -102,9 +103,13 @@ const useStyles1 = makeStyles((theme) => ({
 }));
 export default function Admin() {
   const classes = useStyles1();
+  const history = useHistory();
+  useEffect(() =>{
+      history.push('/Admin');
+  }, [history]);
 
 
-  
+
   const resource = fetchPostsData();
   let count_post = 0;
   let count_user = 0;

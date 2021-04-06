@@ -68,7 +68,7 @@ function GetPosts(user){
                                         </Grid>)}
                                          
                                 })}
-                            </Grid>
+                    </Grid>
                         )}
 
         </div>
@@ -76,16 +76,14 @@ function GetPosts(user){
     
 }
 function Explore(props){
-    var username = props.app.state.currentUser;
-
-    var user = {
+    const username = props.app.state.currentUser;
+    const history = useHistory();
+    useEffect(() =>{
+        history.push('/Explore');
+    }, [history]);
+    const user = {
         Username: username
     }
-    console.log(user.Username)
-        // const history = useHistory();
-        // history.push("/Explore");
-
-        // props.history.push("/Explore")
 
         const [modalShow, setModalShow] = React.useState(false);
 
@@ -145,7 +143,8 @@ function Explore(props){
                     data.append('date', Date().toLocaleString());
                     data.append('desc', desc);
                     data.append('comments', [])
-    
+                    
+                    // window.localStorage.setItem('file', file)
                     newPosti(data);
 
                     window.location.reload(false);

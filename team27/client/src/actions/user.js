@@ -1,5 +1,5 @@
 
-import ENV from './../config.js'
+import ENV from '../config.js'
 const API_HOST = ENV.api_host
 
 export const newAccount = (account, signUp, app) => {
@@ -61,6 +61,7 @@ export const loginAccount = (account, loginPage, app) => {
                 app.setState({
                     currentUser: json.currentUser
                 });
+                console.log("rechecking", app.state.currentUser);
 				return;
 			}else{
 				loginPage.setState({
@@ -140,7 +141,6 @@ export const updateUserInfo = (website) => {
 //     }
 export const logoutUser = (app) => {
     const url = `${API_HOST}/users/logout`;
-    console.log("logging out user", app)
     fetch(url)
         .then(res => {
             app.setState({

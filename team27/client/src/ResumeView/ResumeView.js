@@ -1,11 +1,12 @@
 import './ResumeView.css'
-import React, {useState, Suspense} from 'react'
+import React, {useState, useEffect, Suspense} from 'react'
 import {NavExplore} from "../NavBar"
 import { Container, List } from "semantic-ui-react";
 import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react'
 import Avatar from '@material-ui/core/Avatar';
 import {newComment, fetchCommentsData, fetchPostsData} from '../actions/post.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
+import PdfDisplay from '../PdfDisplay'
 // const resource = fetchCommentsData;
 const res = fetchPostsData();
 const App = ({ children }) => (
@@ -14,57 +15,45 @@ const App = ({ children }) => (
     </Container>
   );
 
-
-  let comments = [
-    {author:'Elon Musk',
-    time:'Today at 5:42PM',
-    text: 'You will need to add more experiences'},
-    {author:"Jeff Bezos",
-    time:'Yesterday at 4:42PM',
-    text: 'Fix your spelling man, No job for you!!'},
-    {author:"Shaquille o'neal",
-    time:'Yesterday at 4:42PM',
-    text: "Woah, that's a great resume"}
-  ]
   let post = null;
   function GetComments(){
       
     // const gotComments = resource(post._id).comments.read(); 
     const cvc = res.posts.read();
-    console.log(cvc)
     // console.log(gotComments);
 
          return(
            <div>
-          {comments.length === 0 ?(
-            <h5 className="posts_empty">No Comments Yet</h5>
-        ) :(
-          // cvc.map((pst)=>
-            
-          // );
-          cvc.slice(0).reverse().map((i,index)=>{
-            if(i._id == post._id)
-            return (i.comments.map((item,index)=>{
-              return <Comment key={index}>
-                  <Comment.Avatar src={<Avatar aria-label="user" >
-                                      {i.Username.charAt(0)}
-                                      </Avatar>} />
-                  <Comment.Content>
-                  <Comment.Author as='a'>{item.Username}</Comment.Author>
-                  <Comment.Metadata>
-                      <div>{item.time}</div>
-                  </Comment.Metadata>
-                  <Comment.Text>{item.text}</Comment.Text>
-                  <Comment.Actions>
-                  <Comment.Action>Reply</Comment.Action>
-                  </Comment.Actions>
-                  </Comment.Content>
-              </Comment> 
-          }))
-                     
-            })
-          
-        )}
+              {false ?(
+                <h5 className="posts_empty">No Comments Yet</h5>
+            ) :(
+              cvc.slice(0).reverse().map((i,index)=>{
+                    if(i._id == post._id)
+                      if(i.comments.length>0){
+                        return (i.comments.map((item,index)=>{
+                          return <Comment key={index}>
+                              <Comment.Avatar src={<Avatar aria-label="user" >
+                                                  {item.Username.charAt(0)}
+                                                  </Avatar>} />
+                              <Comment.Content>
+                              <Comment.Author as='a'>{item.Username}</Comment.Author>
+                              <Comment.Metadata>
+                                  <div>{item.time}</div>
+                              </Comment.Metadata>
+                              <Comment.Text>{item.text}</Comment.Text>
+                              <Comment.Actions>
+                              <Comment.Action>Reply</Comment.Action>
+                              </Comment.Actions>
+                              </Comment.Content>
+                          </Comment> 
+                      }))}
+                      else{
+                        <h5 className="posts_empty">No Comments Yet</h5>
+                      }
+                        
+                })
+              
+            )}
         </div>
           )
 
@@ -72,11 +61,9 @@ const App = ({ children }) => (
 
 
 function ResumeView(props) {
-
-    
+    var username = props.app.state.currentUser;
+    console.log(username);
     post = props.location.state.data.post
-    var user = props.location.state.user
-    const [comment, setComment] = React.useState(comments);
     const [commentText, setCommentText] = React.useState("");
     const handleCommentChange = (event) => {
       setCommentText(event.target.value);
@@ -86,22 +73,8 @@ function ResumeView(props) {
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
     document.head.appendChild(styleLink);
 
-    // function postComment(e){
-    //     var today = new Date()
-    //     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-        
-    //     comments.unshift(
-    //         {
-    //             author:"User",
-    //             time:{date},
-    //             text: "Perfect resume"
-                
-    //         })
-    //     setComment(comments)
-    // }
-
-    const CommentSection = ({comment}) => (
+    const CommentSection = () => (
         
         <Comment.Group>
 
@@ -117,14 +90,16 @@ function ResumeView(props) {
           <Form onSubmit={(e)=>{
                 
                 // setComment(c)
-
+              if(commentText!=''){
                 let nComment = {
-                  Username: user,
-                  text: commentText,
-                  time: "today"
-              };
+                    Username: username,
+                    text: commentText,
+                    time: Date().toLocaleString()
+                };
                 newComment(post._id, nComment)
                 window.location.reload(false);  
+              }
+
           }} reply>
          
             <Bt content='Add Reply'  secondary />
@@ -135,21 +110,21 @@ function ResumeView(props) {
       )
     return (
         <div>
-         <NavExplore/>
+         <NavExplore app = {props.app}/>
             <div>
               <div id="resume-image">
                 <h1 id="resume-header"> {post.title}</h1>
-                <div className = "border-box">
-                  <img id="photo" src={post.fileurl} />
-                </div>
-                <h3 className="hh"> Description </h3>
                 <div className="border-box">
                     <p className="pp">{post.desc}</p>
                 </div>
+                <div className = "border-box">
+                  <PdfDisplay url={`http://localhost:5000/files/${post.file}`} width={0.5} ></PdfDisplay>
+                </div>
+                
               </div>
               <div className = "feedback-box">
               <App>
-                <CommentSection comment = {comment}/>
+                <CommentSection/>
 
               </App>
                 {/* <textarea 

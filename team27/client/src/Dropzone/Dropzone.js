@@ -100,13 +100,13 @@ function DropZone(props) {
           src={file.preview}
           style={img}
         /> */}
+        {console.log(file.preview)};
         <PdfDisplay url={file.preview} width={0.4} ></PdfDisplay>
       </div>
     </div>
   ));
   const Droped = files.map(file => (
-      props.onImageDrop(file),
-      console.log(file.preview)
+      props.onImageDrop(file)
     ));
   
   // useEffect(() => () => {

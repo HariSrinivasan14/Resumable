@@ -1,6 +1,6 @@
-import React, { useState,  Suspense} from 'react';
+import React, { useState, useEffect, Suspense} from 'react';
 import './profile.css';
-
+import { useHistory } from "react-router"
 import { styled, withTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
@@ -138,6 +138,10 @@ const images = importAll(require.context('../images', false, /\.(gif|jpe?g|svg|p
 
 
 export default function Profile1(propss){
+	const history = useHistory();
+    useEffect(() =>{
+        history.push('/Profile');
+    }, [history]);
 	const resource = fetchPostsData();
 	function GetPosts(){
     const got_posts = resource.posts.read();
