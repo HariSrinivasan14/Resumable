@@ -28,7 +28,7 @@ const { User } = require('./models/user')
 const { Post } = require('./models/post')
 
 // to validate object IDs
-const { ObjectID } = require('mongodb')
+const { ObjectID, MongoClient } = require('mongodb')
 
 // File upload/retreival from db using multer and GridFS
 const multer = require('multer');
@@ -50,9 +50,11 @@ const gfsCollectionName = 'uploads'
 
 // GridFS stream
 // Reference: https://github.com/aheckmann/gridfs-stream
-mongoose.connection.once('open', () => {
+const db = mongoose.connection;
+db.once('open', () => {
   gfs = Grid(mongoose.connection.db, mongoose.mongo);
   gfs.collection(gfsCollectionName);
+
 });
 
 // GridFS storage engine
@@ -68,7 +70,7 @@ const storage = new GridFsStorage({
 });
 const gfsUpload = multer({ storage });
 
-
+let count;
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 
@@ -288,6 +290,22 @@ app.get('/getPost', (req, res) => {
 	}
 	
 	Post.find().then((temp) => {
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+app.get('/getSession', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	db.collection('sessions').find().then((temp) => {
 		res.send(temp)
 	})
 	.catch((error) => {

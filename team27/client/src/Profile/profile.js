@@ -5,29 +5,27 @@ import { styled, withTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import ground from './images/ground.jpg'
-import acount from './images/acount.png'
+import ground from '../images/ground.jpg'
+import acount from '../images/acount.png'
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import SinglePagePDFViewer from "./pdf-viewer";
+import SinglePagePDFViewer from "../pdf-viewer";
 /* This is required only if the project file is located 
 inside the app. Otherwise you can use the external link of the pdf file*/
-import {NavExplore} from "./NavBar"
-import CardComponent from './CardComponent/CardComponent';
-import resume1 from './images/resume_samantha.jpg'
-import resume2 from './images/resume_angela.webp'
-import resume3 from './images/resume_emma.png'
-import "./styles.css";
+import {NavExplore} from "../NavBar"
+import CardComponent from '../CardComponent/CardComponent';
+import resume1 from '../images/resume_samantha.jpg'
+import resume2 from '../images/resume_angela.webp'
+import resume3 from '../images/resume_emma.png'
+import "../styles.css";
 import Modal from 'react-bootstrap/Modal'
-import PostPage from './Postpage/PostPage'
-import UpdateInfo from './updateInfo/updateInfo'
-import newPDF from './images/sampleResume.pdf'
-import {fetchPostsData} from './actions/post.js';
-import {updateUserInfo, fetchUsersData} from './actions/user.js';
+import PostPage from '../Postpage/PostPage'
+import newPDF from '../images/sampleResume.pdf'
+import {fetchPostsData} from '../actions/post.js';
+import {updateUserInfo, fetchUsersData} from '../actions/user.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
-import Dropzone from './Dropzone/Dropzone';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 // let posts = [{
@@ -136,7 +134,7 @@ function importAll(r) {
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
     return images;
   }
-const images = importAll(require.context('./images', false, /\.(gif|jpe?g|svg|png)$/));
+const images = importAll(require.context('../images', false, /\.(gif|jpe?g|svg|png)$/));
 
 
 export default function Profile1(propss){
@@ -292,10 +290,6 @@ export default function Profile1(propss){
 		   )
 	}
 	
-	function userInfo(){
-	
-
-	}
 	function MyVerticallyCenteredModal(props) {
 
 		return (

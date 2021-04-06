@@ -7,8 +7,8 @@ import HighlightFeedBack from './HighlightFeedback';
 import Explore from './Explore/Explore'
 import PostPage from './Postpage/PostPage'
 import ResumeView from './ResumeView/ResumeView'
-import Admin from './admin';
-import Profile from './profile';
+import Admin from './Admin/admin';
+import Profile from './Profile/profile';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {checkUserSession} from './actions/user.js';
 
@@ -32,7 +32,7 @@ class App extends React.Component{
                 <Switch>
 
                     <Route
-                        exact path={["/Login", "/Explore"]}
+                        exact path={["/Login"]}
                         render={ props => (
                             <div className="app">
                                 { /* Different componenets rendered depending on if someone is logged in. */}

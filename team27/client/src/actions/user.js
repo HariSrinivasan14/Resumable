@@ -209,3 +209,61 @@ function fetchUsers() {
       }));
   });
 }
+
+export function fetchSessions() {
+    let postsPromise = fetchUsersession();
+    return {
+      posts: wrapPromises(postsPromise)
+    };
+  }
+
+function wrapPromises(promise) {
+    let status = "pending";
+    let result;
+    let suspender = promise.then(
+      r => {
+        status = "success";
+        result = r;
+      },
+      e => {
+        status = "error";
+        result = e;
+      }
+    );
+    return {
+      read() {
+        if (status === "pending") {
+          throw suspender;
+        } else if (status === "error") {
+          throw result;
+        } else if (status === "success") {
+          return result;
+        }
+      }
+    };
+  }
+
+function fetchUsersession() {
+//   let posts = []
+  const request = `${API_HOST}/getSession`
+  console.log("Fetch sessions...");
+  return new Promise(resolve => {
+      resolve(fetch(request)
+      .then(res => {
+          if (res.status === 200) {
+              return res.json();
+          } else {
+              alert("Could not get sessions");
+          }
+      })
+      .then(json => {
+          // the resolved promise with the JSON body
+          // post = json[0];
+          console.log(json)
+          return json
+      })
+      .catch(error => {
+          console.log(error);
+      }));
+  });
+}

@@ -9,7 +9,7 @@
     padding: 0px;
   }
   .logo{
-    background-image: url(./resume.png);
+    background-image: url(../resume.png);
   }
   #head{
     margin-left: 30px;
@@ -30,7 +30,24 @@
     width: 300px;
     height: 140px;
   }
-
+  #car1{
+    display: 'flex';
+    width: 300px;
+    height: 140px;
+    margin-right: 120px;
+  }
+  #car3{
+    display: 'flex';
+    width: 300px;
+    height: 140px;
+    margin-left: 250px;
+  }
+  #car2{
+    display: 'flex';
+    width: 300px;
+    height: 140px;
+    
+  }
   .tex{
     margin-top: 200px;
     margin-left: 200px;
