@@ -14,18 +14,6 @@ const App = ({ children }) => (
     </Container>
   );
 
-
-  let comments = [
-    {author:'Elon Musk',
-    time:'Today at 5:42PM',
-    text: 'You will need to add more experiences'},
-    {author:"Jeff Bezos",
-    time:'Yesterday at 4:42PM',
-    text: 'Fix your spelling man, No job for you!!'},
-    {author:"Shaquille o'neal",
-    time:'Yesterday at 4:42PM',
-    text: "Woah, that's a great resume"}
-  ]
   let post = null;
   function GetComments(){
       
@@ -76,7 +64,6 @@ function ResumeView(props) {
     var username = props.app.state.currentUser;
     console.log(username);
     post = props.location.state.data.post
-    const [comment, setComment] = React.useState(comments);
     const [commentText, setCommentText] = React.useState("");
     const handleCommentChange = (event) => {
       setCommentText(event.target.value);
@@ -86,22 +73,8 @@ function ResumeView(props) {
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
     document.head.appendChild(styleLink);
 
-    // function postComment(e){
-    //     var today = new Date()
-    //     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-        
-    //     comments.unshift(
-    //         {
-    //             author:"User",
-    //             time:{date},
-    //             text: "Perfect resume"
-                
-    //         })
-    //     setComment(comments)
-    // }
-
-    const CommentSection = ({comment}) => (
+    const CommentSection = () => (
         
         <Comment.Group>
 
@@ -117,14 +90,16 @@ function ResumeView(props) {
           <Form onSubmit={(e)=>{
                 
                 // setComment(c)
-
+              if(commentText!=''){
                 let nComment = {
-                  Username: username,
-                  text: commentText,
-                  time: Date().toLocaleString()
-              };
+                    Username: username,
+                    text: commentText,
+                    time: Date().toLocaleString()
+                };
                 newComment(post._id, nComment)
                 window.location.reload(false);  
+              }
+
           }} reply>
          
             <Bt content='Add Reply'  secondary />
@@ -149,7 +124,7 @@ function ResumeView(props) {
               </div>
               <div className = "feedback-box">
               <App>
-                <CommentSection comment = {comment}/>
+                <CommentSection/>
 
               </App>
                 {/* <textarea 
