@@ -55,7 +55,7 @@ class App extends React.Component{
 							render={ props => (
 								<div className="app">
 								{ /* Different componenets rendered depending on if someone is logged in. */}
-									{this.state.currentUser ? <ResumeView {...props} app={this} /> : <SignUp {...props} app={this} />}
+									{this.state.currentUser ? <ResumeView {...props} app={this} /> : <Login {...props} app={this} />}
 								</div> 
 							)}
 						/>

@@ -73,7 +73,8 @@ const App = ({ children }) => (
 
 function ResumeView(props) {
 
-    
+    var username = props.app.state.currentUser;
+    console.log(username);
     post = props.location.state.data.post
     var user = props.location.state.user
     const [comment, setComment] = React.useState(comments);
@@ -135,7 +136,7 @@ function ResumeView(props) {
       )
     return (
         <div>
-         <NavExplore/>
+         <NavExplore app = {props.app}/>
             <div>
               <div id="resume-image">
                 <h1 id="resume-header"> {post.title}</h1>
