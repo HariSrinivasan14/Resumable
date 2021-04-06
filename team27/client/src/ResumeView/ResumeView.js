@@ -44,10 +44,10 @@ const App = ({ children }) => (
                         return (i.comments.map((item,index)=>{
                           return <Comment key={index}>
                               <Comment.Avatar src={<Avatar aria-label="user" >
-                                                  {i.Username.charAt(0)}
+                                                  {item.Username.charAt(0)}
                                                   </Avatar>} />
                               <Comment.Content>
-                              <Comment.Author as='a'>{i.Username}</Comment.Author>
+                              <Comment.Author as='a'>{item.Username}</Comment.Author>
                               <Comment.Metadata>
                                   <div>{item.time}</div>
                               </Comment.Metadata>
@@ -76,7 +76,6 @@ function ResumeView(props) {
     var username = props.app.state.currentUser;
     console.log(username);
     post = props.location.state.data.post
-    var user = props.location.state.user
     const [comment, setComment] = React.useState(comments);
     const [commentText, setCommentText] = React.useState("");
     const handleCommentChange = (event) => {
@@ -120,7 +119,7 @@ function ResumeView(props) {
                 // setComment(c)
 
                 let nComment = {
-                  Username: user,
+                  Username: username,
                   text: commentText,
                   time: Date().toLocaleString()
               };
