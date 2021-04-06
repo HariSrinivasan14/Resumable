@@ -6,6 +6,7 @@ import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react
 import Avatar from '@material-ui/core/Avatar';
 import {newComment, fetchCommentsData, fetchPostsData} from '../actions/post.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
+import PdfDisplay from '../PdfDisplay'
 // const resource = fetchCommentsData;
 const res = fetchPostsData();
 const App = ({ children }) => (
@@ -114,13 +115,13 @@ function ResumeView(props) {
             <div>
               <div id="resume-image">
                 <h1 id="resume-header"> {post.title}</h1>
-                <div className = "border-box">
-                  <img id="photo" src={post.fileurl} />
-                </div>
-                <h3 className="hh"> Description </h3>
                 <div className="border-box">
                     <p className="pp">{post.desc}</p>
                 </div>
+                <div className = "border-box">
+                  <PdfDisplay url={`http://localhost:5000/files/${post.file}`} width={0.5} ></PdfDisplay>
+                </div>
+                
               </div>
               <div className = "feedback-box">
               <App>
