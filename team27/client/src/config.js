@@ -1,11 +1,12 @@
 const prod = {
     env: 'production',
-    api_host: ''
+    api_host: '',
+    use_frontend_test_user: false,
 };
 const dev = {
     env: 'development',
     api_host: 'http://localhost:5000', 
-    use_frontend_test_user: false, // false for production, true for testing
+    use_frontend_test_user: true, // false for production, true for testing
     user: "test"
 };
 

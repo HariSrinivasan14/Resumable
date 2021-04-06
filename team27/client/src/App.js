@@ -32,7 +32,7 @@ class App extends React.Component{
                 <Switch>
 
                     <Route
-                        exact path={["/Login", "/Explore"]}
+                        exact path={["/Login"]}
                         render={ props => (
                             <div className="app">
                                 { /* Different componenets rendered depending on if someone is logged in. */}
@@ -60,7 +60,7 @@ class App extends React.Component{
 							)}
 						/>
 						<Route
-							path="/profile"
+							path="/Profile"
 							render={ props => (
 								<div className="app">
 								{ /* Different componenets rendered depending on if someone is logged in. */}
