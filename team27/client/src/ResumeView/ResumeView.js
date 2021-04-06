@@ -1,5 +1,5 @@
 import './ResumeView.css'
-import React, {useState, Suspense} from 'react'
+import React, {useState, useEffect, Suspense} from 'react'
 import {NavExplore} from "../NavBar"
 import { Container, List } from "semantic-ui-react";
 import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react'
@@ -61,7 +61,6 @@ const App = ({ children }) => (
 
 
 function ResumeView(props) {
-
     var username = props.app.state.currentUser;
     console.log(username);
     post = props.location.state.data.post

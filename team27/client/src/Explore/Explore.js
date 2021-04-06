@@ -76,15 +76,14 @@ function GetPosts(user){
     
 }
 function Explore(props){
-    var username = props.app.state.currentUser;
-
-    var user = {
+    const username = props.app.state.currentUser;
+    const history = useHistory();
+    useEffect(() =>{
+        history.push('/Explore');
+    }, [history]);
+    const user = {
         Username: username
     }
-        // const history = useHistory();
-        // history.push("/Explore");
-
-        // props.history.push("/Explore")
 
         const [modalShow, setModalShow] = React.useState(false);
 

@@ -1,6 +1,7 @@
 const prod = {
     env: 'production',
-    api_host: ''
+    api_host: '',
+    use_frontend_test_user: false,
 };
 const dev = {
     env: 'development',

@@ -77,8 +77,8 @@ class NavExplore extends React.Component{
 							/>{' '}
 					</Navbar.Brand>
 					<Nav className="mr-auto">
-						<Nav.Link href="/Explore">Home</Nav.Link>
-						<Nav.Link href="/Profile">My Profile</Nav.Link>
+						<Link className = 'home-style' to="/Explore">Home</Link>
+						<Link className = 'home-style' to="/Profile">My Profile</Link>
 						{/* <Nav.Link href="/PostPage">Post Resume</Nav.Link> */}
 					</Nav>
 					{/* <Form inline>
@@ -90,5 +90,6 @@ class NavExplore extends React.Component{
 		);
 	}
 }
+
 export {NavHome, NavSignUp, NavLogin, NavExplore};
 
