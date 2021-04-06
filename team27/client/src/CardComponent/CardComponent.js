@@ -105,15 +105,18 @@ function CardComponent({post, user}){
                     onClick={() => handleLike()}>
           <FavoriteIcon style={{ color: color }}/>
         </IconButton>
-        <IconButton aria-label="share">
+        {/* <IconButton aria-label="share">
           <ShareIcon />
-        </IconButton>
+        </IconButton> */}
 
       </CardActions>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-           {count} likes
+           {count} likes  {post.comments.length} comments
         </Typography>
+        {/* <Typography variant="body2" color="textSecondary" component="p">
+           {post.comments.length} comments
+        </Typography> */}
       </CardContent>
     </Card>
     
