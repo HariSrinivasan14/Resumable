@@ -16,11 +16,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pd
 
 const resource = fetchPostsData();
 
-function GetPosts(user){
-    if(!user)
-        return
+function GetPosts(username){
     const got_posts = resource.posts.read();
-    console.log(got_posts)
     return(
         <div className="resumes">
 
@@ -36,11 +33,11 @@ function GetPosts(user){
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
-                                if(item.Username !== user.Username){
+                                if(item.Username !== username){
                                 return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
-                                                user = {user.Username}
+                                                user = {username}
                                             />
                                         </Grid>)}
                                          
@@ -223,7 +220,7 @@ function Explore(props){
                     onHide={() => setModalShow(false)}
                 />
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
-                    <GetPosts user={user}/>
+                    <GetPosts user={username}/>
                 </Suspense>
                    
                 
