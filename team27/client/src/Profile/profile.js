@@ -182,6 +182,7 @@ export default function Profile1(propss){
 													<h3>Old Posts</h3>
 													<CardComponent 
 														post= {item}
+														user = {user}
 													/>
 													
 												</Grid>

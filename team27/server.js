@@ -472,8 +472,6 @@ app.patch('/updatePost/:id/:like', authenticate, (req, res) => {
         return;  
     }   
     Post.findOne({_id:postId}).then((rest)=>{ 
-		console.log('found post in likes')
-		console.log(req.params.like)
         rest.likes = (parseInt(rest.likes) + parseInt(req.params.like)).toString();
         rest.save().then((rest_patch)=>{  
             res.send({  
@@ -485,7 +483,22 @@ app.patch('/updatePost/:id/:like', authenticate, (req, res) => {
   
 })  
 
-
+app.delete('/deletePost/:postid', (req, res) => {  
+ 
+    // check mongoose connection established.  
+    if (mongoose.connection.readyState != 1) {  
+        log('Issue with mongoose connection')  
+        res.status(500).send('Internal server error')  
+        return;  
+    }   
+  
+    Post.deleteOne({_id:req.params.postid}).then((post)=>
+		post.save()
+	).catch((error)=>{  
+        res.status(500).send(error)  
+    })  
+  
+}) 
 /*************************************************/
 // Express server listening...
 const port = process.env.PORT || 5000

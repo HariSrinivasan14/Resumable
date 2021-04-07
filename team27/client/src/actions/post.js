@@ -162,9 +162,8 @@ fetch(request)
         console.log(error);
     });
   }
-  export const updateLikes = (like, postId) => {
+export const updateLikes = (like, postId) => {
     // Create our request constructor with all the parameters we need
-    console.log(like)
     const request = new Request(`${API_HOST}/updatePost/${postId}/${like}`, {
         method: "PATCH"
     });
@@ -179,3 +178,20 @@ fetch(request)
             console.log(error);
         });
 };
+
+export const deletePost = (postId)=>{
+    const request = new Request(`${API_HOST}/deletePost/${postId}`, {
+        method: "DELETE"
+    });
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+    });
+}
+
+
