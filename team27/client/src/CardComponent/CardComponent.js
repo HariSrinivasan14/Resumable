@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 function CardComponent({post, user}){
   const classes = useStyles();
-  console.log(user.user)
   // const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);
