@@ -24,9 +24,11 @@ import Modal from 'react-bootstrap/Modal'
 import PostPage from '../Postpage/PostPage'
 import newPDF from '../images/sampleResume.pdf'
 import {fetchPostsData} from '../actions/post.js';
-import {updateUserInfo, fetchUsersData} from '../actions/user.js';
+import {updateFileUserInfo ,updateUserInfo, fetchUsersData} from '../actions/user.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
 import { Document, Page, pdfjs } from 'react-pdf';
+import Dropzone from '../Dropzone/Dropzone';
+import PdfDisplay from '../PdfDisplay'
 
 // let posts = [{
 // 	Username: "Samantha Jansen",
@@ -142,47 +144,69 @@ export default function Profile1(propss){
     useEffect(() =>{
         history.push('/Profile');
     }, [history]);
-	const resource = fetchPostsData();
-	function GetPosts(){
-    const got_posts = resource.posts.read();
-	const user = propss.app.state.currentUser;
-    return(
-        <div className="oldPosts">
-			
-            {got_posts.length === 0 ?(
-                <h5 className="posts_empty">No Posts Yet</h5>
-            ) :
-            (
-               
-                    <Grid container 
-                        spacing={10}
-                        p = {1}
-                        direction="column"
-                        alignItems="center"
-                        justify="flex-end">
-                            {got_posts.map((item,index)=>{
-								if(item.Username == user)
-                                return(
-								
-								
-									<Grid key={index} item xs = {12}>
-											
-											
-                                            <CardComponent 
-                                                post= {item}
-                                            />
-											
-                                        </Grid>
-								
-								)
-							})}
-                            </Grid>
-                        )}
+	let pd = null;
+	const [post, setPost] = React.useState(false);
 
-        </div>
-    );
-    
-}
+	const resource = fetchPostsData();
+		function GetPosts(){
+			
+			const got_posts = resource.posts.read();
+			const user = propss.app.state.currentUser;
+			return(
+				<dic>
+				<div className="oldPosts">
+					
+					{got_posts.length === 0 ?(
+						<h5 className="posts_empty">No Posts Yet</h5>
+					) :
+					(
+					
+							<Grid container 
+								spacing={10}
+								p = {1}
+								direction="column"
+								alignItems="center"
+								justify="flex-end">
+									{got_posts.map((item,index)=>{
+										
+										
+										
+										if(item.Username == user){
+											pd = item.file;
+											setPost(true)
+										return(
+										
+										
+											<Grid className="grids" key={index} item xs = {12}>
+													
+													<h3>Old Posts</h3>
+													<CardComponent 
+														post= {item}
+													/>
+													
+												</Grid>
+										
+										)}
+									})}
+									</Grid>
+								)}
+								
+
+				</div>
+				{console.log(pd)}
+				{console.log(post)}
+				<div>
+					<h4>Resume</h4>
+					<div className="Apps">
+				
+					{post ? (<PdfDisplay url={`http://localhost:5000/files/${pd}`} width={0.4} ></PdfDisplay>) : (null)}
+					</div>
+				</div>
+				</dic>
+			);
+			
+		}
+
 	const resour = fetchUsersData();
 	function GetUsers(){ 
 		const classes = useStyles2();
@@ -232,15 +256,10 @@ export default function Profile1(propss){
 									// setBirthday(item.dateOfBirth);
 									// setProgram(item.program);
 									 username = item.Username
-									 console.log(username)
 									 firstName = item.firstName
-									 console.log(firstName)
 									 lastName = item.lastName
-									 console.log(lastName)
 									 birthday = item.dateOfBirth
-									 console.log(birthday)
 									 program = item.Program
-									 console.log(program)
 									}
 
 								})}
@@ -270,60 +289,114 @@ export default function Profile1(propss){
 	const classes = useStyles2();
 	const [modalShow, setModalShow] = React.useState(false);
 	const [update, setUpdate] = React.useState(false);
-	const [post, setPost] = React.useState(false);
-
 
 
     
 
 
-	function postit(){
-		setPost(true);
-	    setModalShow(false);
-	   
-	}
+
 	function afterUpdate(){
 		setUpdate(false);
 	}
-	function afterPost(){
-		return(
-			<div className="Apps">
-				<h4>Resume</h4>
-				<SinglePagePDFViewer pdf={newPDF} />
-		 	</div>
-		   )
-	}
 	
-	function MyVerticallyCenteredModal(props) {
+	
+	// function MyVerticallyCenteredModal(props) {
+	// 	const [file, setFile] = React.useState('');
+	// 	const handleFileChange = (f) => {
+	// 		console.log(f);
+	// 		setFile(f);
+	// 	};
+	// 	const [title, setTitle] = React.useState('');
+	// 	const handleTitleChange = (event) => {
+	// 		setTitle(event.target.value);
+	// 	};
+		
+	// 	const [subtitle, setSubtitle] = React.useState('');
+	// 	const handleSubtitleChange = (event) => {
+	// 		setSubtitle(event.target.value);
+	// 	};
+		
+	// 	function postit(){
+			
+	// 		const user = propss.app.state.currentUser;
+	// 		if(title == ''){
+	// 			console.log("empty section");
+				
+	// 		}else{
+	// 			setModalShow(false)
+	// 			const np = {
+	// 				username: user,
+	// 				file: file,
+	// 				fileUrl: file.preview,
+		
+	// 			}
+			
+	// 			updateFileUserInfo(np);
+				
+	// 		}
+			
+			
+	// 	}
+	// 	return (
+	// 	  <Modal 
+	// 		{...props}
+	// 		size='xl'
+	// 		aria-labelledby="contained-modal-title-vcenter"
+	// 		centered
+	// 	  >
+	// 		<Modal.Header closeButton>
+	// 		  <Modal.Title id="contained-modal-title-vcenter">
+	// 			post resume
+	// 		  </Modal.Title>
+	// 		</Modal.Header>
+	// 		<Modal.Body>
+	// 		<div>
+		
+	// 	<div className='Title_input'>     
 
-		return (
-		  <Modal 
-			{...props}
-			size='xl'
-			aria-labelledby="contained-modal-title-vcenter"
-			centered
-		  >
-			<Modal.Header closeButton>
-			  <Modal.Title id="contained-modal-title-vcenter">
-				post resume
-			  </Modal.Title>
-			</Modal.Header>
-			<Modal.Body>
-				<PostPage/>
-			</Modal.Body>
-			<Modal.Footer>
-			  <Button color= 'secondary'  onClick={props.onHide}>Close</Button>
-			  <Button color= "primary"  onClick={() => {
-				postit();
-				afterPost();
+	// 		<OutlinedInput
+	// 			id="outlined-name"
+	// 			name="title"
+	// 			value={title}
+	// 			placeholder="title"
+	// 			onChange={handleTitleChange}
+	// 			variant="outlined"/>    
+		   
 
-				}} >
-				post
-			  </Button>
-			</Modal.Footer>
-		  </Modal>
-		);
-	  }
+	// 	</div>
+	// 	<div className='Subtitle_input'>
+	// 		<Box width={500}>
+	// 			<TextField
+	// 				id="subtitle-textarea"
+	// 				name="desc"
+	// 				value={subtitle}
+	// 				placeholder="description"
+	// 				onChange={handleSubtitleChange}
+	// 				variant="outlined"
+	// 				fullWidth
+	// 			/>
+	// 		</Box>
+		
+		
+			
+	// 	</div>
+		
+	// 	<Dropzone onImageDrop={handleFileChange}/>
+	// </div>
+	// 		</Modal.Body>
+	// 		<Modal.Footer>
+	// 		  <Button color= 'secondary'  onClick={props.onHide}>Close</Button>
+	// 		  <Button color= "primary"  onClick={() => {
+	// 			postit();
+	// 			afterPost();
+
+	// 			}} >
+	// 			post
+	// 		  </Button>
+	// 		</Modal.Footer>
+	// 	  </Modal>
+	// 	);
+	//   }
 
 
 	  function UpdateInterface(props) {
@@ -341,6 +414,14 @@ export default function Profile1(propss){
 		const handleSubtitleChange = (event) => {
 			setSubtitle(event.target.value);
 		};
+		const [name, setName] = React.useState('');
+		const handleNameChange = (event) => {
+			setName(event.target.value);
+		};
+		const [lastname, setLastname] = React.useState('');
+		const handleLastnameChange = (event) => {
+			setLastname(event.target.value);
+		};
 	
 		const [desc, setDesc] = React.useState('');
 		const handleDescChange = (event) => {
@@ -349,26 +430,23 @@ export default function Profile1(propss){
 		function postit(){
 			
 			const user = propss.app.state.currentUser;
-			console.log(user)
-			if(title == ''){
-				console.log("empty section");
-				
-			}else{
+		
 				setModalShow(false)
+				console.log(name)
+				console.log(lastname)
 				const np = {
-					
 					Username: user,
 					Program: title,
 					dateOfBirth: subtitle,
-					
+					firstName: name,
+					lastName: lastname
 					
 				}
-				console.log(np)
 			
 
 				updateUserInfo(np);
 				window.location.reload(false);
-			}
+			
 
 			
 		}
@@ -386,12 +464,31 @@ export default function Profile1(propss){
 			</Modal.Header>
 			<Modal.Body>
 			<div>
-		
-		{/* <NavExplore /> */}
-		{/* <div className = 'postResume'>
-			<Dropzone />
-		</div> */}
+			<div className='Title_input'>     
 
+			<OutlinedInput
+				id="outlined-name"
+				name="name"
+				value={name}
+				placeholder="Name"
+				onChange={handleNameChange}
+				variant="outlined"/>    
+
+
+			</div>
+		<div className='Title_input'>     
+
+			<OutlinedInput
+				id="outlined-name"
+				name="lastname"
+				value={lastname}
+				placeholder="lastname"
+				onChange={handleLastnameChange}
+				variant="outlined"/>    
+		   
+
+		</div>
+		
 		<div className='Title_input'>     
 
 			<OutlinedInput
@@ -416,7 +513,9 @@ export default function Profile1(propss){
 					fullWidth
 				/>
 			</Box>
-
+		
+		
+			
 		</div>
 		
 
@@ -450,18 +549,18 @@ export default function Profile1(propss){
 				<GetUsers/>
             	</Suspense>
 				<buttonGroup>
-				<GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
+				{/* <GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
 			        {'upload resume'}
-		        </GreenButton_explore>	
+		        </GreenButton_explore>	 */}
 				<GreenButton_explore variant="contained" onClick={() => setUpdate(true)}>
 			        {'update info'}
 		        </GreenButton_explore>	
 				</buttonGroup>
 
-				<MyVerticallyCenteredModal
+				{/* <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
-                />
+                /> */}
 
 				<UpdateInterface
                     show={update}
@@ -471,7 +570,8 @@ export default function Profile1(propss){
 				<Suspense fallback={<h2>Loading Posts...</h2>}>
                     <GetPosts/>
                 </Suspense>
-					{post ? afterPost(): null}
+					 {/* {post ? afterPost(): null}  */}
+					
 				</div>
 			
 

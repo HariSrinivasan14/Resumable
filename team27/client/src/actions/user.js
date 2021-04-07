@@ -122,6 +122,27 @@ export const updateUserInfo = (website) => {
         });
 };
 
+export const updateFileUserInfo = (website) => {
+
+  const request = new Request(`${API_HOST}/updateFileInfo`, {
+      method: "put",
+      body: JSON.stringify(website),
+      headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+      }
+  });
+  fetch(request)
+  .then(res => {
+          if (res.status === 200) {
+              return res.json();
+          }
+      })
+      .catch(error => {
+          console.log("error PUT");
+          console.log(error);
+      });
+};
 // export const getUser = () => {
 
 //     const request = new Request(`${API_HOST}/getUser`, {
