@@ -167,7 +167,7 @@ export default function Profile1(propss){
 								direction="column"
 								alignItems="center"
 								justify="flex-end">
-									{got_posts.map((item,index)=>{
+									{got_posts.slice(0).reverse().map((item,index)=>{
 										
 										
 										
