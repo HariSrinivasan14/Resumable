@@ -106,29 +106,6 @@ class App extends React.Component{
                 </Switch>
             </Router>
         );
-		
-
-
-		// return(
-		// 	<Router>
-		// 		<div>
-		// 			<Switch>
-		// 				<Route path="/" exact component={Home} {...this.props} app={this}/>
-		// 				<Route path="/Login" component={Login} {...this.props} app={this}/>
-		// 				<Route path="/SignUp" component={SignUp} {...this.props} app={this}/>
-		// 				<Route path="/Explore" component={Explore} {...this.props} app={this}/>
-		// 				<Route path="/PostPage" component={PostPage} {...this.props} app={this}/>
-		// 				<Route path="/ResumeView" component={ResumeView} {...this.props} app={this}/>
-							
-		// 				<Route path="/Admin" component={Admin} {...this.props} app={this}/>
-		// 				<Route path="/profile" component={Profile} {...this.props} app={this}/>
-		// 				<Route path="/highlight-feedback" component={HighlightFeedBack} {...this.props} app={this}/>
-		// 			</Switch>
-		// 		</div>
-		// 	</Router>
-			
-		// );
-
 
 	}
 }

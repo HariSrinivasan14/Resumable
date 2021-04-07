@@ -1,8 +1,6 @@
 import './Login.css';
 import React from 'react';
 import {NavLogin} from '../NavBar';
-import {OutlinedInput, Button} from '@material-ui/core'
-import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
 import {MainButton, MainInputBox} from '../Components/Components.js';
 import {loginAccount} from '../actions/user.js';
@@ -60,12 +58,6 @@ class Login extends React.Component{
 			}
 			const {app} = this.props;
 			loginAccount(newAccountInfo, this, app);
-			// if(this.state.Username === 'admin' && this.state.Password === 'admin'){
-			
-				// console.log("going to admin");
-			// } else if (this.state.Username === 'user' && this.state.Password === 'user'){
-				// this.props.history.push("/Explore");
-			// }
 		}
 		
 	}
