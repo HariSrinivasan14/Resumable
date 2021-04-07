@@ -153,7 +153,7 @@ export default function Profile1(propss){
 			const got_posts = resource.posts.read();
 			const user = propss.app.state.currentUser;
 			return(
-				<dic>
+				<div>
 				<div className="oldPosts">
 					
 					{got_posts.length === 0 ?(
@@ -196,13 +196,14 @@ export default function Profile1(propss){
 				{console.log(pd)}
 				{console.log(post)}
 				<div>
-					<h4>Resume</h4>
+					{post ? (<h4>Resume</h4>) : (null)}
 					<div className="Apps">
 				
-					{post ? (<PdfDisplay url={`http://localhost:5000/files/${pd}`} width={0.4} ></PdfDisplay>) : (null)}
+					{post ? (
+					<PdfDisplay url={`http://localhost:5000/files/${pd}`} width={0.4} ></PdfDisplay>) : (null)}
 					</div>
 				</div>
-				</dic>
+				</div>
 			);
 			
 		}
@@ -541,7 +542,7 @@ export default function Profile1(propss){
 		<div className={classes.root} >
 			
 		
-			<NavExplore/>
+			<NavExplore app = {propss.app}/>
 
 			<div id="info">
         		<img className="pic" src={acount} />
