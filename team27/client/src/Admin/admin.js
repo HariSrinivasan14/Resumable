@@ -101,7 +101,7 @@ const useStyles1 = makeStyles((theme) => ({
 
  
 }));
-export default function Admin() {
+export default function Admin(props) {
   console.log("welcome to BHD")
   const classes = useStyles1();
   const history = useHistory();
@@ -226,7 +226,7 @@ const resour = fetchUsersData();
     
         <div  className={classes.root}  >
          
-          <NavExplore className="nav"/>
+          <NavExplore className="nav" app = {props.app}/>
 
     <main className={classes.content}> 
 

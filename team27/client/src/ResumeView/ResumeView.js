@@ -69,6 +69,7 @@ function ResumeView(props) {
     const username = props.app.state.currentUser;
     console.log(username);
     post = props.location.state.data.post
+    console.log(post)
     const [commentText, setCommentText] = React.useState("");
     const handleCommentChange = (event) => {
       setCommentText(event.target.value);

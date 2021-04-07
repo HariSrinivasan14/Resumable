@@ -64,7 +64,12 @@ class NavExplore extends React.Component{
 		console.log("logging out");
 		logoutUser(this.props.app);
 	}
+
 	render(){
+		let link;
+		if(this.props.app.state.currentUser === "admin"){
+			link = 	<Link className = 'home-style' to="/Admin">Admin</Link>			
+		}
 		return(
 				<Navbar bg="dark" variant="dark">
 					<Navbar.Brand href="/Explore">
@@ -79,6 +84,7 @@ class NavExplore extends React.Component{
 					<Nav className="mr-auto">
 						<Link className = 'home-style' to="/Explore">Home</Link>
 						<Link className = 'home-style' to="/Profile">My Profile</Link>
+						{link}
 						{/* <Nav.Link href="/PostPage">Post Resume</Nav.Link> */}
 					</Nav>
 					{/* <Form inline>

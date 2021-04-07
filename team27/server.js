@@ -347,13 +347,59 @@ app.put('/updateInfo', (req, res) => {
 	console.log("anything")
 	let dateOfBirth= req.body.dateOfBirth
 	let Program= req.body.Program
+	let firstName = req.body.firstName
+	let lastName = req.body.lastName
 
 	User.findOne({Username: req.body.Username}).then((temp) => {
 		if (!temp) {  
 			res.status(404).send('Resource not found')  
 		} else {  
-		temp.dateOfBirth = dateOfBirth;
-		temp.Program = Program;
+		if(dateOfBirth != null && dateOfBirth != ''){
+			temp.dateOfBirth = dateOfBirth;
+		}
+		if(Program != null && Program != ''){
+			temp.Program = Program;
+		}
+		if(firstName != null && firstName != ''){
+			temp.firstName = firstName;
+		}
+		if(lastName != null && lastName != ''){
+			temp.lastName = lastName;
+		}
+		
+	
+		temp.save().then((r) => {
+			res.send(r)
+		}).catch((error) => {
+			log(error)
+			res.status(500).send("Internal Server Error")
+		})
+		}
+	}).catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+	
+})
+app.put('/updateFileInfo', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+
+	console.log("anything")
+	let f= req.body.file
+	let fPre= req.body.fileUrl
+
+	User.findOne({Username: req.body.Username}).then((temp) => {
+		if (!temp) {  
+			res.status(404).send('Resource not found')  
+		} else {  
+		temp.file = f;
+		temp.fileUrl = fPre;
 	
 		temp.save().then((r) => {
 			res.send(r)
