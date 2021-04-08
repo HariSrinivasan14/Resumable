@@ -84,7 +84,6 @@ const App = ({ children }) => (
 
 
 function ResumeView(props) {
-
   // const history = useHistory();
   // useEffect(() =>{
   //     history.push('/ResumeView');
