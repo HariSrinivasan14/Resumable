@@ -1,7 +1,7 @@
 import './ResumeView.css'
 import React, {useState, useEffect, Suspense} from 'react'
 import { useHistory } from "react-router"
-import {NavExplore} from "../NavBar"
+import {NavExplore} from "../NavBar/NavBar"
 import { Container, List } from "semantic-ui-react";
 import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react'
 import Avatar from '@material-ui/core/Avatar';
@@ -49,7 +49,7 @@ const App = ({ children }) => (
                                 (<Comment.Text>
                                   <Link
                                     to={{
-                                      pathname: `highlight-feedback-view/${item._id}`,
+                                      pathname: `/highlight-feedback-view/${item._id}`,
                                       state: { 
                                         user: item.Username, 
                                         postId: post._id, 
@@ -100,7 +100,6 @@ function ResumeView(props) {
     styleLink.rel = "stylesheet";
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
     document.head.appendChild(styleLink);
-
 
     const CommentSection = () => (
         

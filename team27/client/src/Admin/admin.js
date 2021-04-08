@@ -32,7 +32,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Explore from '../Explore/Explore';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import {NavExplore} from "../NavBar"
+import {NavExplore} from "../NavBar/NavBar"
 import {newPosti, fetchPostsData} from '../actions/post.js';
 import {fetchSessions, fetchUsersData} from '../actions/user.js';
 import { useHistory } from "react-router"

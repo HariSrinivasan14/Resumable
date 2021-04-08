@@ -14,7 +14,7 @@ import CardContent from '@material-ui/core/CardContent';
 import SinglePagePDFViewer from "../pdf-viewer";
 /* This is required only if the project file is located 
 inside the app. Otherwise you can use the external link of the pdf file*/
-import {NavExplore} from "../NavBar"
+import {NavExplore} from "../NavBar/NavBar"
 import CardComponent from '../CardComponent/CardComponent';
 import resume1 from '../images/resume_samantha.jpg'
 import resume2 from '../images/resume_angela.webp'

@@ -1,6 +1,6 @@
 import './SignUp.css';
 import React from 'react';
-import {NavSignUp} from '../NavBar.js';
+import {NavSignUp} from '../NavBar/NavBar';
 import {MainButton, MainInputBox} from '../Components/Components.js';
 import {newAccount} from '../actions/user.js';
 

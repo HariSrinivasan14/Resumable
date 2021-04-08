@@ -110,7 +110,7 @@ function CardComponent({post, user, width}){
         title= {post.title}
         subheader= {post.subtitle}
       />
-      <Link to={{pathname: "/ResumeView", state:{user: user, data: {post}}}} >
+      <Link to={{pathname: `/ResumeView/${post._id}`, state:{user: user, data: {post}}}} >
 
         <CardActionArea className="preview">
    
