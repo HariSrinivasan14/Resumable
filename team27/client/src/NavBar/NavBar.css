@@ -60,3 +60,21 @@
 	color: white;
 	text-decoration: none;
 }
+
+.loginTag{
+	float: right;
+	margin-left:  1300px;
+	font-weight: bold;
+	list-style: none; 
+	color: White;
+}
+
+
+.loginTagUser{
+	float: right;
+	font-weight: bold;
+	margin-left:  10px;
+	font-style: italic;
+	list-style: none; 
+	color: White;
+}

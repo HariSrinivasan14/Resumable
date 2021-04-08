@@ -544,7 +544,7 @@ export default function Profile1(propss){
 		<div className={classes.root} >
 			
 		
-			<NavExplore app = {propss.app}/>
+			<NavExplore app = {propss.app} log = {propss.history}/>
 
 			<div id="info">
         		<img className="pic" src={acount} />

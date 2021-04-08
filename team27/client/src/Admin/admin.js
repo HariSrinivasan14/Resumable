@@ -226,7 +226,7 @@ const resour = fetchUsersData();
     
         <div  className={classes.root}  >
          
-          <NavExplore className="nav" app = {props.app}/>
+          <NavExplore className="nav" app = {props.app} log = {props.history}/>
 
     <main className={classes.content}> 
 

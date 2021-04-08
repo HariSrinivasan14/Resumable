@@ -210,7 +210,7 @@ function Explore(props){
 
     return(
             <div className="feed">
-                <NavExplore app = {props.app}/>
+                <NavExplore app = {props.app} log = {props.history}/>
                 {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
                     Create a Post
                 </Button> */}
