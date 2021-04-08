@@ -53,17 +53,24 @@ class HighlightFeedBack extends React.Component{
 					
 				</div>
 					<button id="back" onClick={() => this.props.history.goBack()}>Back</button>
-			<Link
-              to={{
-                pathname: `/ResumeView/${this.props.location.state.postId}`,
-				state:{user: this.props.location.state.user, data: {post:this.props.location.state.post}}
-              }}
-            >
-				<button id="feedback-submit" onClick={() => {this.postFeedback();}}>Submit</button>
 
-            </Link>
+			{this.state.feedback.length > 0 ?
+				<Link
+				to={{
+					pathname: `/ResumeView/${this.props.location.state.postId}`,
+					state:{user: this.props.location.state.user, data: {post:this.props.location.state.post}}
+				}}
+				>
+					<button id="feedback-submit" onClick={() => {this.postFeedback();}}>Submit</button>
+
+				</Link> : 
+				
+				<button id="feedback-submit-disabled" disabled="true">Submit</button>}
 					
-			</div>
+			</div> 
+
+			
+
 			
 		);
 	}
