@@ -9,13 +9,18 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
-import {updateLikes, fetchPostsData} from '../actions/post.js';
+import {updateLikes, deletePost, fetchPostsData} from '../actions/post.js';
 import "./CardComponent.css"
+import DeleteIcon from '@material-ui/icons/Delete';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 function CardComponent({post, user}){
   const classes = useStyles();
   // const [expanded, setExpanded] = React.useState(false);
@@ -48,7 +52,20 @@ function CardComponent({post, user}){
   const [isLiked, updateLike] = useState(false);
   const [count, setCount] = useState(post.likes);
   const [color, setColor] = useState('grey');
+  const [open, setOpen] = React.useState(false);
   let likee;
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleCloseYes = () => {
+    setOpen(false);
+    deletePost(post._id);
+    window.location.reload(false);
+  };
+  const handleCloseNo = () => {
+    setOpen(false);
+  };
   const handleLike = () => {
     if (!isLiked) {
       updateLike(true);
@@ -65,8 +82,21 @@ function CardComponent({post, user}){
       updateLikes(likee, post._id)
     }
   };
-
+  const handleDelete= (post) => {
+    // <div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel(item) } } />
+    handleClickOpen()
+  };
+  function add_delete(user, post, classes){
+    if(user === 'admin'){
+      return(
+        <IconButton onClick={() => handleDelete(post)} aria-label="delete" className={classes.margin}>
+          <DeleteIcon />
+        </IconButton>
+      )
+    }
+  }
   return (
+    <div>
     <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -74,11 +104,9 @@ function CardComponent({post, user}){
             {post.Username.charAt(0)}
           </Avatar>
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
+        action={
+          add_delete(user.user, post, classes)
+        }
         title= {post.title}
         subheader= {post.subtitle}
       />
@@ -101,20 +129,37 @@ function CardComponent({post, user}){
                     onClick={() => handleLike()}>
           <FavoriteIcon style={{ color: color }}/>
         </IconButton>
-        {/* <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
 
       </CardActions>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
            {count} likes  {post.comments.length} comments
         </Typography>
-        {/* <Typography variant="body2" color="textSecondary" component="p">
-           {post.comments.length} comments
-        </Typography> */}
       </CardContent>
     </Card>
+
+    <Dialog
+        open={open}
+        onClose={handleCloseNo}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete Post?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this post!?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNo} color="primary">
+            no
+          </Button>
+          <Button onClick={handleCloseYes} color="primary" autoFocus>
+            yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
     
   );
 }

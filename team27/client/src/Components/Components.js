@@ -85,10 +85,6 @@ const InputBox = withStyles({
 		 return 'This Field is required!';
 	 }else if(code === 2){
 		 return 'Username is taken';
-	 }else if(code === 3){
-			app.props.history.push("/Explore");
-	 }else if(code === 4){
-			app.props.history.push("/Admin");
 	 }else if(code === 5){
 		 return 'Username or Password is incorrect';
 	 }else{

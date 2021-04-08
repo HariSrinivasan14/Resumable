@@ -8,8 +8,8 @@ import HighlightFeedBackView from './HighlightFeedbackView';
 import Explore from './Explore/Explore'
 import PostPage from './Postpage/PostPage'
 import ResumeView from './ResumeView/ResumeView'
-import Admin from './admin';
-import Profile from './profile';
+import Admin from './Admin/admin';
+import Profile from './Profile/profile';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {checkUserSession} from './actions/user.js';
 
@@ -17,15 +17,17 @@ import {checkUserSession} from './actions/user.js';
 
 class App extends React.Component{
 	
-	componentDidMount(){
-		checkUserSession(this);
-	}
-		
 	state = {
 		currentUser: null,
+		currpage: 'home',
 		adminCounter: 0
 	}
-	
+	componentWillMount(prev){
+		// if(this.state.currpage !== prev.state.currpage){
+			checkUserSession(this);
+		// }
+	}
+		
 	render(){
 		const {currentUser} = this.state;
 		return (
@@ -33,7 +35,7 @@ class App extends React.Component{
                 <Switch>
 
                     <Route
-                        exact path={["/Login", "/Explore"]}
+                        exact path={["/Login"]}
                         render={ props => (
                             <div className="app">
                                 { /* Different componenets rendered depending on if someone is logged in. */}
@@ -61,7 +63,7 @@ class App extends React.Component{
 							)}
 						/>
 						<Route
-							path="/profile"
+							path="/Profile"
 							render={ props => (
 								<div className="app">
 								{ /* Different componenets rendered depending on if someone is logged in. */}
@@ -115,29 +117,6 @@ class App extends React.Component{
                 </Switch>
             </Router>
         );
-		
-
-
-		// return(
-		// 	<Router>
-		// 		<div>
-		// 			<Switch>
-		// 				<Route path="/" exact component={Home} {...this.props} app={this}/>
-		// 				<Route path="/Login" component={Login} {...this.props} app={this}/>
-		// 				<Route path="/SignUp" component={SignUp} {...this.props} app={this}/>
-		// 				<Route path="/Explore" component={Explore} {...this.props} app={this}/>
-		// 				<Route path="/PostPage" component={PostPage} {...this.props} app={this}/>
-		// 				<Route path="/ResumeView" component={ResumeView} {...this.props} app={this}/>
-							
-		// 				<Route path="/Admin" component={Admin} {...this.props} app={this}/>
-		// 				<Route path="/profile" component={Profile} {...this.props} app={this}/>
-		// 				<Route path="/highlight-feedback" component={HighlightFeedBack} {...this.props} app={this}/>
-		// 			</Switch>
-		// 		</div>
-		// 	</Router>
-			
-		// );
-
 
 	}
 }

@@ -48,3 +48,15 @@
 	color: black;
 	display: inline-block;
 }
+
+.home-style{
+	margin-left: 30px;
+	font-weight: bold;
+	list-style: none; 
+	color: rgb(202, 201, 201);
+}
+
+.home-style:hover{
+	color: white;
+	text-decoration: none;
+}

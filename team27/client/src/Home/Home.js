@@ -1,10 +1,6 @@
 import React from 'react';
 import {NavHome} from '../NavBar'
 import './Home.css';
-import SignUp from '../SignUp/SignUp';
-import Button from '@material-ui/core/Button';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import teal from '@material-ui/core/colors/teal';
 import landingImage from '../images/landingImage.png';
 import {HomeButton} from '../Components/Components.js';
 

@@ -15,35 +15,9 @@ import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const resource = fetchPostsData();
-const inputBoxTheme = createMuiTheme({
-	overrides: {
-		MuiOutlinedInput: {
-			root: {
-				borderRadius: '10px',
-				Textcolor: 'black',
-				Height: '48px',
-				minWidth: '500px',
-				textTransform: 'capitalize',
-				marginLeft: '50px',
-				marginBottom: '10px',
-				'&$focused $notchedOutline': {
-					borderColor: '#009688',
-					borderWidth: '2px',
-				},
-				"&:hover $notchedOutline": {
-					borderColor: '#71A89E'
-				}
-			},
-			notchedOutline: {
-				borderColor: '#71A89E'
-			},
-		},
-	}
-});
 
-function GetPosts(user){
+function GetPosts(username){
     const got_posts = resource.posts.read();
-    console.log(got_posts)
     return(
         <div className="resumes">
 
@@ -59,11 +33,11 @@ function GetPosts(user){
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
-                                if(item.Username != user.Username){
+                                if(item.Username !== username){
                                 return (<Grid key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
-                                                user = {user.Username}
+                                                user = {username}
                                             />
                                         </Grid>)}
                                          
@@ -76,17 +50,17 @@ function GetPosts(user){
     
 }
 function Explore(props){
-    var username = props.app.state.currentUser;
-
-    var user = {
+    const username = props.app.state.currentUser;
+    // props.
+    const history = useHistory();
+    useEffect(() =>{
+        history.push('/Explore');
+    }, [history]);
+    const user = {
         Username: username
     }
-        // const history = useHistory();
-        // history.push("/Explore");
 
-        // props.history.push("/Explore")
-
-        const [modalShow, setModalShow] = React.useState(false);
+    const [modalShow, setModalShow] = React.useState(false);
 
 
 
@@ -246,7 +220,7 @@ function Explore(props){
                     onHide={() => setModalShow(false)}
                 />
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
-                    <GetPosts user={user}/>
+                    <GetPosts user={username}/>
                 </Suspense>
                    
                 

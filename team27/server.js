@@ -28,7 +28,7 @@ const { User } = require('./models/user')
 const { Post } = require('./models/post')
 
 // to validate object IDs
-const { ObjectID } = require('mongodb')
+const { ObjectID, MongoClient } = require('mongodb')
 
 // File upload/retreival from db using multer and GridFS
 const multer = require('multer');
@@ -50,9 +50,11 @@ const gfsCollectionName = 'uploads'
 
 // GridFS stream
 // Reference: https://github.com/aheckmann/gridfs-stream
-mongoose.connection.once('open', () => {
+const db = mongoose.connection;
+db.once('open', () => {
   gfs = Grid(mongoose.connection.db, mongoose.mongo);
   gfs.collection(gfsCollectionName);
+
 });
 
 // GridFS storage engine
@@ -68,7 +70,7 @@ const storage = new GridFsStorage({
 });
 const gfsUpload = multer({ storage });
 
-
+let count;
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 
@@ -213,7 +215,7 @@ app.post('/addUser', (req, res) => {
 	})
 })
 
-app.post('/addPost', gfsUpload.single('file'), (req, res) => {
+app.post('/addPost', gfsUpload.single('file'),authenticate, (req, res) => {
 	// log(req.body)
 
 	// check mongoose connection established.
@@ -250,7 +252,8 @@ app.post('/addPost', gfsUpload.single('file'), (req, res) => {
 	})
 
 })
-app.post('/addPost/:id', (req, res) => {
+// app.post('/addPost/:id',authenticate, (req, res) => {
+app.post('/addPost/:id',(req, res) => {
 	// log(req.body)
 
 	// check mongoose connection established.
@@ -325,7 +328,24 @@ app.get('/getPost', (req, res) => {
 	})
 	
 })
-app.get('/getPost/:id', (req, res) => {
+app.get('/getSession', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	db.collection('sessions').find().then((temp) => {
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+})
+// app.get('/getPost/:id', authenticate, (req, res) => {
+	app.get('/getPost/:id', (req, res) => {
 	
 	if (mongoose.connection.readyState != 1) {
 		log('Issue with mongoose connection')
@@ -379,13 +399,59 @@ app.put('/updateInfo', (req, res) => {
 	console.log("anything")
 	let dateOfBirth= req.body.dateOfBirth
 	let Program= req.body.Program
+	let firstName = req.body.firstName
+	let lastName = req.body.lastName
 
 	User.findOne({Username: req.body.Username}).then((temp) => {
 		if (!temp) {  
 			res.status(404).send('Resource not found')  
 		} else {  
-		temp.dateOfBirth = dateOfBirth;
-		temp.Program = Program;
+		if(dateOfBirth != null && dateOfBirth != ''){
+			temp.dateOfBirth = dateOfBirth;
+		}
+		if(Program != null && Program != ''){
+			temp.Program = Program;
+		}
+		if(firstName != null && firstName != ''){
+			temp.firstName = firstName;
+		}
+		if(lastName != null && lastName != ''){
+			temp.lastName = lastName;
+		}
+		
+	
+		temp.save().then((r) => {
+			res.send(r)
+		}).catch((error) => {
+			log(error)
+			res.status(500).send("Internal Server Error")
+		})
+		}
+	}).catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+	
+	
+})
+app.put('/updateFileInfo', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+
+	console.log("anything")
+	let f= req.body.file
+	let fPre= req.body.fileUrl
+
+	User.findOne({Username: req.body.Username}).then((temp) => {
+		if (!temp) {  
+			res.status(404).send('Resource not found')  
+		} else {  
+		temp.file = f;
+		temp.fileUrl = fPre;
 	
 		temp.save().then((r) => {
 			res.send(r)
@@ -448,7 +514,8 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
-app.patch('/updatePost/:id/:like', (req, res) => {  
+app.patch('/updatePost/:id/:like', authenticate, (req, res) => {  
+// app.patch('/updatePost/:id/:like', (req, res) => {  
 	const postId = req.params.id;
     // check mongoose connection established.  
     if (mongoose.connection.readyState != 1) {  
@@ -457,8 +524,6 @@ app.patch('/updatePost/:id/:like', (req, res) => {
         return;  
     }   
     Post.findOne({_id:postId}).then((rest)=>{ 
-		console.log('found post in likes')
-		console.log(req.params.like)
         rest.likes = (parseInt(rest.likes) + parseInt(req.params.like)).toString();
         rest.save().then((rest_patch)=>{  
             res.send({  
@@ -470,7 +535,22 @@ app.patch('/updatePost/:id/:like', (req, res) => {
   
 })  
 
-
+app.delete('/deletePost/:postid', (req, res) => {  
+ 
+    // check mongoose connection established.  
+    if (mongoose.connection.readyState != 1) {  
+        log('Issue with mongoose connection')  
+        res.status(500).send('Internal server error')  
+        return;  
+    }   
+  
+    Post.deleteOne({_id:req.params.postid}).then((post)=>
+		post.save()
+	).catch((error)=>{  
+        res.status(500).send(error)  
+    })  
+  
+}) 
 /*************************************************/
 // Express server listening...
 const port = process.env.PORT || 5000

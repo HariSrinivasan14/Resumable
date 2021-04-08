@@ -1,5 +1,6 @@
 import './ResumeView.css'
-import React, {useState, Suspense} from 'react'
+import React, {useState, useEffect, Suspense} from 'react'
+import { useHistory } from "react-router"
 import {NavExplore} from "../NavBar"
 import { Container, List } from "semantic-ui-react";
 import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react'
@@ -8,7 +9,7 @@ import {newComment, fetchCommentsData, fetchPostsData} from '../actions/post.js'
 import {TextField, OutlinedInput, Box, Button} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
-// const resource = fetchCommentsData;
+
 const res = fetchPostsData();
 const App = ({ children }) => (
     <Container style={{ margin: 20 }}>
@@ -22,7 +23,6 @@ const App = ({ children }) => (
     // const gotComments = resource(post._id).comments.read(); 
     
     const cvc = res.posts.read();
-    // console.log(gotComments);
 
     console.log(cvc);
 
@@ -85,9 +85,14 @@ const App = ({ children }) => (
 
 function ResumeView(props) {
 
-    var username = props.app.state.currentUser;
+  // const history = useHistory();
+  // useEffect(() =>{
+  //     history.push('/ResumeView');
+  // }, [history]);
+    const username = props.app.state.currentUser;
     console.log(username);
     post = props.location.state.data.post
+    console.log(post)
     const [commentText, setCommentText] = React.useState("");
     const handleCommentChange = (event) => {
       setCommentText(event.target.value);
@@ -113,7 +118,6 @@ function ResumeView(props) {
 
           <Form onSubmit={(e)=>{
                 
-                // setComment(c)
               if(commentText!=''){
                 let nComment = {
                     Username: username,
@@ -160,11 +164,7 @@ function ResumeView(props) {
                 <CommentSection/>
 
               </App>
-                {/* <textarea 
-                    id="comment-text-area" 
-                    value={commentText} 
-                    onChange={handleCommentChange}
-                /> */}
+
                 <TextField
                         id="comment-textarea"
                         name="Comment"
