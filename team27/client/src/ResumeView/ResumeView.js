@@ -140,7 +140,7 @@ function ResumeView(props) {
             >
               <Bt color='teal'> Add Highlight </Bt>
 
-            </Link>;
+            </Link>
           </Form>
 
         </Comment.Group>

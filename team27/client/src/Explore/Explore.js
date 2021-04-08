@@ -38,6 +38,7 @@ function GetPosts(username){
                                             <CardComponent 
                                                 post= {item}
                                                 user = {username}
+                                                width = {700}
                                             />
                                         </Grid>)}
                                          
@@ -103,6 +104,8 @@ function Explore(props){
                 if(title == ''){
                     console.log("empty title");
                     
+                }else if(file = ''){
+                    console.log("empty pdf");
                 }else{
                     setModalShow(false)
                     // console.log(pdfjs.getDocument(file.preview))
