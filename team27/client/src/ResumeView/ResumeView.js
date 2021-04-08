@@ -9,21 +9,27 @@ import {newComment, fetchCommentsData, fetchPostsData} from '../actions/post.js'
 import {TextField, OutlinedInput, Box, Button} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
+import TextFieldInput from '../TextFieldInput';
 
-const res = fetchPostsData();
-const App = ({ children }) => (
+var res;
+const App = ({ children}) => (
     <Container style={{ margin: 20 }}>
       {children}
     </Container>
   );
 
   let post = null;
-  function GetComments(){
+function GetComments(){
       
     // const gotComments = resource(post._id).comments.read(); 
-    
-    const cvc = res.posts.read();
 
+    // const [cvc, setCvc] = useState([])
+    // useEffect(() => {
+    //   fetchPostsData().then(
+    //     setCvc(res.posts.read())
+    //     )      
+    // }, [])
+    const cvc = res.posts.read();
     console.log(cvc);
 
          return(
@@ -49,7 +55,7 @@ const App = ({ children }) => (
                                 (<Comment.Text>
                                   <Link
                                     to={{
-                                      pathname: `highlight-feedback-view/${item._id}`,
+                                      pathname: `/highlight-feedback-view/${item._id}`,
                                       state: { 
                                         user: item.Username, 
                                         postId: post._id, 
@@ -84,29 +90,23 @@ const App = ({ children }) => (
 
 
 function ResumeView(props) {
-
-  // const history = useHistory();
-  // useEffect(() =>{
-  //     history.push('/ResumeView');
-  // }, [history]);
+    res = fetchPostsData();
     const username = props.app.state.currentUser;
-    console.log(username);
+    let ct = ""
     post = props.location.state.data.post
-    console.log(post)
-    const [commentText, setCommentText] = React.useState("");
-    const handleCommentChange = (event) => {
-      setCommentText(event.target.value);
-  };
+
+    const handleCommentChange = (comment) => {
+      ct = comment;
+    };
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
     document.head.appendChild(styleLink);
 
-
     const CommentSection = () => (
         
         <Comment.Group>
-
+          {/* {console.log("comment section") */}
           <Header as='h3' dividing>
             Comments
           </Header>
@@ -117,11 +117,11 @@ function ResumeView(props) {
 
 
           <Form onSubmit={(e)=>{
-                
-              if(commentText!=''){
+              console.log(ct);
+              if(ct !=''){
                 let nComment = {
                     Username: username,
-                    text: commentText,
+                    text: ct,
                     time: Date().toLocaleString(),
                     type: "TEXT"
                 };
@@ -135,10 +135,10 @@ function ResumeView(props) {
             <Link
               to={{
                 pathname: `/highlight-feedback/${post._id}`,
-                state: { user: username, postId: post._id }
+                state: { user: username, postId: post._id, post: post }
               }}
             >
-              <Bt color='teal'> Add Highlight </Bt>
+            <Bt color='teal'> Add Highlight </Bt>
 
             </Link>
           </Form>
@@ -165,7 +165,7 @@ function ResumeView(props) {
 
               </App>
 
-                <TextField
+                {/* <TextField
                         id="comment-textarea"
                         name="Comment"
                         placeholder="Please insert your comment in here"
@@ -174,7 +174,8 @@ function ResumeView(props) {
                         multiline
                         variant="outlined"
                         fullWidth
-                />
+                /> */}
+                <TextFieldInput onCommentChange={handleCommentChange}/>
               </div>
 
 

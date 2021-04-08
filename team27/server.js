@@ -161,6 +161,7 @@ app.post('/loginUser', (req, res) => {
 })
 
 app.get("/users/logout", (req, res) => {
+    console.log("logging user out......");
     req.session.destroy(error => {
         if (error) {
             res.status(500).send(error);
@@ -317,7 +318,7 @@ app.get('/getPost', (req, res) => {
 		res.status(500).send('Internal mongoose server error');
 		return;
 	}
-	
+	// .sort({likes: -1})
 	Post.find().then((temp) => {
 		res.send(temp)
 	})
@@ -344,7 +345,7 @@ app.get('/getSession', (req, res) => {
 	
 })
 // app.get('/getPost/:id', authenticate, (req, res) => {
-	app.get('/getPost/:id', (req, res) => {
+app.get('/getPost/:id', (req, res) => {
 	
 	if (mongoose.connection.readyState != 1) {
 		log('Issue with mongoose connection')

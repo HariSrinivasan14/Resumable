@@ -27,14 +27,14 @@ function GetPosts(username){
             (
                
                     <Grid container 
-                        spacing={10}
                         p = {1}
                         direction="column"
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
                                 if(item.Username !== username){
-                                return (<Grid key={index} item xs = {12}>
+                                return (<Grid   style={{margin: 10}}
+                                                key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
                                                 user = {username}
