@@ -41,7 +41,8 @@ class HighlightFeedBackView extends React.Component{
                     x={highlight.x}
                     y={highlight.y}
                     h={highlight.h}
-                    w={highlight.w} />]});
+                    w={highlight.w}
+                    feedback={this.state.feedback[i].title.text} />]});
 
             }
         }

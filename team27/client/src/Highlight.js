@@ -16,7 +16,12 @@ class Highlight extends React.Component {
         }
 
         return (
-            <div className="highlight" id={`highlight-${this.props.highlightID}`} style={highlightStyle}></div>
+            <div 
+                className="highlight" 
+                id={`highlight-${this.props.highlightID}`} 
+                style={highlightStyle}
+                ></div>
+
         )
     }
 }
