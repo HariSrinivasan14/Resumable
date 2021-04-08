@@ -54,7 +54,7 @@ class App extends React.Component{
                     />
 						<Route path="/" exact component={Home} {...this.props} app={this}/>
 						<Route path="/PostPage" component={PostPage} {...this.props} app={this}	/>
-						<Route path="/ResumeView" 
+						<Route path="/ResumeView/:id" 
 							render={ props => (
 								<div className="app">
 								{ /* Different componenets rendered depending on if someone is logged in. */}

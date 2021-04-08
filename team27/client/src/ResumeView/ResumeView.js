@@ -49,7 +49,7 @@ const App = ({ children }) => (
                                 (<Comment.Text>
                                   <Link
                                     to={{
-                                      pathname: `highlight-feedback-view/${item._id}`,
+                                      pathname: `/highlight-feedback-view/${item._id}`,
                                       state: { 
                                         user: item.Username, 
                                         postId: post._id, 
@@ -101,7 +101,6 @@ function ResumeView(props) {
     styleLink.rel = "stylesheet";
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
     document.head.appendChild(styleLink);
-
 
     const CommentSection = () => (
         
