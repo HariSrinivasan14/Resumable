@@ -10,20 +10,25 @@ import {TextField, OutlinedInput, Box, Button} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
 
-const res = fetchPostsData();
-const App = ({ children }) => (
+var res;
+const App = ({ children}) => (
     <Container style={{ margin: 20 }}>
       {children}
     </Container>
   );
 
   let post = null;
-  function GetComments(){
+function GetComments(){
       
     // const gotComments = resource(post._id).comments.read(); 
-    
-    const cvc = res.posts.read();
 
+    // const [cvc, setCvc] = useState([])
+    // useEffect(() => {
+    //   fetchPostsData().then(
+    //     setCvc(res.posts.read())
+    //     )      
+    // }, [])
+    const cvc = res.posts.read();
     console.log(cvc);
 
          return(
@@ -84,14 +89,10 @@ const App = ({ children }) => (
 
 
 function ResumeView(props) {
-  // const history = useHistory();
-  // useEffect(() =>{
-  //     history.push('/ResumeView');
-  // }, [history]);
+    res = fetchPostsData();
     const username = props.app.state.currentUser;
-    console.log(username);
+
     post = props.location.state.data.post
-    console.log(post)
     const [commentText, setCommentText] = React.useState("");
     const handleCommentChange = (event) => {
       setCommentText(event.target.value);
@@ -104,7 +105,7 @@ function ResumeView(props) {
     const CommentSection = () => (
         
         <Comment.Group>
-
+          {/* {console.log("comment section") */}
           <Header as='h3' dividing>
             Comments
           </Header>
@@ -133,10 +134,10 @@ function ResumeView(props) {
             <Link
               to={{
                 pathname: `/highlight-feedback/${post._id}`,
-                state: { user: username, postId: post._id }
+                state: { user: username, postId: post._id, post: post }
               }}
             >
-              <Bt color='teal'> Add Highlight </Bt>
+            <Bt color='teal'> Add Highlight </Bt>
 
             </Link>
           </Form>

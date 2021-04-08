@@ -5,7 +5,7 @@ import HighlightSidebar from './HighlightSidebar';
 import PdfHighlight from './PdfHighlight';
 import {newComment} from './actions/post'
 import './HighlightFeedback.css';
-
+import { Link } from 'react-router-dom';
 
 
 class HighlightFeedBack extends React.Component{
@@ -78,7 +78,16 @@ class HighlightFeedBack extends React.Component{
 					
 				</div>
 					<button id="back" onClick={() => this.props.history.goBack()}>Back</button>
-					<button id="feedback-submit" onClick={() => {this.postFeedback(); this.props.history.goBack();}}>Submit</button>
+			<Link
+              to={{
+                pathname: `/ResumeView/${this.props.location.state.postId}`,
+				state:{user: this.props.location.state.user, data: {post:this.props.location.state.post}}
+              }}
+            >
+				<button id="feedback-submit" onClick={() => {this.postFeedback();}}>Submit</button>
+
+            </Link>
+					
 			</div>
 			
 		);
