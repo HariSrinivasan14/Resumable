@@ -59,6 +59,7 @@ function GetComments(){
                                       state: { 
                                         user: item.Username, 
                                         postId: post._id, 
+                                        post: post,
                                         highlightId: item._id
                                       }
                                     }}
@@ -165,16 +166,6 @@ function ResumeView(props) {
 
               </App>
 
-                {/* <TextField
-                        id="comment-textarea"
-                        name="Comment"
-                        placeholder="Please insert your comment in here"
-                        onChange={handleCommentChange}
-                        value={commentText}
-                        multiline
-                        variant="outlined"
-                        fullWidth
-                /> */}
                 <TextFieldInput onCommentChange={handleCommentChange}/>
               </div>
 
