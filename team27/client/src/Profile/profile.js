@@ -183,6 +183,7 @@ export default function Profile1(propss){
 													<CardComponent 
 														post= {item}
 														user = {user}
+														width = {500}
 													/>
 													
 												</Grid>
