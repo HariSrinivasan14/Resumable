@@ -9,6 +9,7 @@ import {newComment, fetchCommentsData, fetchPostsData} from '../actions/post.js'
 import {TextField, OutlinedInput, Box, Button} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
+import TextFieldInput from '../TextFieldInput';
 
 var res;
 const App = ({ children}) => (
@@ -91,12 +92,12 @@ function GetComments(){
 function ResumeView(props) {
     res = fetchPostsData();
     const username = props.app.state.currentUser;
-
+    let ct = ""
     post = props.location.state.data.post
-    const [commentText, setCommentText] = React.useState("");
-    const handleCommentChange = (event) => {
-      setCommentText(event.target.value);
-  };
+
+    const handleCommentChange = (comment) => {
+      ct = comment;
+    };
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
@@ -116,11 +117,11 @@ function ResumeView(props) {
 
 
           <Form onSubmit={(e)=>{
-                
-              if(commentText!=''){
+              console.log(ct);
+              if(ct !=''){
                 let nComment = {
                     Username: username,
-                    text: commentText,
+                    text: ct,
                     time: Date().toLocaleString(),
                     type: "TEXT"
                 };
@@ -164,7 +165,7 @@ function ResumeView(props) {
 
               </App>
 
-                <TextField
+                {/* <TextField
                         id="comment-textarea"
                         name="Comment"
                         placeholder="Please insert your comment in here"
@@ -173,7 +174,8 @@ function ResumeView(props) {
                         multiline
                         variant="outlined"
                         fullWidth
-                />
+                /> */}
+                <TextFieldInput onCommentChange={handleCommentChange}/>
               </div>
 
 
