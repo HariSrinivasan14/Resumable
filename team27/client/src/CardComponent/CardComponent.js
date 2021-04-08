@@ -22,10 +22,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((width) => ({
   root: {
-    maxWidth: 500,
-    minWidth: 500,
+    maxWidth: width,
+    minWidth: width,
     transition: "0.3s",
     boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
     "&:hover": {
@@ -42,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function CardComponent({post, user}){
-  const classes = useStyles();
+function CardComponent({post, user, width}){
+  const classes = useStyles(width);
   // const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);

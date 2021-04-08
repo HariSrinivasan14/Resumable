@@ -3,7 +3,7 @@ import { useHistory } from "react-router"
 import "./Explore.css"
 import CardComponent from '../CardComponent/CardComponent';
 import { Grid } from "@material-ui/core"
-import {NavExplore} from "../NavBar"
+import {NavExplore} from "../NavBar/NavBar"
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
 import {styled} from '@material-ui/core';
@@ -38,6 +38,7 @@ function GetPosts(username){
                                             <CardComponent 
                                                 post= {item}
                                                 user = {username}
+                                                width = {700}
                                             />
                                         </Grid>)}
                                          
@@ -103,6 +104,8 @@ function Explore(props){
                 if(title == ''){
                     console.log("empty title");
                     
+                }else if(file = ''){
+                    console.log("empty pdf");
                 }else{
                     setModalShow(false)
                     // console.log(pdfjs.getDocument(file.preview))

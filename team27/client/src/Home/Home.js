@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavHome} from '../NavBar'
+import {NavHome} from '../NavBar/NavBar'
 import './Home.css';
 import landingImage from '../images/landingImage.png';
 import {HomeButton} from '../Components/Components.js';
