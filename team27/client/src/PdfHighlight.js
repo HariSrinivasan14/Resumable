@@ -68,15 +68,13 @@ class PdfHighlight extends React.Component{
     }
 
     handleFeedbackComment(e) {
-        // console.log(this.state.textSelection);
-        // console.log(e.target.value);
-
-        
         if (e.target.value != null && e.target.value != "") {
             let currHighlightCoord = this.state.highlightCoords[this.state.highlightCoords.length -1]
             this.setState({ highlightID: this.state.highlightID + 1 });
 
             console.log(this.state.highlightCoords);
+            console.log(this.state.highlightID);
+
             this.setState({ highlights: [...this.state.highlights, <Highlight
                 key ={this.state.highlightID}
                 highlightID={this.state.highlightID}
@@ -84,6 +82,8 @@ class PdfHighlight extends React.Component{
                 y={currHighlightCoord.y - this.state.canvasDim.y}
                 h={currHighlightCoord.h}
                 w={currHighlightCoord.w} />]});
+
+            console.log(this.state.highlights);
 
 
             this.setState({feedbackComment: e.target.value});
@@ -95,14 +95,22 @@ class PdfHighlight extends React.Component{
                 title: {
                     text: e.target.value,
                 },
-                highlight: this.state.highlights[this.state.highlights.length - 1]
+                highlight: {
+                    key: this.state.highlightID,
+                    x: currHighlightCoord.x,
+                    y: currHighlightCoord.y - this.state.canvasDim.y,
+                    h: currHighlightCoord.h,
+                    w: currHighlightCoord.w
+                }
             };
+            
             this.props.onFeedbackSubmit(newFeedback);
             this.setState({ feedbackPopupOpen: false });
         }
     }
             
     render(){
+        console.log(this.state.feedback)
 		return(
             <div className="pdf-container" onMouseUp={this.handleTextSelection}>
                 <PdfDisplay url={this.props.url} width={0.68}></PdfDisplay>
@@ -116,37 +124,8 @@ class PdfHighlight extends React.Component{
                 {this.state.highlights ? 
                     this.state.highlights.map(highlight => 
                     (highlight)) : null}
-                {/* {this.state.feedbackPopupCoords ? <Highlight 
-                    x={this.state.feedbackPopupCoords.x}
-                    y={this.state.feedbackPopupCoords.y}
-                    h={this.state.feedbackPopupCoords.h}
-                    w={this.state.feedbackPopupCoords.w} /> : null} */}
             </div>
 		);
 	}
 }
 export default PdfHighlight;
-
-
-
-// let pageTextContent = document.getElementsByClassName("react-pdf__Page__textContent")[0];
-//                 let textContentToHiglight = []
-//                 console.log(pageTextContent.children);
-//                 for (let i =0; i < pageTextContent.children.length; i++) {
-//                     let c = pageTextContent.children[i]
-//                     // console.log(textRectCoords.x);
-//                     // console.log(c.style.left);
-                    
-//                     // console.log(textRectCoords.y);
-//                     // console.log(c.style.top);
-//                     let top = parseInt(c.style.top.slice(0, -2))
-//                     let left = parseInt(c.style.left.slice(0, -2))
-//                     if (textRectCoords.x >= left && textRectCoords.y >= top) {
-//                         textContentToHiglight.push(c);
-//                     }
-//                 }
-//                 console.log(textContentToHiglight)
-//                 for (let i = 0; i < textContentToHiglight.length; i++) {
-//                     textContentToHiglight[i].id = "highlight";
-//                     console.log(textContentToHiglight[i]);
-//                 }

@@ -14,11 +14,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
-import pdf from '../images/sampleResume.pdf'
-import {getFileById} from '../actions/files'
 import {updateLikes, fetchPostsData} from '../actions/post.js';
-import { Document, Page, pdfjs } from 'react-pdf';
-import { get } from 'mongoose';
 import "./CardComponent.css"
 
 const useStyles = makeStyles((theme) => ({

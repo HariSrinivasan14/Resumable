@@ -2,7 +2,6 @@ import React from "react";
 import './HighlightSidebar.css';
 
 function HighlightSidebar({ feedbackItems }) {
-
   return (
     <div className="highlight-sidebar">
       <div className="description">
@@ -41,7 +40,7 @@ function HighlightSidebar({ feedbackItems }) {
                   </div>
                   ) : null
                 }
-              </div>
+            </div>
             
           </li>
         ))}

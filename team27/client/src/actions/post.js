@@ -110,6 +110,7 @@ export const newComment = (postid, comment) => {
         });
 };
 
+
 function fetchComments(id) {
     //   let posts = []
       const request = `${API_HOST}/getPost/${id}`
@@ -135,6 +136,32 @@ function fetchComments(id) {
           }));
       });
     }
+
+export const fetchHighlights = (pid, hid) => {
+
+    const request = `${API_HOST}/highlights/${pid}/${hid}`;
+    
+    return new Promise(resolve => {
+        resolve(fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                console.log(res)
+                return res;
+            } else {
+                alert("Could not get comments");
+            }
+        })
+        .then(json => {
+            return json
+        })
+        .catch(error => {
+            console.log(error);
+        }));
+    });
+}
+        
+    
+    
     
 
 

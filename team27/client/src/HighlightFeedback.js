@@ -3,6 +3,7 @@ import pdf from './images/sampleResume.pdf';
 import HighlightSidebar from './HighlightSidebar';
 // import PdfDisplay from './PdfDisplay';
 import PdfHighlight from './PdfHighlight';
+import {newComment} from './actions/post'
 import './HighlightFeedback.css';
 
 
@@ -49,15 +50,23 @@ class HighlightFeedBack extends React.Component{
     	this.setState({ feedback: [newFeedback, ...this.state.feedback] });
 	}
 
-	postFeedback() {
-		return this.state.feedback;
+	postFeedback(e) {
+		console.log(this.state.feedback);
+		let postId = this.props.location.state.postId
+		let newHighlightComment = {
+			type: "HIGHLIGHT",
+			Username: this.props.location.state.user,
+			text: `http://localhost:3000/highlight-feedback-view`,
+			time: Date().toLocaleString(),
+			feedback: this.state.feedback
+			
+		};
+		newComment(postId, newHighlightComment)
 	}
 	
 	render(){
-		let history = this.useHistory;
 		return(
 			<div>
-				{/* <NavExplore/> */}
 				<div className="highlight-feedback-container">
 					<div className="highlight-feedback-document">
 						<PdfHighlight url={pdf} onFeedbackSubmit={this.addFeedback}></PdfHighlight>
@@ -68,8 +77,8 @@ class HighlightFeedBack extends React.Component{
 					</div>
 					
 				</div>
-					<button id="feedback-post" onClick={() => this.props.history.goBack()}>Back to Resume</button>
-				
+					<button id="back" onClick={() => this.props.history.goBack()}>Back</button>
+					<button id="feedback-submit" onClick={() => {this.postFeedback(); this.props.history.goBack();}}>Submit</button>
 			</div>
 			
 		);

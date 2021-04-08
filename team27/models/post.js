@@ -3,11 +3,43 @@
 
 const mongoose = require('mongoose');
 
-const CommentSchema = new mongoose.Schema({
-   Username: String,
-   text: String,
-   time: String
+
+const HighlightSchema = new mongoose.Schema({
+
+    content: {
+        text: String,
+        image: String,
+    },
+    title: {
+        text: String
+    },
+    highlight: 
+        {
+            key: String,
+            x: Number,
+            y: Number,
+            h: Number,
+            w: Number
+        }
+    
 });
+
+const HighlightCommentSchema = new mongoose.Schema({
+    Username: String, 
+    text: String,
+    time: String,
+    type: String,
+    feedback:[HighlightSchema]
+});
+
+const CommentSchema = new mongoose.Schema({
+    Username: String,
+    text: String,
+    time: String,
+    type: String
+ });
+ 
+
 const postSchema = new mongoose.Schema({
     Username: String,
     title: String,
@@ -17,7 +49,9 @@ const postSchema = new mongoose.Schema({
     fileUrl: String,
     desc: String,
     likes: Number,
-    comments: [CommentSchema]
+    comments: [CommentSchema | HighlightCommentSchema],
+    highlights: [HighlightCommentSchema]
+    
 });
 
 

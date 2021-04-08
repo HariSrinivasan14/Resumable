@@ -4,6 +4,7 @@ import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import Home from './Home/Home';
 import HighlightFeedBack from './HighlightFeedback';
+import HighlightFeedBackView from './HighlightFeedbackView';
 import Explore from './Explore/Explore'
 import PostPage from './Postpage/PostPage'
 import ResumeView from './ResumeView/ResumeView'
@@ -79,11 +80,21 @@ class App extends React.Component{
                     	/>
 
 						<Route 
-							path="/highlight-feedback" 
+							path="/highlight-feedback/:id" 
 							render={ props => (
 								<div className="app">
 								{ /* Different componenets rendered depending on if someone is logged in. */}
 									{this.state.currentUser ? <HighlightFeedBack {...props} app={this} /> : <Login {...props} app={this} />}
+								</div> 
+							)}
+						
+						/>
+						<Route 
+							path="/highlight-feedback-view/:id" 
+							render={ props => (
+								<div className="app">
+								{ /* Different componenets rendered depending on if someone is logged in. */}
+									{this.state.currentUser ? <HighlightFeedBackView {...props} app={this} /> : <Login {...props} app={this} />}
 								</div> 
 							)}
 						

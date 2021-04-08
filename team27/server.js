@@ -260,24 +260,53 @@ app.post('/addPost/:id', (req, res) => {
 		return;
 	}  
 
-	// Create a new student using the Student mongoose model
+	console.log(req.body);
+
+	let comment = {
+		_id: ObjectID(),
+		Username: req.body.Username, 
+		text: req.body.text,
+		time: req.body.time,
+		type: req.body.type,
+		feedback: req.body.feedback
+	}
+
 	Post.findOne({_id:req.params.id}).then((p)=>{  
-        // add the requested reservation to the restaurant  
-        p.comments.push(req.body)  
-        p.save().then((rest)=> {  
-            res.send({  
-                    comment: rest.comments[rest.comments.length-1],  
-                    post: rest  
-                })  
-        }).catch((error) =>{  
-            res.status(500).send(error)  
-        })  
-  
-    }).catch((error)=>{  
-        res.status(500).send(error)  
-    })  
+		p.comments.push(comment)  
+		p.save().then((rest)=> {  
+			res.send({  
+					comment: rest.comments[rest.comments.length-1],  
+					post: rest  
+				})  
+		}).catch((error) =>{  
+			res.status(500).send(error)  
+		})  
+	
+	}).catch((error)=>{  
+		res.status(500).send(error)  
+	})  
+		 
+	if (req.body.type == "HIGHLIGHT") {
+		console.log("here");
+		Post.findOne({_id:req.params.id}).then((p)=>{  
+			p.highlights.push(comment)  
+			p.save().then((rest)=> {  
+				res.send({  
+						highlight: rest.highlights[rest.highlights.length-1],  
+						post: rest  
+					})  
+			}).catch((error) =>{  
+				res.status(500).send(error)  
+			})  
+		
+		}).catch((error)=>{  
+			res.status(500).send(error)  
+		})  
+	}
+	
 
 })
+
 
 app.get('/getPost', (req, res) => {
 	
@@ -313,6 +342,30 @@ app.get('/getPost/:id', (req, res) => {
 		res.status(500).send("Internal Server Error")
 	})
 	
+})
+
+app.get('/highlights/:pid/:hid', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	console.log("in highlights");
+	Post.findById(req.params.pid).then((post) => {
+		if (!post) {
+			res.status(404).send('Post not found')
+		} else {
+			let highlights = post.highlights.id(req.params.hid);
+			console.log(highlights);
+			res.send(highlights)
+
+		}
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send('Internal Server Error') 
+	});
 })
 
 app.put('/updateInfo', (req, res) => {
