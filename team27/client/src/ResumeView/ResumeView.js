@@ -1,7 +1,7 @@
 import './ResumeView.css'
 import React, {useState, useEffect, Suspense} from 'react'
 import { useHistory } from "react-router"
-import {NavExplore} from "../NavBar"
+import {NavExplore} from "../NavBar/NavBar"
 import { Container, List } from "semantic-ui-react";
 import { Comment, Form, Button as Bt, Header, TextArea } from 'semantic-ui-react'
 import Avatar from '@material-ui/core/Avatar';

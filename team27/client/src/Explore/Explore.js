@@ -3,7 +3,7 @@ import { useHistory } from "react-router"
 import "./Explore.css"
 import CardComponent from '../CardComponent/CardComponent';
 import { Grid } from "@material-ui/core"
-import {NavExplore} from "../NavBar"
+import {NavExplore} from "../NavBar/NavBar"
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
 import {styled} from '@material-ui/core';
