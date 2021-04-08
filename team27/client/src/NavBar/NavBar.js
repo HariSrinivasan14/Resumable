@@ -61,7 +61,8 @@ class NavSignUp extends React.Component{
 
 class NavExplore extends React.Component{
 	handleChangeLogoutUser = (event) => {
-		console.log("logging out");
+		console.log("printing this", this.props.log);
+		this.props.log.push('/Login');
 		logoutUser(this.props.app);
 	}
 
@@ -85,12 +86,8 @@ class NavExplore extends React.Component{
 						<Link className = 'home-style' to="/Explore">Home</Link>
 						<Link className = 'home-style' to="/Profile">My Profile</Link>
 						{link}
-						{/* <Nav.Link href="/PostPage">Post Resume</Nav.Link> */}
+						{/* <p className = 'loginTag' > Logged In As <span className = 'loginTagUser'> {this.props.app.state.currentUser} </span></p> */}
 					</Nav>
-					{/* <Form inline>
-						<FormControl type="text" placeholder="Search" className="mr-sm-2" />
-						<Button variant="outline-info">Search</Button>
-					</Form> */}
 					<Button onClick={this.handleChangeLogoutUser} variant="outline-info">Logout</Button>
 				</Navbar>
 		);

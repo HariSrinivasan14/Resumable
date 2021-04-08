@@ -148,7 +148,7 @@ function ResumeView(props) {
       )
     return (
         <div>
-         <NavExplore app = {props.app}/>
+         <NavExplore app = {props.app} log = {props.history}/>
             <div>
               <div id="resume-image">
                 <h1 id="resume-header"> {post.title}</h1>
