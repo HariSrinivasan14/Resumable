@@ -3,6 +3,8 @@
   /* height: 722px; */
   /* width: 800px; */
   user-select: none;
+  height: 700px;
+  width: 60%;
 }
 #resume-title {
   margin-left: 100px;
@@ -26,7 +28,6 @@
   margin-left: 100px;
   margin-bottom: 10px;
   /* max-width: 500px; */
-  /* width: 50%; */
 }
 #photo {
   height: 600px;
@@ -42,8 +43,8 @@
 
 .feedback-box {
   float: right;
-  top: 78px;
-  margin-top: 65px;
+  top: 85px;
+  margin-top: 70px;
   margin-right: 150px;
   max-width: 500px;
   height: 63vh;
@@ -52,7 +53,6 @@
 
 .feedback-add-section {
   float: right;
-  top: 78px + 68vh;
   margin-right: 139px;
   margin-top: 20px;
   width: 495px;
