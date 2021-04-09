@@ -23,7 +23,7 @@ class Highlight extends React.Component {
                 ></div>
 
         )
-    }
+    } 
 }
 
 export default Highlight;
