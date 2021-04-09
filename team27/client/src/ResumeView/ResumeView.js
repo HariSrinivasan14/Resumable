@@ -187,7 +187,7 @@ function ResumeView(props) {
                     window.location.reload(false);  
                   }
                   }} reply>
-                
+          
                     <Bt content='Add Reply'  secondary />
                     <Link
                       to={{
