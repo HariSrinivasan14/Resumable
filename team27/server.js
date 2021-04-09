@@ -318,7 +318,6 @@ app.get('/getPost', (req, res) => {
 		res.status(500).send('Internal mongoose server error');
 		return;
 	}
-	// .sort({likes: -1})
 	Post.find().then((temp) => {
 		res.send(temp)
 	})
@@ -326,7 +325,38 @@ app.get('/getPost', (req, res) => {
 		log(error)
 		res.status(500).send("Internal Server Error")
 	})
+})
+app.get('/getPostByLikes', (req, res) => {
 	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	// .sort({likes: -1})
+	Post.find().sort({likes: 1}).then((temp) => {
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+})
+app.get('/getPostByComments', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	// .sort({likes: -1})
+	Post.find().sort({comments: 1}).then((temp) => {
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
 })
 app.get('/getSession', (req, res) => {
 	
