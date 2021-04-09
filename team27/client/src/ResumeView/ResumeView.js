@@ -168,8 +168,8 @@ function ResumeView(props) {
 
                 
               </div>
-              <div className="feedback-submit">
-                <div className="submit-buttons">
+              <div className="feedback-add-section">
+                <div className="feedback-add-buttons">
                 <Form onSubmit={(e)=>{
                   console.log(ct);
                   if(ct !=''){

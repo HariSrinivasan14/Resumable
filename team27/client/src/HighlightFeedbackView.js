@@ -52,7 +52,7 @@ class HighlightFeedBackView extends React.Component{
 	render(){
 		return(
 				<div className="highlight-feedback-view-container">
-                    <div className="pdf-container">
+                    <div className="pdf-container-view">
                         <PdfDisplay url={`http://localhost:5000/files/${this.props.location.state.post.file}`} width={0.68}></PdfDisplay>
                     </div>
 
