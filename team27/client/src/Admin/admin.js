@@ -36,6 +36,7 @@ import {NavExplore} from "../NavBar/NavBar"
 import {newPosti, fetchPostsData} from '../actions/post.js';
 import {fetchSessions, fetchUsersData} from '../actions/user.js';
 import { useHistory } from "react-router"
+import ReactScrollableList from '../Components/scroll'
 
 const data = [
   { argument: 1, value: 25 },
@@ -52,21 +53,25 @@ const drawerWidth = 170;
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
-   
+   flex: 1,
     backgroundImage: ground
   },
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    marginLeft: 100
+    marginLeft: 40
   },
   
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
   },
-  
+  list:{
+    // width: "100%",
+    // maxWidth: 360,
+    // backgroundColor: theme.palette.background.paper
+  },
  
   drawer: {
     width: drawerWidth,
@@ -102,6 +107,9 @@ const useStyles1 = makeStyles((theme) => ({
  
 }));
 export default function Admin(props) {
+  var user_list = [];
+  var new_list = [];
+  var count = 0;
   console.log("welcome to BHD")
   const classes = useStyles1();
   const history = useHistory();
@@ -141,9 +149,7 @@ export default function Admin(props) {
                         <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
                         {count_comment}
                         </Typography>
-                        <Typography variant="subtitle1" color="primary">
-                          More Details
-                        </Typography>
+                     
                       </CardContent>
                     </div>
                     <Hidden xsDown>
@@ -161,9 +167,6 @@ export default function Admin(props) {
                   </Typography>
                   <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
                   {count_post}
-                  </Typography>
-                  <Typography variant="subtitle1" color="primary">
-                    More Details
                   </Typography>
                 </CardContent>
               </div>
@@ -192,7 +195,7 @@ const resour = fetchUsersData();
 					
 								got_posts.map((item)=>{
 									count_user = count_user +1
-
+                  user_list.push(item.Username)
 								})
 						
 							)}
@@ -201,14 +204,12 @@ const resour = fetchUsersData();
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                total Users
+                Total Users
               </Typography>
               <Typography className={classes.typography} variant="subtitle1" color="textSecondary">
               {count_user}
               </Typography>
-              <Typography variant="subtitle1" color="primary">
-                More Details
-              </Typography>
+    
             </CardContent>
           </div>
           <Hidden xsDown>
@@ -216,53 +217,71 @@ const resour = fetchUsersData();
           </Hidden>
         </Card>
     </Grid>
-	
+    {user_list.map((item)=>
+      new_list.push({id: count, content: item}),
+      count = count + 1,
+      console.log(count)
+    )}
+ 
+          <h1 id='head'>Overview</h1>      
+          
+                        <ReactScrollableList
+                        listItems={new_list}
+                        heightOfItem={30}
+                        maxItemsToRender={20}
+                        style={{ color: '#333' }}
+                      />
+
               
 			</div>
 		);
 		
 	}
+  function printUsers(){
+   
+  }
     return(
-    
+    <div>
         <div  className={classes.root}  >
          
           <NavExplore className="nav" app = {props.app} log = {props.history}/>
 
-    <main className={classes.content}> 
+          <main className={classes.content}> 
 
-     <h1 id='head'>Overview</h1>
+            <h1 id='head'>Overview</h1>
 
-    <div style={{ display: 'flex' }}>
- 
-    <Suspense fallback={<h2>Loading Posts...</h2>}>
-          <GetPosts/>
-    </Suspense>
-    
+            <div style={{ display: 'flex' }}>
+        
+            <Suspense fallback={<h2>Loading Posts...</h2>}>
+                  <GetPosts/>
+            </Suspense>
+            
 
-    <Suspense fallback={<h2>Loading Users...</h2>}>
-          <GetUsers/>
-    </Suspense>
+            <Suspense fallback={<h2>Loading Users...</h2>}>
+                  <GetUsers/>
+            </Suspense>
 
-    </div>
-    <Chart
-    style={{ marginLeft: 150 , marginTop: 40}}
-      data={data}
-      width={1200} height={500}
-    >
-      <ArgumentAxis />
-      <ValueAxis />
-      
-      
-      <LineSeries valueField="value" argumentField="argument" />
-      
-    </Chart>
+            </div>
+            <Chart
+            style={{ marginLeft: 150 , marginTop: 40}}
+              data={data}
+              width={1200} height={500}
+            >
+              <ArgumentAxis />
+              <ValueAxis />
+              
+              
+              <LineSeries valueField="value" argumentField="argument" />
+              
+            </Chart>
+            
 
 
-    </main>
-    
-    </div>
-     
+            </main>
    
+    </div>
+    
+    </div>
       )
   } 
 
