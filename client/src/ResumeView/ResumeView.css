@@ -25,6 +25,7 @@
   margin-top: 30px;
   margin-left: 100px;
   margin-bottom: 10px;
+  width: 50%;
 }
 #photo {
   height: 600px;
@@ -39,7 +40,6 @@
 }
 
 .feedback-box {
-  float: right;
   top: 78px;
   margin-top: 65px;
   margin-right: 150px;
@@ -49,7 +49,6 @@
 }
 
 .feedback-add-section {
-  float: right;
   top: 78px + 68vh;
   margin-right: 139px;
   margin-top: 20px;
@@ -59,3 +58,8 @@
 .feedback-add-buttons {
   margin-bottom: 20px;
 }
+/* .someshit{
+  height: 1000px;
+  width: 1000px;
+  float: right;
+} */

@@ -43,6 +43,7 @@ const useStyles = makeStyles((width) => ({
 
 
 function CardComponent({post, user, width}){
+  console.log(user)
   const classes = useStyles(width);
   // const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
@@ -86,7 +87,8 @@ function CardComponent({post, user, width}){
     // <div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel(item) } } />
     handleClickOpen()
   };
-  function add_delete(user, post, classes){
+  function add_delete(post, classes){
+    console.log(user)
     if(user === 'admin'){
       return(
         <IconButton onClick={() => handleDelete(post)} aria-label="delete" className={classes.margin}>
@@ -105,7 +107,7 @@ function CardComponent({post, user, width}){
           </Avatar>
         }
         action={
-          add_delete(user.user, post, classes)
+          add_delete(post, classes)
         }
         title= {post.title}
         subheader= {post.subtitle}

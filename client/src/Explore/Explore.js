@@ -17,12 +17,12 @@ const resource = fetchPostsData();
 const resourceLikes = fetchPostsDataByLikes();
 const resourceComments = fetchPostsDataByComments();
 
-function GetPosts(pos, username){
+function GetPosts(pos, user){
     var got_posts;
-    console.log(pos)
-    if(pos = 0){
+    console.log(pos.user)
+    if(pos.pos = 0){
         got_posts = resource.posts.read();
-    }else if(pos = 1){
+    }else if(pos.pos = 1){
         got_posts = resourceLikes.posts.read();
     }else{
         got_posts = resourceComments.posts.read();
@@ -42,12 +42,12 @@ function GetPosts(pos, username){
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
-                                if(item.Username !== username){
+                                if(item.Username !== pos.user){
                                 return (<Grid   style={{margin: 10}}
                                                 key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
-                                                user = {username}
+                                                user = {pos.user}
                                                 width = {700}
                                             />
                                         </Grid>)}
@@ -250,9 +250,9 @@ function Explore(props){
                     <GetPosts pos={pos} user={username}/>
                 </Suspense> */}
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
-                    { pos==1 ? <GetPosts pos={1} user={username}/> : null }
-                    { pos==0 ? <GetPosts pos={0} user={username}/> : null }
-                    { pos==2 ? <GetPosts pos={2} user={username}/> : null }
+                    { pos==1 ? <GetPosts pos={1} user={props.app.state.currentUser}/> : null }
+                    { pos==0 ? <GetPosts pos={0} user={props.app.state.currentUser}/> : null }
+                    { pos==2 ? <GetPosts pos={2} user={props.app.state.currentUser}/> : null }
                 </Suspense>
                    
                 
