@@ -30,29 +30,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import Dropzone from '../Dropzone/Dropzone';
 import PdfDisplay from '../PdfDisplay'
 
-// let posts = [{
-// 	Username: "Samantha Jansen",
-// 	title: "My Resume",
-// 	subtitle: "for Product Manager at Amazon",
-// 	date: "Septermber 23, 2020",
-// 	imagesrc: './images/resume_samantha.jpg',
-// 	image: resume1,
-// 	desc: " help me to fix my resume please!",
-// 	likes: 10
-	
-// },
-// {
-// 	Username: "Angela Wilkinson",
-// 	title: "Recent Resume",
-// 	subtitle: "for Administrative Assistant",
-// 	date: "october 11, 2020",
-// 	imagesrc: './images/resume_angela.webp',
-// 	image: resume2,
-// 	desc: "help me to improve my resume!",
-// 	likes: 9
-// },
 
-// ] 
 
   const GreenButton_explore = styled(Button)({
 	backgroundColor: '#71A89E',
@@ -70,7 +48,7 @@ import PdfDisplay from '../PdfDisplay'
 });
 
  
-  const drawerWidth = 170;
+
   const useStyles2 = makeStyles((theme) => ({
 	root: {
 		flex: 1,
@@ -200,7 +178,7 @@ export default function Profile1(propss){
 				{console.log(pd)}
 				{console.log(post)}
 				<div>
-					{post ? (<h4>Resume</h4>) : (null)}
+					{post ? (<h4 id='h4'>Resume</h4>) : (null)}
 					<div className="Apps">
 				
 					{post ? (
@@ -217,23 +195,13 @@ export default function Profile1(propss){
 		const classes = useStyles2();
 		const user = propss.app.state.currentUser;
 		
-		// const [username, setUsername] = React.useState('');
-		// const [firstName, setFirstName] = React.useState('');
-		// const [lastName, setLastName] = React.useState('');
-		// const [birthday, setBirthday] = React.useState('');
-		// const [program, setProgram] = React.useState('');
+
 
 		var username = "";
 		var firstName = "";
 		var lastName = "";
 		var birthday = "";
 		var program = "";
-		// if (birthday == null){
-		// 	setBirthday("")
-		// }
-		// if (program == null){
-		// 	setProgram("")
-		// }
 
 		const got_posts = resour.posts.read();
 		return(

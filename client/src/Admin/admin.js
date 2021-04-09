@@ -37,6 +37,7 @@ import {newPosti, fetchPostsData} from '../actions/post.js';
 import {fetchSessions, fetchUsersData} from '../actions/user.js';
 import { useHistory } from "react-router"
 import ReactScrollableList from '../Components/scroll'
+import {Link} from 'react-router-dom';
 
 var data = [
   { argument: 1, value: 3 },
@@ -211,7 +212,7 @@ export default function Admin(props) {
 }
 const resour = fetchUsersData();
 	function GetUsers(){ 
-		
+    
 		const got_posts = resour.posts.read();
 		return(
       <div id="lis">
@@ -225,13 +226,11 @@ const resour = fetchUsersData();
 					
 								got_posts.map((item, index)=>{
 									count_user = count_user +1
-                  user_list.push({id: index, content: <a href="#" onClick={console.log('The link was clicked.')}>
-                  {item.Username}
-                </a>})
+                  user_list.push(item.Username)  
 								})
                 
 							)}
-<Grid item xs={3}>
+    <Grid item xs={3}>
         <Card id="car1" className="bg-dark text-white">
           <div className={classes.cardDetails}>
             <CardContent>
@@ -253,16 +252,26 @@ const resour = fetchUsersData();
     
  
          
-
-
-          <div id='gg'>
+        <div id='gg'>
           <h1>List of Users</h1>
-          <ReactScrollableList
-          listItems={user_list}
-          heightOfItem={30}
-          maxItemsToRender={12}
-          style={{ color: '#333' }}
-        />
+          <div className = "feedback-box">
+          {user_list.map((item, selectedIndex) =>{
+            console.log(item)
+          return(
+            <List aria-label="main mailbox folders">
+              <ListItem
+                button
+                selected={selectedIndex === 0}
+              >
+                <Link >{item}</Link>
+
+              </ListItem>
+              </List>
+          )
+          }
+          )}
+                
+        </div>
         </div>
 			</div>
 		);
