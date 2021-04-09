@@ -69,7 +69,7 @@ class NavExplore extends React.Component{
 	render(){
 		let link;
 		if(this.props.app.state.currentUser === "admin"){
-			link = 	<Link className = 'home-style' to="/Admin">Admin</Link>			
+			link = 	<Link className = 'home-style' to="/Admin">Overview</Link>			
 		}
 		return(
 				<Navbar bg="dark" variant="dark">

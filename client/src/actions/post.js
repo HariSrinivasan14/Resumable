@@ -1,4 +1,5 @@
-const API_HOST = 'http://localhost:5000';
+import ENV from './../config.js'
+const API_HOST = ENV.api_host;
 
 export function fetchPostsData() {
     let postsPromise = fetchPosts();
