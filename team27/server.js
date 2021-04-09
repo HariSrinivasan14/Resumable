@@ -87,7 +87,6 @@ app.use(
         },
         // store the sessions on the database in production
 		store: toggle ? MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'}) : null
-
     })
 );
 
