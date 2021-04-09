@@ -186,7 +186,6 @@ function ResumeView(props) {
                     newComment(post._id, nComment)
                     window.location.reload(false);  
                   }
-
                   }} reply>
                 
                     <Bt content='Add Reply'  secondary />
