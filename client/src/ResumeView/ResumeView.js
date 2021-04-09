@@ -64,7 +64,7 @@ function GetComments(){
                                       }
                                     }}
                                   >
-                                    <Button>{`${item.text}/${item._id}`}</Button>
+                                    <Button>{`Click to view feedback`}</Button>
                                   </Link>
                                 </Comment.Text>) : 
                                 (<Comment.Text>
@@ -95,7 +95,10 @@ function ResumeView(props) {
     const username = props.app.state.currentUser;
     let ct = ""
     post = props.location.state.data.post
-
+    const [cm, setCm] = React.useState('');
+    const handleCmChange = (e) => {
+      setCm(e);
+    };
     const handleCommentChange = (comment) => {
       ct = comment;
     };
@@ -103,6 +106,7 @@ function ResumeView(props) {
     styleLink.rel = "stylesheet";
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
     document.head.appendChild(styleLink);
+
 
     const CommentSection = () => (
         
@@ -117,7 +121,7 @@ function ResumeView(props) {
           </Suspense>
 
 
-          <Form onSubmit={(e)=>{
+          {/* <Form onSubmit={(e)=>{
               console.log(ct);
               if(ct !=''){
                 let nComment = {
@@ -142,7 +146,7 @@ function ResumeView(props) {
             <Bt color='teal'> Add Highlight </Bt>
 
             </Link>
-          </Form>
+          </Form> */}
 
         </Comment.Group>
       )
@@ -166,8 +170,41 @@ function ResumeView(props) {
 
               </App>
 
+                
+              </div>
+              <div className="feedback-add-section">
+                <div className="feedback-add-buttons">
+                <Form onSubmit={(e)=>{
+                  console.log(ct);
+                  if(ct !=''){
+                    let nComment = {
+                        Username: username,
+                        text: ct,
+                        time: Date().toLocaleString(),
+                        type: "TEXT"
+                    };
+                    newComment(post._id, nComment)
+                    window.location.reload(false);  
+                  }
+                  }} reply>
+          
+                    <Bt content='Add Reply'  secondary />
+                    <Link
+                      to={{
+                        pathname: `/highlight-feedback/${post._id}`,
+                        state: { user: username, postId: post._id, post: post }
+                      }}
+                    >
+                    <Bt color='teal'> Add Highlight </Bt>
+
+                    </Link>
+                  </Form>
+                  </div>
+
                 <TextFieldInput onCommentChange={handleCommentChange}/>
               </div>
+
+
 
 
 

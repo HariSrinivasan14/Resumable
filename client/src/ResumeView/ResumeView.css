@@ -1,5 +1,8 @@
 #resume-image {
   float: left;
+  height: 722px;
+  width: 100%;
+  user-select: none;
 }
 #resume-title {
   margin-left: 100px;
@@ -41,4 +44,18 @@
   margin-top: 65px;
   margin-right: 150px;
   max-width: 500px;
+  height: 63vh;
+  overflow-y: auto;
+}
+
+.feedback-add-section {
+  float: right;
+  top: 78px + 68vh;
+  margin-right: 139px;
+  margin-top: 20px;
+  width: 495px;
+}
+
+.feedback-add-buttons {
+  margin-bottom: 20px;
 }

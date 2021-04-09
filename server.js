@@ -87,7 +87,6 @@ app.use(
         },
         // store the sessions on the database in production
 		store: toggle ? MongoStore.create({mongoUrl: 'mongodb+srv://Team27:Team27@cluster0.arl4q.mongodb.net/Team27'}) : null
-
     })
 );
 
@@ -115,7 +114,7 @@ const authenticate = (req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '/public')))
 
-app.get("/users/checkSession", (req, res) => {
+app.get("/checkSession", (req, res) => {
 	if (env !== 'production' && USE_TEST_USER) {
         req.session.user = TEST_USER_ID;
         req.session.Username = TEST_USER_USERNAME;
@@ -160,7 +159,7 @@ app.post('/loginUser', (req, res) => {
 		
 })
 
-app.get("/users/logout", (req, res) => {
+app.get("/logout", (req, res) => {
     console.log("logging user out......");
     req.session.destroy(error => {
         if (error) {
@@ -318,7 +317,6 @@ app.get('/getPost', (req, res) => {
 		res.status(500).send('Internal mongoose server error');
 		return;
 	}
-	// .sort({likes: -1})
 	Post.find().then((temp) => {
 		res.send(temp)
 	})
@@ -326,7 +324,38 @@ app.get('/getPost', (req, res) => {
 		log(error)
 		res.status(500).send("Internal Server Error")
 	})
+})
+app.get('/getPostByLikes', (req, res) => {
 	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	// .sort({likes: -1})
+	Post.find().sort({likes: 1}).then((temp) => {
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
+})
+app.get('/getPostByComments', (req, res) => {
+	
+	if (mongoose.connection.readyState != 1) {
+		log('Issue with mongoose connection')
+		res.status(500).send('Internal mongoose server error');
+		return;
+	}
+	// .sort({likes: -1})
+	Post.find().sort({comments: 1}).then((temp) => {
+		res.send(temp)
+	})
+	.catch((error) => {
+		log(error)
+		res.status(500).send("Internal Server Error")
+	})
 })
 app.get('/getSession', (req, res) => {
 	
@@ -534,7 +563,7 @@ app.patch('/updatePost/:id/:like', authenticate, (req, res) => {
     })  
   
 })  
-
+ 
 app.delete('/deletePost/:postid', (req, res) => {  
  
     // check mongoose connection established.  
