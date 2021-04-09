@@ -95,7 +95,10 @@ function ResumeView(props) {
     const username = props.app.state.currentUser;
     let ct = ""
     post = props.location.state.data.post
-
+    const [cm, setCm] = React.useState('');
+    const handleCmChange = (e) => {
+      setCm(e);
+    };
     const handleCommentChange = (comment) => {
       ct = comment;
     };
@@ -103,6 +106,7 @@ function ResumeView(props) {
     styleLink.rel = "stylesheet";
     styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
     document.head.appendChild(styleLink);
+
 
     const CommentSection = () => (
         

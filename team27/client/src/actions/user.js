@@ -76,7 +76,7 @@ export const loginAccount = (account, loginPage, app) => {
 };
 
 export const checkUserSession = (app) => {
-    const url = `${API_HOST}/users/checkSession`;
+    const url = `${API_HOST}/checkSession`;
     console.log("logging current user in react", ENV.use_frontend_test_user);
 
     if(!ENV.use_frontend_test_user){
@@ -161,7 +161,7 @@ export const updateFileUserInfo = (website) => {
 //         });
 //     }
 export const logoutUser = (app) => {
-    const url = `${API_HOST}/users/logout`;
+    const url = `${API_HOST}/logout`;
     fetch(url)
         .then(res => {
             app.setState({

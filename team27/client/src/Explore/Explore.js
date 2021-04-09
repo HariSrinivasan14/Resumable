@@ -9,15 +9,25 @@ import Modal from 'react-bootstrap/Modal'
 import {styled} from '@material-ui/core';
 import Dropzone from '../Dropzone/Dropzone';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
-import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
-import {newPosti, fetchPostsData} from '../actions/post.js';
+import {newPosti, fetchPostsData, fetchPostsDataByLikes, fetchPostsDataByComments} from '../actions/post.js';
 import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const resource = fetchPostsData();
+const resourceLikes = fetchPostsDataByLikes();
+const resourceComments = fetchPostsDataByComments();
 
-function GetPosts(username){
-    const got_posts = resource.posts.read();
+function GetPosts(pos, username){
+    var got_posts;
+    console.log(pos)
+    if(pos = 0){
+        got_posts = resource.posts.read();
+    }else if(pos = 1){
+        got_posts = resourceLikes.posts.read();
+    }else{
+        got_posts = resourceComments.posts.read();
+    }
+    console.log(got_posts)
     return(
         <div className="resumes">
 
@@ -63,7 +73,7 @@ function Explore(props){
     const [titleToggle, emptyTitle] = React.useState(0);
 
     const [modalShow, setModalShow] = React.useState(false);
-
+    const [pos, setPos] = React.useState(0);
 
 
         const GreenButton_explore = styled(Button)({
@@ -223,13 +233,26 @@ function Explore(props){
                 <GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
 			        {'create post'}
 		        </GreenButton_explore>
-
+                <GreenButton_explore variant="contained" onClick={() => setPos(1)}>
+			        {'Sort By Likes'}
+		        </GreenButton_explore>
+                <GreenButton_explore variant="contained" onClick={() => setPos(2)}>
+			        {'Sort By Comments'}
+		        </GreenButton_explore>
+                <GreenButton_explore variant="contained" onClick={() => setPos(0)}>
+			        {'Sort By Newest'}
+		        </GreenButton_explore>
                 <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 />
+                {/* <Suspense fallback={<h2>Loading Posts...</h2>}>
+                    <GetPosts pos={pos} user={username}/>
+                </Suspense> */}
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
-                    <GetPosts user={username}/>
+                    { pos==1 ? <GetPosts pos={1} user={username}/> : null }
+                    { pos==0 ? <GetPosts pos={0} user={username}/> : null }
+                    { pos==2 ? <GetPosts pos={2} user={username}/> : null }
                 </Suspense>
                    
                 
