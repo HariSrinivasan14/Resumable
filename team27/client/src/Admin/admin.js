@@ -38,15 +38,29 @@ import {fetchSessions, fetchUsersData} from '../actions/user.js';
 import { useHistory } from "react-router"
 import ReactScrollableList from '../Components/scroll'
 
-const data = [
-  { argument: 1, value: 25 },
-  { argument: 3, value: 20 },
-  { argument: 5, value: 30 },
-  { argument: 7, value: 60 },
-  { argument: 9, value: 50 },
-  { argument: 11, value: 60 },
+var data = [
+  { argument: 1, value: 3 },
+  { argument: 3, value: 5 },
+  { argument: 5, value: 3 },
+  { argument: 7, value: 11 },
+  { argument: 9, value: 9 },
+  { argument: 11, value: 13 },
 ];
 
+const GreenButton_explore = styled(Button)({
+	backgroundColor: '#71A89E',
+	borderRadius: '5px',
+	marginLeft: '50px',
+	marginTop: '15px',
+	color: "white",
+	Height: '48px',
+	minWidth: '150px',
+	textTransform: 'capitalize',
+	"&:hover": {
+		backgroundColor: "#009688",
+		color: 'white'
+	}
+});
 
 const drawerWidth = 170;
 
@@ -55,6 +69,7 @@ const useStyles1 = makeStyles((theme) => ({
   root: {
    flex: 1,
     backgroundImage: ground
+    
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -133,6 +148,7 @@ export default function Admin(props) {
               ) :
               (
                               got_posts.map((item,index)=>{
+                                console.log(item.date.slice(8,11))
                                 count_comment += item.comments.length
                                 count_post = count_post +1
                                   })
@@ -175,7 +191,20 @@ export default function Admin(props) {
               </Hidden>
             </Card>
           </Grid>
+          
           </div>
+          <Chart
+            style={{ marginLeft: 100 , marginTop: 100}}
+              data={data}
+              width={900} height={500}
+            >
+              <ArgumentAxis />
+              <ValueAxis />
+              
+              
+              <LineSeries valueField="value" argumentField="argument" />
+              
+            </Chart>
           </div>
       );
     
@@ -185,7 +214,8 @@ const resour = fetchUsersData();
 		
 		const got_posts = resour.posts.read();
 		return(
-			<div>
+      <div id="lis">
+	
 
 				{got_posts.length === 0 ?(
 					<h5 className="posts_empty">No Posts Yet</h5>
@@ -193,11 +223,13 @@ const resour = fetchUsersData();
 				(
 				
 					
-								got_posts.map((item)=>{
+								got_posts.map((item, index)=>{
 									count_user = count_user +1
-                  user_list.push(item.Username)
+                  user_list.push({id: index, content: <a href="#" onClick={console.log('The link was clicked.')}>
+                  {item.Username}
+                </a>})
 								})
-						
+                
 							)}
 <Grid item xs={3}>
         <Card id="car1" className="bg-dark text-white">
@@ -217,29 +249,28 @@ const resour = fetchUsersData();
           </Hidden>
         </Card>
     </Grid>
-    {user_list.map((item)=>
-      new_list.push({id: count, content: item}),
-      count = count + 1,
-      console.log(count)
-    )}
+   
+    
  
-          <h1 id='head'>Overview</h1>      
-          
-                        <ReactScrollableList
-                        listItems={new_list}
-                        heightOfItem={30}
-                        maxItemsToRender={20}
-                        style={{ color: '#333' }}
-                      />
+         
 
-              
+
+          <div id='gg'>
+          <h1>List of Users</h1>
+          <ReactScrollableList
+          listItems={user_list}
+          heightOfItem={30}
+          maxItemsToRender={12}
+          style={{ color: '#333' }}
+        />
+        </div>
 			</div>
 		);
 		
 	}
-  function printUsers(){
-   
-  }
+
+
+  
     return(
     <div>
         <div  className={classes.root}  >
@@ -251,7 +282,7 @@ const resour = fetchUsersData();
             <h1 id='head'>Overview</h1>
 
             <div style={{ display: 'flex' }}>
-        
+            
             <Suspense fallback={<h2>Loading Posts...</h2>}>
                   <GetPosts/>
             </Suspense>
@@ -260,22 +291,11 @@ const resour = fetchUsersData();
             <Suspense fallback={<h2>Loading Users...</h2>}>
                   <GetUsers/>
             </Suspense>
-
+           
             </div>
-            <Chart
-            style={{ marginLeft: 150 , marginTop: 40}}
-              data={data}
-              width={1200} height={500}
-            >
-              <ArgumentAxis />
-              <ValueAxis />
-              
-              
-              <LineSeries valueField="value" argumentField="argument" />
-              
-            </Chart>
             
-
+            
+            
 
             </main>
    

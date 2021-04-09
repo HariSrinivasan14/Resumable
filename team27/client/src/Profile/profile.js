@@ -160,6 +160,7 @@ export default function Profile1(propss){
 						<h5 className="posts_empty">No Posts Yet</h5>
 					) :
 					(
+						<div>
 					
 							<Grid container 
 								spacing={10}
@@ -167,7 +168,7 @@ export default function Profile1(propss){
 								direction="column"
 								alignItems="center"
 								justify="flex-end">
-									{got_posts.slice(0).reverse().map((item,index)=>{
+									{got_posts.map((item,index)=>{
 										
 										
 										
@@ -175,11 +176,11 @@ export default function Profile1(propss){
 											pd = item.file;
 											setPost(true)
 										return(
-										
-										
-											<Grid className="grids" key={index} item xs = {12}>
+											<div>
+											
+											<Grid className="grids" style={{margin: 10}} key={index} item xs = {12}>
 													
-													<h3>Old Posts</h3>
+													
 													<CardComponent 
 														post= {item}
 														user = {user}
@@ -187,10 +188,11 @@ export default function Profile1(propss){
 													/>
 													
 												</Grid>
-										
+												</div>
 										)}
 									})}
 									</Grid>
+									</div>
 								)}
 								
 
@@ -244,7 +246,7 @@ export default function Profile1(propss){
 					<h5 className="posts_empty">No Posts Yet</h5>
 				) :
 				(
-				
+					
 						<Grid container 
 							spacing={10}
 							p = {1}
@@ -267,6 +269,7 @@ export default function Profile1(propss){
 
 								})}
 								</Grid>
+								
 							)}
 
 			</div>
@@ -278,10 +281,7 @@ export default function Profile1(propss){
 										<Typography className={classes.typography}>Last Name: {lastName}</Typography>
 										<Typography className={classes.typography}>Date of Birth: {birthday}</Typography>
 										<Typography className={classes.typography}>Program: {program}</Typography>
-										<Typography className={classes.typography} color="primary">More Info</Typography>
-										<CardActionArea>
-										<Typography className={classes.typography}>...</Typography>
-										</CardActionArea>
+									
 									</CardContent>
 								</div>
 							</Card>
@@ -303,103 +303,6 @@ export default function Profile1(propss){
 	}
 	
 	
-	// function MyVerticallyCenteredModal(props) {
-	// 	const [file, setFile] = React.useState('');
-	// 	const handleFileChange = (f) => {
-	// 		console.log(f);
-	// 		setFile(f);
-	// 	};
-	// 	const [title, setTitle] = React.useState('');
-	// 	const handleTitleChange = (event) => {
-	// 		setTitle(event.target.value);
-	// 	};
-		
-	// 	const [subtitle, setSubtitle] = React.useState('');
-	// 	const handleSubtitleChange = (event) => {
-	// 		setSubtitle(event.target.value);
-	// 	};
-		
-	// 	function postit(){
-			
-	// 		const user = propss.app.state.currentUser;
-	// 		if(title == ''){
-	// 			console.log("empty section");
-				
-	// 		}else{
-	// 			setModalShow(false)
-	// 			const np = {
-	// 				username: user,
-	// 				file: file,
-	// 				fileUrl: file.preview,
-		
-	// 			}
-			
-	// 			updateFileUserInfo(np);
-				
-	// 		}
-			
-			
-	// 	}
-	// 	return (
-	// 	  <Modal 
-	// 		{...props}
-	// 		size='xl'
-	// 		aria-labelledby="contained-modal-title-vcenter"
-	// 		centered
-	// 	  >
-	// 		<Modal.Header closeButton>
-	// 		  <Modal.Title id="contained-modal-title-vcenter">
-	// 			post resume
-	// 		  </Modal.Title>
-	// 		</Modal.Header>
-	// 		<Modal.Body>
-	// 		<div>
-		
-	// 	<div className='Title_input'>     
-
-	// 		<OutlinedInput
-	// 			id="outlined-name"
-	// 			name="title"
-	// 			value={title}
-	// 			placeholder="title"
-	// 			onChange={handleTitleChange}
-	// 			variant="outlined"/>    
-		   
-
-	// 	</div>
-	// 	<div className='Subtitle_input'>
-	// 		<Box width={500}>
-	// 			<TextField
-	// 				id="subtitle-textarea"
-	// 				name="desc"
-	// 				value={subtitle}
-	// 				placeholder="description"
-	// 				onChange={handleSubtitleChange}
-	// 				variant="outlined"
-	// 				fullWidth
-	// 			/>
-	// 		</Box>
-		
-		
-			
-	// 	</div>
-		
-	// 	<Dropzone onImageDrop={handleFileChange}/>
-	// </div>
-	// 		</Modal.Body>
-	// 		<Modal.Footer>
-	// 		  <Button color= 'secondary'  onClick={props.onHide}>Close</Button>
-	// 		  <Button color= "primary"  onClick={() => {
-	// 			postit();
-	// 			afterPost();
-
-	// 			}} >
-	// 			post
-	// 		  </Button>
-	// 		</Modal.Footer>
-	// 	  </Modal>
-	// 	);
-	//   }
 
 
 	  function UpdateInterface(props) {
@@ -570,6 +473,7 @@ export default function Profile1(propss){
                     onHide={() => setUpdate(false)}
                 />
 				</div>
+				
 				<Suspense fallback={<h2>Loading Posts...</h2>}>
                     <GetPosts/>
                 </Suspense>
