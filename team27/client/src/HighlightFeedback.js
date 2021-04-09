@@ -3,43 +3,16 @@ import pdf from './images/sampleResume.pdf';
 import HighlightSidebar from './HighlightSidebar';
 // import PdfDisplay from './PdfDisplay';
 import PdfHighlight from './PdfHighlight';
+import {newComment} from './actions/post'
 import './HighlightFeedback.css';
-
+import { Link } from 'react-router-dom';
 
 
 class HighlightFeedBack extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			feedback: [
-				// {
-				// 	content: {
-				// 		text:"please fix the spelling of...",
-				// 		image: null
-				// 	},
-				// 	title: {
-				// 		text:"Spelling Mistake",
-				// 	}
-				// }, 
-				// {
-				// 	content: {
-				// 		text:"consider the following...",
-				// 		image: null
-				// 	},
-				// 	title: {
-				// 		text:"Sentence Structure",
-				// 	}
-				// },
-				// {
-				// 	content: {
-				// 		text:"consider the following...",
-				// 		image: sampleImg
-				// 	},
-				// 	title: {
-				// 		text:"Header...",
-				// 	}
-				// }
-			]
+			feedback: []
 		}
 		this.addFeedback = this.addFeedback.bind(this);
 	}
@@ -49,18 +22,29 @@ class HighlightFeedBack extends React.Component{
     	this.setState({ feedback: [newFeedback, ...this.state.feedback] });
 	}
 
-	postFeedback() {
-		return this.state.feedback;
+	postFeedback(e) {
+		console.log(this.state.feedback);
+		let postId = this.props.location.state.postId
+		let newHighlightComment = {
+			type: "HIGHLIGHT",
+			Username: this.props.location.state.user,
+			text: `http://localhost:3000/highlight-feedback-view`,
+			time: Date().toLocaleString(),
+			feedback: this.state.feedback
+			
+		};
+		newComment(postId, newHighlightComment)
 	}
 	
 	render(){
-		let history = this.useHistory;
 		return(
 			<div>
-				{/* <NavExplore/> */}
 				<div className="highlight-feedback-container">
 					<div className="highlight-feedback-document">
-						<PdfHighlight url={pdf} onFeedbackSubmit={this.addFeedback}></PdfHighlight>
+						<PdfHighlight 
+							url={`http://localhost:5000/files/${this.props.location.state.post.file}`} 
+							onFeedbackSubmit={this.addFeedback}>
+						</PdfHighlight>
 					</div>
 					
 					<div className="highlight-feedback-sidebar">
@@ -68,9 +52,25 @@ class HighlightFeedBack extends React.Component{
 					</div>
 					
 				</div>
-					<button id="feedback-post" onClick={() => this.props.history.goBack()}>Back to Resume</button>
+					<button id="back" onClick={() => this.props.history.goBack()}>Back</button>
+
+			{this.state.feedback.length > 0 ?
+				<Link
+				to={{
+					pathname: `/ResumeView/${this.props.location.state.postId}`,
+					state:{user: this.props.location.state.user, data: {post:this.props.location.state.post}}
+				}}
+				>
+					<button id="feedback-submit" onClick={() => {this.postFeedback();}}>Submit</button>
+
+				</Link> : 
 				
-			</div>
+				<button id="feedback-submit-disabled" disabled="true">Submit</button>}
+					
+			</div> 
+
+			
+
 			
 		);
 	}

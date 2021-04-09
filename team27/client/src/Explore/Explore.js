@@ -3,7 +3,7 @@ import { useHistory } from "react-router"
 import "./Explore.css"
 import CardComponent from '../CardComponent/CardComponent';
 import { Grid } from "@material-ui/core"
-import {NavExplore} from "../NavBar"
+import {NavExplore} from "../NavBar/NavBar"
 import Button from '@material-ui/core/Button';
 import Modal from 'react-bootstrap/Modal'
 import {styled} from '@material-ui/core';
@@ -27,17 +27,18 @@ function GetPosts(username){
             (
                
                     <Grid container 
-                        spacing={10}
                         p = {1}
                         direction="column"
                         alignItems="center"
                         justify="flex-end">
                             {got_posts.slice(0).reverse().map((item,index)=>{
                                 if(item.Username !== username){
-                                return (<Grid key={index} item xs = {12}>
+                                return (<Grid   style={{margin: 10}}
+                                                key={index} item xs = {12}>
                                             <CardComponent 
                                                 post= {item}
                                                 user = {username}
+                                                width = {700}
                                             />
                                         </Grid>)}
                                          
@@ -59,6 +60,7 @@ function Explore(props){
     const user = {
         Username: username
     }
+    const [titleToggle, emptyTitle] = React.useState(0);
 
     const [modalShow, setModalShow] = React.useState(false);
 
@@ -86,6 +88,7 @@ function Explore(props){
                 setFile(f);
             };
             const [title, setTitle] = React.useState('');
+
             const handleTitleChange = (event) => {
                 setTitle(event.target.value);
             };
@@ -99,10 +102,14 @@ function Explore(props){
             const handleDescChange = (event) => {
                 setDesc(event.target.value);
             };
+
             function postit(){
-                if(title == ''){
+                if(title === ''){
                     console.log("empty title");
+                    emptyTitle(1);
                     
+                }else if(file === ''){
+                    console.log("empty pdf");
                 }else{
                     setModalShow(false)
                     // console.log(pdfjs.getDocument(file.preview))
@@ -157,7 +164,9 @@ function Explore(props){
                     value={title}
                     placeholder="Title"
                     onChange={handleTitleChange}
-                    variant="outlined"/>    
+                    variant="outlined"
+                    error={titleToggle}
+                    />    
                
 
             </div>
@@ -207,7 +216,7 @@ function Explore(props){
 
     return(
             <div className="feed">
-                <NavExplore app = {props.app}/>
+                <NavExplore app = {props.app} log = {props.history}/>
                 {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
                     Create a Post
                 </Button> */}

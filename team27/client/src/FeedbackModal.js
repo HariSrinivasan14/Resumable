@@ -14,8 +14,6 @@ class FeedbackModal extends React.Component{
     }
 
     render(){
-        console.log(this.props.position.y);
-        console.log(this.props.position.x);
         const modalStyle = {
             backgroundColor: "#333333",
             width: "250px",
@@ -48,7 +46,7 @@ class FeedbackModal extends React.Component{
                         <div className="feedback-submit">
                             <button type="button" 
                                 value={this.state.feedback}
-                                onClick={this.props.onFeedbackCommentSubmit}>Submit</button>
+                                onClick={this.props.onFeedbackCommentSubmit}>Add</button>
                         </div>
                     </div>
                 </Modal>

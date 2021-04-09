@@ -9,16 +9,10 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay'
-import pdf from '../images/sampleResume.pdf'
-import {getFileById} from '../actions/files'
-import {updateLikes, deletePost} from '../actions/post.js';
-import { Document, Page, pdfjs } from 'react-pdf';
-import { get } from 'mongoose';
+import {updateLikes, deletePost, fetchPostsData} from '../actions/post.js';
 import "./CardComponent.css"
 import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
@@ -28,10 +22,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((width) => ({
   root: {
-    maxWidth: 500,
-    minWidth: 500,
+    maxWidth: width,
+    minWidth: width,
     transition: "0.3s",
     boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
     "&:hover": {
@@ -48,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function CardComponent({post, user}){
-  const classes = useStyles();
+function CardComponent({post, user, width}){
+  const classes = useStyles(width);
   // const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);
@@ -116,7 +110,7 @@ function CardComponent({post, user}){
         title= {post.title}
         subheader= {post.subtitle}
       />
-      <Link to={{pathname: "/ResumeView", state:{user: user, data: {post}}}} >
+      <Link to={{pathname: `/ResumeView/${post._id}`, state:{user: user, data: {post}}}} >
 
         <CardActionArea className="preview">
    

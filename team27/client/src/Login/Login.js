@@ -1,6 +1,6 @@
 import './Login.css';
 import React from 'react';
-import {NavLogin} from '../NavBar';
+import {NavLogin} from '../NavBar/NavBar';
 import {Link} from 'react-router-dom';
 import {MainButton, MainInputBox} from '../Components/Components.js';
 import {loginAccount} from '../actions/user.js';
@@ -9,7 +9,7 @@ class Login extends React.Component{
 	
 	constructor(props) {
         super(props);
-		// this.props.history.push("/Login");
+		this.props.history.push('/Login');
     }
 	state = {
 		Username: "",

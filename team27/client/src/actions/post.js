@@ -2,7 +2,6 @@ const API_HOST = 'http://localhost:5000';
 
 export function fetchPostsData() {
     let postsPromise = fetchPosts();
-    console.log(postsPromise)
     return {
       posts: wrapPromise(postsPromise)
     };
@@ -19,10 +18,9 @@ export function fetchPostsData() {
 function wrapPromise(promise) {
     let status = "pending";
     let result;
-    
     let suspender = promise.then(
       r => {
-        console.log(r)
+        
         status = "success";
         result = r;
       },
@@ -48,6 +46,12 @@ function wrapPromise(promise) {
 function fetchPosts() {
 //   let posts = []
   const request = `${API_HOST}/getPost`
+//   const request = new Request(`${API_HOST}/getPost`, {
+//     method: "GET",
+//     headers: {
+//         'Cache-Control': 'no-cache'
+//     }
+// });
   console.log("Fetch Posts...");
   return new Promise(resolve => {
       resolve(fetch(request)
@@ -110,6 +114,7 @@ export const newComment = (postid, comment) => {
         });
 };
 
+
 function fetchComments(id) {
     //   let posts = []
       const request = `${API_HOST}/getPost/${id}`
@@ -135,6 +140,32 @@ function fetchComments(id) {
           }));
       });
     }
+
+export const fetchHighlights = (pid, hid) => {
+
+    const request = `${API_HOST}/highlights/${pid}/${hid}`;
+    
+    return new Promise(resolve => {
+        resolve(fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                console.log(res)
+                return res;
+            } else {
+                alert("Could not get comments");
+            }
+        })
+        .then(json => {
+            return json
+        })
+        .catch(error => {
+            console.log(error);
+        }));
+    });
+}
+        
+    
+    
     
 
 
