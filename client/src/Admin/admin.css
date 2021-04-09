@@ -23,6 +23,7 @@
 
   }
   #gg{
+    position: relative;
     float: right;
     margin-right: 150px;
   }
@@ -133,4 +134,13 @@
   background-color: #f2f2f2;
   border-bottom: #ddd solid 1px;
   pointer-events: none;
+}
+.feedback-box {
+
+  float: right;
+  top: 20px;
+  margin-top: 5px;
+  max-width: 500px;
+  height: 50vh;
+  overflow-y: auto;
 }
