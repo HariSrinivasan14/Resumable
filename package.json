@@ -1,8 +1,4 @@
 {
-    "name": "students_server",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
     "scripts": {
         "setup": "npm install && cd client && npm install && cd ..",
         "build-run": "cd client && npm run build && cd .. && node server.js",
