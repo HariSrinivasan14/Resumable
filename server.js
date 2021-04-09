@@ -357,22 +357,7 @@ app.get('/getPostByComments', (req, res) => {
 		res.status(500).send("Internal Server Error")
 	})
 })
-app.get('/getSession', (req, res) => {
-	
-	if (mongoose.connection.readyState != 1) {
-		log('Issue with mongoose connection')
-		res.status(500).send('Internal mongoose server error');
-		return;
-	}
-	db.collection('sessions').find().then((temp) => {
-		res.send(temp)
-	})
-	.catch((error) => {
-		log(error)
-		res.status(500).send("Internal Server Error")
-	})
-	
-})
+
 // app.get('/getPost/:id', authenticate, (req, res) => {
 app.get('/getPost/:id', (req, res) => {
 	
@@ -463,39 +448,7 @@ app.put('/updateInfo', (req, res) => {
 	
 	
 })
-app.put('/updateFileInfo', (req, res) => {
-	
-	if (mongoose.connection.readyState != 1) {
-		log('Issue with mongoose connection')
-		res.status(500).send('Internal mongoose server error');
-		return;
-	}
 
-	console.log("anything")
-	let f= req.body.file
-	let fPre= req.body.fileUrl
-
-	User.findOne({Username: req.body.Username}).then((temp) => {
-		if (!temp) {  
-			res.status(404).send('Resource not found')  
-		} else {  
-		temp.file = f;
-		temp.fileUrl = fPre;
-	
-		temp.save().then((r) => {
-			res.send(r)
-		}).catch((error) => {
-			log(error)
-			res.status(500).send("Internal Server Error")
-		})
-		}
-	}).catch((error) => {
-		log(error)
-		res.status(500).send("Internal Server Error")
-	})
-	
-	
-})
 app.get('/getUser', (req, res) => {
 	
 	if (mongoose.connection.readyState != 1) {
@@ -533,15 +486,6 @@ app.get('/files/:id', (req, res) => {
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
-app.get("*", (req, res) => {
-    const goodPageRoutes = ["/", "/Login",  "/PostPage", "/ResumeView", "/Admin", "/Profile", "/highlight-feedback", "/Explore", "/SignUP"];
-    if (!goodPageRoutes.includes(req.url)) {
-        res.status(404);
-    }
-
-    // send index.html
-    res.sendFile(path.join(__dirname, "/client/build/index.html"));
-});
 
 app.patch('/updatePost/:id/:like', authenticate, (req, res) => {  
 // app.patch('/updatePost/:id/:like', (req, res) => {  
@@ -579,7 +523,17 @@ app.delete('/deletePost/:postid', (req, res) => {
         res.status(500).send(error)  
     })  
   
-}) 
+})
+app.get("*", (req, res) => {
+    const goodPageRoutes = ["/", "/Login",  "/PostPage", "/ResumeView", "/Admin", "/Profile", "/highlight-feedback", "/Explore", "/SignUP"];
+    if (!goodPageRoutes.includes(req.url)) {
+        res.status(404);
+    }
+
+    // send index.html
+    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
+
 /*************************************************/
 // Express server listening...
 const port = process.env.PORT || 5000
