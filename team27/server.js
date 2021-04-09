@@ -115,7 +115,7 @@ const authenticate = (req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '/public')))
 
-app.get("/users/checkSession", (req, res) => {
+app.get("/checkSession", (req, res) => {
 	if (env !== 'production' && USE_TEST_USER) {
         req.session.user = TEST_USER_ID;
         req.session.Username = TEST_USER_USERNAME;
@@ -160,7 +160,7 @@ app.post('/loginUser', (req, res) => {
 		
 })
 
-app.get("/users/logout", (req, res) => {
+app.get("/logout", (req, res) => {
     console.log("logging user out......");
     req.session.destroy(error => {
         if (error) {
