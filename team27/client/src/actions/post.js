@@ -5,9 +5,21 @@ export function fetchPostsData() {
     return {
       posts: wrapPromise(postsPromise)
     };
-  }
+}
+export function fetchPostsDataByLikes() {
+    let postsPromise = fetchPostsByLikes();
+    return {
+      posts: wrapPromise(postsPromise)
+    };
+}
+export function fetchPostsDataByComments() {
+    let postsPromise = fetchPostsByComments();
+    return {
+      posts: wrapPromise(postsPromise)
+    };
+}
 
-  export function fetchCommentsData(id) {
+export function fetchCommentsData(id) {
     
     let commentPromise = fetchComments(id);
     console.log(commentPromise)
@@ -72,6 +84,66 @@ function fetchPosts() {
           console.log(error);
       }));
   });
+}
+function fetchPostsByLikes() {
+    //   let posts = []
+      const request = `${API_HOST}/getPostByLikes`
+    //   const request = new Request(`${API_HOST}/getPost`, {
+    //     method: "GET",
+    //     headers: {
+    //         'Cache-Control': 'no-cache'
+    //     }
+    // });
+      console.log("Fetch Posts...");
+      return new Promise(resolve => {
+          resolve(fetch(request)
+          .then(res => {
+              if (res.status === 200) {
+                  return res.json();
+              } else {
+                  alert("Could not get posts");
+              }
+          })
+          .then(json => {
+              // the resolved promise with the JSON body
+              // post = json[0];
+              
+              return json
+          })
+          .catch(error => {
+              console.log(error);
+          }));
+      });
+    }
+function fetchPostsByComments() {
+        //   let posts = []
+          const request = `${API_HOST}/getPostByComments`
+        //   const request = new Request(`${API_HOST}/getPost`, {
+        //     method: "GET",
+        //     headers: {
+        //         'Cache-Control': 'no-cache'
+        //     }
+        // });
+          console.log("Fetch Posts...");
+          return new Promise(resolve => {
+              resolve(fetch(request)
+              .then(res => {
+                  if (res.status === 200) {
+                      return res.json();
+                  } else {
+                      alert("Could not get posts");
+                  }
+              })
+              .then(json => {
+                  // the resolved promise with the JSON body
+                  // post = json[0];
+                  
+                  return json
+              })
+              .catch(error => {
+                  console.log(error);
+              }));
+          });
 }
 
 export const newPosti = (data) => {
