@@ -11,7 +11,7 @@
     "multer-gridfs-storage": "^4.2.0",
     "validator": "^13.5.2"
   },
-  "script":{
+  "scripts":{
     "start": "node server.js"
   }
 }
