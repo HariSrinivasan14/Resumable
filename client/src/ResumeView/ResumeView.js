@@ -164,48 +164,51 @@ function ResumeView(props) {
                 </div>
                 
               </div>
+
+
+              
+
               <div className = "feedback-box">
-              <App>
-                <CommentSection/>
+                  <App>
+                    <CommentSection/>
+                  </App>
+                </div>
+                <div className="feedback-add-section">
+                  <div className="feedback-add-buttons">
+                  <Form onSubmit={(e)=>{
+                    console.log(ct);
+                    if(ct !=''){
+                      let nComment = {
+                          Username: username,
+                          text: ct,
+                          time: Date().toLocaleString(),
+                          type: "TEXT"
+                      };
+                      newComment(post._id, nComment)
+                      window.location.reload(false);  
+                    }
+                    }} reply>
+            
+                      <Bt content='Add Reply'  secondary />
+                      <Link
+                        to={{
+                          pathname: `/highlight-feedback/${post._id}`,
+                          state: { user: username, postId: post._id, post: post }
+                        }}
+                      >
+                      <Bt color='teal'> Add Highlight </Bt>
 
-              </App>
+                      </Link>
+                    </Form>
+                    </div>
 
-                
-              </div>
-              <div className="feedback-add-section">
-                <div className="feedback-add-buttons">
-                <Form onSubmit={(e)=>{
-                  console.log(ct);
-                  if(ct !=''){
-                    let nComment = {
-                        Username: username,
-                        text: ct,
-                        time: Date().toLocaleString(),
-                        type: "TEXT"
-                    };
-                    newComment(post._id, nComment)
-                    window.location.reload(false);  
-                  }
-                  }} reply>
-          
-                    <Bt content='Add Reply'  secondary />
-                    <Link
-                      to={{
-                        pathname: `/highlight-feedback/${post._id}`,
-                        state: { user: username, postId: post._id, post: post }
-                      }}
-                    >
-                    <Bt color='teal'> Add Highlight </Bt>
-
-                    </Link>
-                  </Form>
-                  </div>
-
-                <TextFieldInput onCommentChange={handleCommentChange}/>
+                  <TextFieldInput onCommentChange={handleCommentChange}/>
               </div>
 
 
 
+
+             
 
 
             </div>

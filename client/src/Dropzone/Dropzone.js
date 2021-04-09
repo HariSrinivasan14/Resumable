@@ -100,8 +100,7 @@ function DropZone(props) {
           src={file.preview}
           style={img}
         /> */}
-        {console.log(file.preview)};
-        <PdfDisplay url={file.preview} width={0.4} ></PdfDisplay>
+        <PdfDisplay url={file.preview} width={0.3} ></PdfDisplay>
       </div>
     </div>
   ));

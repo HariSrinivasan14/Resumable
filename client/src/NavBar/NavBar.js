@@ -69,7 +69,7 @@ class NavExplore extends React.Component{
 	render(){
 		let link;
 		if(this.props.app.state.currentUser === "admin"){
-			link = 	<Link className = 'home-style' to="/Admin">Admin</Link>			
+			link = 	<Link className = 'home-style' to="/Admin">Overview</Link>			
 		}
 		return(
 				<Navbar bg="dark" variant="dark">
@@ -84,7 +84,7 @@ class NavExplore extends React.Component{
 					</Navbar.Brand>
 					<Nav className="mr-auto">
 						<Link className = 'home-style' to="/Explore">Home</Link>
-						<Link className = 'home-style' to="/Profile">My Profile</Link>
+						<Link className = 'home-style' to="/Profile">{this.props.app.state.currentUser}</Link>
 						{link}
 						{/* <p className = 'loginTag' > Logged In As <span className = 'loginTagUser'> {this.props.app.state.currentUser} </span></p> */}
 					</Nav>
