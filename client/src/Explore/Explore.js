@@ -9,25 +9,21 @@ import Modal from 'react-bootstrap/Modal'
 import {styled} from '@material-ui/core';
 import Dropzone from '../Dropzone/Dropzone';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
-import {newPosti, fetchPostsData, fetchPostsDataByLikes, fetchPostsDataByComments} from '../actions/post.js';
+import {newPosti, fetchPostsData, fetchPostsDataByLikes} from '../actions/post.js';
 import { Document, Page, pdfjs } from 'react-pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const resource = fetchPostsData();
 const resourceLikes = fetchPostsDataByLikes();
-const resourceComments = fetchPostsDataByComments();
 
 function GetPosts(pos, user){
     var got_posts;
-    console.log(pos.user)
-    if(pos.pos = 0){
+    if(pos.pos === 0){
         got_posts = resource.posts.read();
-    }else if(pos.pos = 1){
+    }else if(pos.pos === 1){
         got_posts = resourceLikes.posts.read();
-    }else{
-        got_posts = resourceComments.posts.read();
     }
-    console.log(got_posts)
+
     return(
         <div className="resumes">
 
@@ -90,11 +86,25 @@ function Explore(props){
                 color: 'white'
             }
         });
+        const GreenButton_explore_sort = styled(Button)({
+            backgroundColor: '#71A89E',
+            borderRadius: '5px',
+            marginRight: '50px',
+            marginTop: '15px',
+            color: "white",
+            Height: '48px',
+            minWidth: '225px',
+            textTransform: 'capitalize',
+            float: 'right',
+            "&:hover": {
+                backgroundColor: "#009688",
+                color: 'white'
+            }
+        });
 
         function MyVerticallyCenteredModal(props) {
             const [file, setFile] = React.useState('');
             const handleFileChange = (f) => {
-                console.log(f);
                 setFile(f);
             };
             const [title, setTitle] = React.useState('');
@@ -122,7 +132,6 @@ function Explore(props){
                     console.log("empty pdf");
                 }else{
                     setModalShow(false)
-                    // console.log(pdfjs.getDocument(file.preview))
 
 
                     let data = new FormData()
@@ -233,15 +242,12 @@ function Explore(props){
                 <GreenButton_explore variant="contained" onClick={() => setModalShow(true)}>
 			        {'create post'}
 		        </GreenButton_explore>
-                <GreenButton_explore variant="contained" onClick={() => setPos(1)}>
+                <GreenButton_explore_sort variant="contained" onClick={() => setPos(1)}>
 			        {'Sort By Likes'}
-		        </GreenButton_explore>
-                <GreenButton_explore variant="contained" onClick={() => setPos(2)}>
-			        {'Sort By Comments'}
-		        </GreenButton_explore>
-                <GreenButton_explore variant="contained" onClick={() => setPos(0)}>
+		        </GreenButton_explore_sort>
+                <GreenButton_explore_sort variant="contained" onClick={() => setPos(0)}>
 			        {'Sort By Newest'}
-		        </GreenButton_explore>
+		        </GreenButton_explore_sort>
                 <MyVerticallyCenteredModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
@@ -252,7 +258,6 @@ function Explore(props){
                 <Suspense fallback={<h2>Loading Posts...</h2>}>
                     { pos==1 ? <GetPosts pos={1} user={props.app.state.currentUser}/> : null }
                     { pos==0 ? <GetPosts pos={0} user={props.app.state.currentUser}/> : null }
-                    { pos==2 ? <GetPosts pos={2} user={props.app.state.currentUser}/> : null }
                 </Suspense>
                    
                 

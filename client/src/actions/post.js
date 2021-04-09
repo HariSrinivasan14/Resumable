@@ -12,17 +12,11 @@ export function fetchPostsDataByLikes() {
       posts: wrapPromise(postsPromise)
     };
 }
-export function fetchPostsDataByComments() {
-    let postsPromise = fetchPostsByComments();
-    return {
-      posts: wrapPromise(postsPromise)
-    };
-}
+
 
 export function fetchCommentsData(id) {
     
     let commentPromise = fetchComments(id);
-    console.log(commentPromise)
     return {
       comments: wrapPromise(commentPromise)
     };
@@ -115,36 +109,6 @@ function fetchPostsByLikes() {
           }));
       });
     }
-function fetchPostsByComments() {
-        //   let posts = []
-          const request = `${API_HOST}/getPostByComments`
-        //   const request = new Request(`${API_HOST}/getPost`, {
-        //     method: "GET",
-        //     headers: {
-        //         'Cache-Control': 'no-cache'
-        //     }
-        // });
-          console.log("Fetch Posts...");
-          return new Promise(resolve => {
-              resolve(fetch(request)
-              .then(res => {
-                  if (res.status === 200) {
-                      return res.json();
-                  } else {
-                      alert("Could not get posts");
-                  }
-              })
-              .then(json => {
-                  // the resolved promise with the JSON body
-                  // post = json[0];
-                  
-                  return json
-              })
-              .catch(error => {
-                  console.log(error);
-              }));
-          });
-}
 
 export const newPosti = (data) => {
     // Create our request constructor with all the parameters we need
@@ -195,7 +159,6 @@ function fetchComments(id) {
           resolve(fetch(request)
           .then(res => {
               if (res.status === 200) {
-                  console.log(res)
                   return res.json();
               } else {
                   alert("Could not get comments");
@@ -204,7 +167,6 @@ function fetchComments(id) {
           .then(json => {
               // the resolved promise with the JSON body
               // post = json[0];
-              console.log(json)
               return json
           })
           .catch(error => {
@@ -221,7 +183,6 @@ export const fetchHighlights = (pid, hid) => {
         resolve(fetch(request)
         .then(res => {
             if (res.status === 200) {
-                console.log(res)
                 return res;
             } else {
                 alert("Could not get comments");
@@ -236,11 +197,6 @@ export const fetchHighlights = (pid, hid) => {
     });
 }
         
-    
-    
-    
-
-
 export const fetchPostsByUsername = (posts) => {
 //   let posts = []
 const request = `${API_HOST}/getPostByUsername`
@@ -256,9 +212,7 @@ fetch(request)
     .then(json => {
         // the resolved promise with the JSON body
         // post = json[0];
-        console.log(json)
         posts = json;
-        console.log(json)
         return json;
     })
     .catch(error => {
