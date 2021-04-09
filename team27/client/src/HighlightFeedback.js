@@ -12,35 +12,7 @@ class HighlightFeedBack extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			feedback: [
-				// {
-				// 	content: {
-				// 		text:"please fix the spelling of...",
-				// 		image: null
-				// 	},
-				// 	title: {
-				// 		text:"Spelling Mistake",
-				// 	}
-				// }, 
-				// {
-				// 	content: {
-				// 		text:"consider the following...",
-				// 		image: null
-				// 	},
-				// 	title: {
-				// 		text:"Sentence Structure",
-				// 	}
-				// },
-				// {
-				// 	content: {
-				// 		text:"consider the following...",
-				// 		image: sampleImg
-				// 	},
-				// 	title: {
-				// 		text:"Header...",
-				// 	}
-				// }
-			]
+			feedback: []
 		}
 		this.addFeedback = this.addFeedback.bind(this);
 	}
@@ -69,7 +41,10 @@ class HighlightFeedBack extends React.Component{
 			<div>
 				<div className="highlight-feedback-container">
 					<div className="highlight-feedback-document">
-						<PdfHighlight url={pdf} onFeedbackSubmit={this.addFeedback}></PdfHighlight>
+						<PdfHighlight 
+							url={`http://localhost:5000/files/${this.props.location.state.post.file}`} 
+							onFeedbackSubmit={this.addFeedback}>
+						</PdfHighlight>
 					</div>
 					
 					<div className="highlight-feedback-sidebar">
@@ -78,17 +53,24 @@ class HighlightFeedBack extends React.Component{
 					
 				</div>
 					<button id="back" onClick={() => this.props.history.goBack()}>Back</button>
-			<Link
-              to={{
-                pathname: `/ResumeView/${this.props.location.state.postId}`,
-				state:{user: this.props.location.state.user, data: {post:this.props.location.state.post}}
-              }}
-            >
-				<button id="feedback-submit" onClick={() => {this.postFeedback();}}>Submit</button>
 
-            </Link>
+			{this.state.feedback.length > 0 ?
+				<Link
+				to={{
+					pathname: `/ResumeView/${this.props.location.state.postId}`,
+					state:{user: this.props.location.state.user, data: {post:this.props.location.state.post}}
+				}}
+				>
+					<button id="feedback-submit" onClick={() => {this.postFeedback();}}>Submit</button>
+
+				</Link> : 
+				
+				<button id="feedback-submit-disabled" disabled="true">Submit</button>}
 					
-			</div>
+			</div> 
+
+			
+
 			
 		);
 	}

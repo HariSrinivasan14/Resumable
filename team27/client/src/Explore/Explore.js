@@ -70,6 +70,7 @@ function Explore(props){
     const user = {
         Username: username
     }
+    const [titleToggle, emptyTitle] = React.useState(0);
 
     const [modalShow, setModalShow] = React.useState(false);
     const [pos, setPos] = React.useState(0);
@@ -97,6 +98,7 @@ function Explore(props){
                 setFile(f);
             };
             const [title, setTitle] = React.useState('');
+
             const handleTitleChange = (event) => {
                 setTitle(event.target.value);
             };
@@ -110,9 +112,11 @@ function Explore(props){
             const handleDescChange = (event) => {
                 setDesc(event.target.value);
             };
+
             function postit(){
                 if(title === ''){
                     console.log("empty title");
+                    emptyTitle(1);
                     
                 }else if(file === ''){
                     console.log("empty pdf");
@@ -170,7 +174,9 @@ function Explore(props){
                     value={title}
                     placeholder="Title"
                     onChange={handleTitleChange}
-                    variant="outlined"/>    
+                    variant="outlined"
+                    error={titleToggle}
+                    />    
                
 
             </div>
@@ -220,7 +226,7 @@ function Explore(props){
 
     return(
             <div className="feed">
-                <NavExplore app = {props.app}/>
+                <NavExplore app = {props.app} log = {props.history}/>
                 {/* <Button className='button_post' variant="primary" onClick={() => setModalShow(true)}>
                     Create a Post
                 </Button> */}

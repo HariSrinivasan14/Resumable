@@ -1,5 +1,7 @@
 #resume-image {
   float: left;
+  height: 722px;
+  width: 955px;
 }
 #resume-title {
   margin-left: 100px;
@@ -41,4 +43,18 @@
   margin-top: 65px;
   margin-right: 150px;
   max-width: 500px;
+  height: 63vh;
+  overflow-y: auto;
+}
+
+.feedback-submit {
+  float: right;
+  top: 78px + 68vh;
+  margin-right: 139px;
+  margin-top: 20px;
+  width: 495px;
+}
+
+.submit-buttons {
+  margin-bottom: 20px;
 }
