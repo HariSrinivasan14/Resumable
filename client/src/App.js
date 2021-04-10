@@ -3,8 +3,8 @@ import React from 'react';
 import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import Home from './Home/Home';
-import HighlightFeedBack from './HighlightFeedback';
-import HighlightFeedBackView from './HighlightFeedbackView';
+import HighlightFeedBack from './HighlightFeedback/HighlightFeedback';
+import HighlightFeedBackView from './HighlightFeedbackView/HighlightFeedbackView';
 import Explore from './Explore/Explore'
 import PostPage from './Postpage/PostPage'
 import ResumeView from './ResumeView/ResumeView'

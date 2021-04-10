@@ -453,8 +453,6 @@ app.get('/files/:id', (req, res) => {
 			err: 'No file exists'
 			});
 		}
-		// return res.json(file);
-		// res.send(file)
 		const readstream = gfs.createReadStream(file.filename);
 		readstream.pipe(res);
 

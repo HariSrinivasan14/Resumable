@@ -17,7 +17,8 @@ import Modal from 'react-bootstrap/Modal'
 import {fetchPostsData} from '../actions/post.js';
 import {updateFileUserInfo ,updateUserInfo, fetchUsersData} from '../actions/user.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
-import PdfDisplay from '../PdfDisplay'
+import { Document, Page, pdfjs } from 'react-pdf';
+import PdfDisplay from '../PdfDisplay/PdfDisplay'
 
 
 
