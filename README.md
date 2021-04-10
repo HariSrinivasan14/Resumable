@@ -19,16 +19,16 @@
 - mongoose
 
 ## Libraries that we used (Server Side):
-bcryptjs
-connect-mongo
-cors
-express"
-express-session
-gridfs-stream
-mongoose
-multer
-multer-gridfs-storage
-validator
+- bcryptjs
+- connect-mongo
+- cors
+- express"
+- express-session
+- gridfs-stream
+- mongoose
+- multer
+- multer-gridfs-storage
+- validator
 
 ## For best user experience please have the window in fullscreen
 
@@ -153,180 +153,180 @@ Otherwise:
 404 response
 
 ### /loginUser
-**Description** : Check whether the credentials inputted by the user is correct. If so, returns a JSON with currentUser equal to the username of the account that is login and success as true. If the credentials are incorrect returns a JSON with the currentUser as undefined and success as false
-**Type**: POST
-**Body**:
-{Username: the username inputted by the user
-  Password: the password inputted by the user}
-**Example**: {Username: admin,  Password: admin}
-**Response**:
-Example: if credentials are Username: admin, Password: admin
-If the user is logged in successfully:
-{currentUser: admin, success: true} (200 status code)
-If the credentials are incorrect:
-{currentUser: undefined, success: false} (200 status code) 
+- **Description** : Check whether the credentials inputted by the user is correct. If so, returns a JSON with currentUser equal to the username of the account that is login and success as true. If the credentials are incorrect returns a JSON with the currentUser as undefined and success as false
+- **Type**: POST
+- **Body**:
+    - {Username: the username inputted by the user
+       Password: the password inputted by the user}
+    - **Example**: {Username: admin,  Password: admin}
+- **Response**:
+    - Example: if credentials are Username: admin, Password: admin
+        - If the user is logged in successfully:
+            - {currentUser: admin, success: true} (200 status code)
+        - If the credentials are incorrect:
+            - {currentUser: undefined, success: false} (200 status code) 
 
 ### /logout
-**Description **: Logout the user and destroys the session that is stored in the database
-**Type**: GET
-**Response**: If the user is successfully logged out sends 200. Otherwise sends 500.
+- **Description**: Logout the user and destroys the session that is stored in the database
+- **Type**: GET
+- **Response**: If the user is successfully logged out sends 200. Otherwise sends 500.
 
 ### /addUser
-**Description** : Add a new user to the database.
-**Type**: POST
-**Body**:
-{Username: the username inputted by the user
- firstName: First name that is inputted by the user
- lastName: Last name that is inputted by the user
- Password: the password inputted by the user}
-** Example **: {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}
-**Response**: 
-If the new user was successfully added, then a JSON with Username set to the username of the newly created account, and userFound set to true will be sent. 
-**Example**:  If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was successfully created then the response would be:
-{Username: Jack123, userFound: true}
-If the account was not successfully created (i.e. the account already existed), then a JSON with  Username set to null and the userFound set to false will be sent
-**Example**:  If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was not successfully created then the response would be:
-{Username: undefined, userFound: false}
-If there is a Mongodb server error, 500 status code will be sent
-If the request is bad then 400 status code will be sent 
+- **Description** : Add a new user to the database.
+- **Type**: POST
+- **Body**:
+    - {Username: the username inputted by the user
+        firstName: First name that is inputted by the user
+        lastName: Last name that is inputted by the user
+        Password: the password inputted by the user}
+    - ** Example **: {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}
+- **Response**: 
+    - If the new user was successfully added, then a JSON with Username set to the username of the newly created account, and userFound set to true will be sent. 
+        - **Example**: If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was successfully created then the response would be:
+            - {Username: Jack123, userFound: true}
+    - If the account was not successfully created (i.e. the account already existed), then a JSON with  Username set to null and the userFound set to false will be sent
+        - **Example**:  If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was not successfully created then the response would be:
+            - {Username: undefined, userFound: false}
+    - If there is a Mongodb server error, 500 status code will be sent
+    - If the request is bad then 400 status code will be sent 
 
 
 ### /addPost
-**Description** : Add a new post to the database.
-**Type**: POST
-**Body**:
-{Username: the username inputted by the user
- title: Title of the post inputted by the user
- subtitle:: Subtitle of inputted by the user
- date: the inputted by the user
- file:  the pdf file object
- fileUrl: the url of the pdf file object
- desc: description of the post
- Likes: number of likes
- comments: comments under a post (empty list when we just create it)}
-** Example **: {Username: user,  title: New title, subtitle: New subtitle, date: current data, file: pdf file, fileUrl: url of the preview of pdf file, description: “this is my desc”, comments: []}
-**Response**: 
-If there is a Mongodb server error, 500 status code will be sent
-If the request is bad then 400 status code will be sent 
-If the request is successful then 200 status code will be sent 
+- **Description** : Add a new post to the database.
+- **Type**: POST
+- **Body**:
+    - {Username: the username inputted by the user
+    title: Title of the post inputted by the user
+    subtitle:: Subtitle of inputted by the user
+    date: the inputted by the user
+    file:  the pdf file object
+    fileUrl: the url of the pdf file object
+    desc: description of the post
+    Likes: number of likes
+    comments: comments under a post (empty list when we just create it)}
+    - ** Example **: {Username: user,  title: New title, subtitle: New subtitle, date: current data, file: pdf file, fileUrl: url of the preview of pdf file, description: “this is my desc”, comments: []}
+- **Response**: 
+    - If there is a Mongodb server error, 500 status code will be sent
+    - If the request is bad then 400 status code will be sent 
+    - If the request is successful then 200 status code will be sent 
 
 
 
 
 ### /addPost/:id
-**Description** : Add a new comment to a post by id in the database.
-**Type**: POST
-**Body**:
-{comment: user comment on post}
-** Example **: {comment: {Username: “user”, text: “this is my comment”, time: the date of comment, type: “TEXT”}}
-**Response**: 
-If there is a Mongodb server error, 500 status code will be sent
-If the request is bad then 400 status code will be sent 
-If the request is successful then 200 status code will be sent 
+- **Description** : Add a new comment to a post by id in the database.
+- **Type**: POST
+- **Body**:
+    - {comment: user comment on post}
+    - ** Example **: {comment: {Username: “user”, text: “this is my comment”, time: the date of comment, type: “TEXT”}}
+- **Response**: 
+    - If there is a Mongodb server error, 500 status code will be sent
+    - If the request is bad then 400 status code will be sent 
+    - If the request is successful then 200 status code will be sent 
 
 
 ### /getPost
-**Description** : Gets all of the Posts from the database.
-**Type**: GET
-**Body**:
-**Response**: list of all of the posts in a json format
-Example: {
-    likes: '0',
-    Username: 'user',
-    title: 'resume',
-    subtitle: 'resume',
-    fileUrl: 'blob:http://localhost:5000/91e3b158-630
-    date: 'Fri Apr 09 2021 18:19:03 GMT-0400 (Eastern
-    desc: 'resume',
-    comments: ''
-    }
+- **Description** : Gets all of the Posts from the database.
+- **Type**: GET
+- **Body**:
+- **Response**: list of all of the posts in a json format
+    - Example: {
+        likes: '0',
+        Username: 'user',
+        title: 'resume',
+        subtitle: 'resume',
+        fileUrl: 'blob:http://localhost:5000/91e3b158-630
+        date: 'Fri Apr 09 2021 18:19:03 GMT-0400 (Eastern
+        desc: 'resume',
+        comments: ''
+        }
 ### /getPostByLikes
 
-**Description** : Gets all of the Posts sorted by number of likes from the database.
-**Type**: GET
-**Body**:
-**Response**: list of all of the posts sorted by number of likes in a json format
-Example: {
-    likes: '0',
-    Username: 'user',
-    title: 'resume',
-    subtitle: 'resume',
-    fileUrl: 'blob:http://localhost:5000/91e3b158-630
-    date: 'Fri Apr 09 2021 18:19:03 GMT-0400 (Eastern
-    desc: 'resume',
-    comments: ''
+- **Description** : Gets all of the Posts sorted by number of likes from the database.
+- **Type**: GET
+- **Body**:
+- **Response**: list of all of the posts sorted by number of likes in a json format
+    - Example: {
+        likes: '0',
+        Username: 'user',
+        title: 'resume',
+        subtitle: 'resume',
+        fileUrl: 'blob:http://localhost:5000/91e3b158-630
+        date: 'Fri Apr 09 2021 18:19:03 GMT-0400 (Eastern
+        desc: 'resume',
+        comments: ''
     }
 
 ### /getUser
-**Description** : Get all of the users in the database.
-**Type**: GET
-**Body**:
-**Response**: list of all of the users in a json format
-Example: {
-    id: 6068f6e62b019d37f898628c
-    dateOfBirth:""
-    Program:""
-    Username:"test"
-                   firstName:"arshia"
-  	    lastName:"gharai"
-    password:"$2a$05$.N0odqWhETS/VuChXWsyxOFa3pfmF1RYtDB0G/o5J6uRgqiuMKvf2"
-    }
+- **Description** : Get all of the users in the database.
+- **Type**: GET
+- **Body**:
+- **Response**: list of all of the users in a json format
+    - Example: {
+        id: 6068f6e62b019d37f898628c
+        dateOfBirth:""
+        Program:""
+        Username:"test"
+                    firstName:"arshia"
+            lastName:"gharai"
+        password:"$2a$05$.N0odqWhETS/VuChXWsyxOFa3pfmF1RYtDB0G/o5J6uRgqiuMKvf2"
+        }
 
 ### /files/:id
-**Description** : this server route is used to retrieve .pdf file by id from the database using GridFS to display as preview throughout the application  
-**Type**: GET
-**Response**:
-If the file does not exist a 404 status code will be sent 
-If the file is found, the byte representation of the pdf is sent
+- **Description** : this server route is used to retrieve .pdf file by id from the database using GridFS to display as preview throughout the application  
+- **Type**: GET
+- **Response**:
+    - If the file does not exist a 404 status code will be sent 
+    - If the file is found, the byte representation of the pdf is sent
 
 
 ### /updatePost/:id/:like
-**Description** : this server route is used to update number of likes on a post when post like button gets toggled
-**Type**: PUT
-**Body**
-**Response**: not response body just a response code
-If there is a Mongodb server error, 500 status code will be sent
-If the request is successful then 200 status code will be sent 
+- **Description** : this server route is used to update number of likes on a post when post like button gets toggled
+- **Type**: PUT
+- **Body**
+- **Response**: not response body just a response code
+    - If there is a Mongodb server error, 500 status code will be sent
+    - If the request is successful then 200 status code will be sent 
 ### /deletePost/:postid
-**Description** : this server route is used to delete a post, which is used by admin on explore page to delete a post.
-**Type**: PUT
-**Body**
-**Response**: not response body just a response code
-If there is a Mongodb server error, 500 status code will be sent
-If the request is successful then 200 status code will be sent 
+- **Description** : this server route is used to delete a post, which is used by admin on explore page to delete a post.
+- **Type**: PUT
+- **Body**
+- **Response**: not response body just a response code
+    - If there is a Mongodb server error, 500 status code will be sent
+    - If the request is successful then 200 status code will be sent 
 
 ### /updateInfo
-**Description** : this server route is used in the profile page when the user is trying to change/update their information.
-**Type**: PUT
-**Body**: {
+- **Description** : this server route is used in the profile page when the user is trying to change/update their information.
+- **Type**: PUT
+- **Body**: {
   	    dateOfBirth:"september 12, 2001"
    	    Program:"computer science"
   	    Username:"arshia.gharai"
                    firstName:"arshia"
  	    lastName:"gharai"
   	    }
-**Response**: not response body just a response code
-If there is a Mongodb server error, 500 status code will be sent
-If the request is successful then 200 status code will be sent 
-If the user is not found, then 400 status code will be sent
+- **Response**: not response body just a response code
+    - If there is a Mongodb server error, 500 status code will be sent
+    - If the request is successful then 200 status code will be sent 
+    - If the user is not found, then 400 status code will be sent
 
 
 ### /highlights/:pid/:hid
 
-**Description** : this server route is used to obtain the highlight feedback with id (hid) provided on a post with id (pid), to show in the highlight-feedback-view page.
-**Type**: GET
-**Response**: not response body just a response code
-If there is a Mongodb server error, 500 status code will be sent
-If the post is not found, 404 status code will be sent
-If the request is successful then 200 status code will be sent along with the highlight feedback.
-Response Body:
+- **Description** : this server route is used to obtain the highlight feedback with id (hid) provided on a post with id (pid), to show in the highlight-feedback-view page.
+- **Type**: GET
+- **Response**: not response body just a response code
+    - If there is a Mongodb server error, 500 status code will be sent
+    - If the post is not found, 404 status code will be sent
+    - If the request is successful then 200 status code will be sent along with the highlight feedback.
+    - Response Body:
 "highlight":{"key":{"$numberInt":"2"},"x":{"$numberDouble":"971.89453125"},"y":{"$numberDouble":"1075.44921875"},"h":{"$numberDouble":"23.75"},"w":{"$numberDouble":"83.75"}}},{"content":{"text":"TARGET CORPORATION","image":null},"title":{"text":"target !"},"highlight":{"key":{"$numberInt":"1"},"x":{"$numberDouble":"161.953125"},"y":{"$numberDouble":"1267.3828125"},"h":{"$numberDouble":"23.75"},"w":{"$numberDouble":"232.34375"}}},{"content"
 
 ### /*
-Description : Used to check if the URL is valid url
-Type: GET 
-Response:
-If the URL is valid then index.html is sent.
-Otherwise:
-404 response
+- **Description** : Used to check if the URL is valid url
+- **Type**: GET 
+- **Response**:
+    - If the URL is valid then index.html is sent.
+    - Otherwise:
+        - 404 response
 

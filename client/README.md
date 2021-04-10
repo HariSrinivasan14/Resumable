@@ -19,16 +19,16 @@
 - mongoose
 
 ## Libraries that we used (Server Side):
-bcryptjs
-connect-mongo
-cors
-express"
-express-session
-gridfs-stream
-mongoose
-multer
-multer-gridfs-storage
-validator
+- bcryptjs
+- connect-mongo
+- cors
+- express"
+- express-session
+- gridfs-stream
+- mongoose
+- multer
+- multer-gridfs-storage
+- validator
 
 ## For best user experience please have the window in fullscreen
 
@@ -153,36 +153,36 @@ Otherwise:
 404 response
 
 ### /loginUser
-**Description** : Check whether the credentials inputted by the user is correct. If so, returns a JSON with currentUser equal to the username of the account that is login and success as true. If the credentials are incorrect returns a JSON with the currentUser as undefined and success as false
-**Type**: POST
-**Body**:
-{Username: the username inputted by the user
-  Password: the password inputted by the user}
-**Example**: {Username: admin,  Password: admin}
-**Response**:
-Example: if credentials are Username: admin, Password: admin
-If the user is logged in successfully:
-{currentUser: admin, success: true} (200 status code)
-If the credentials are incorrect:
-{currentUser: undefined, success: false} (200 status code) 
+- **Description** : Check whether the credentials inputted by the user is correct. If so, returns a JSON with currentUser equal to the username of the account that is login and success as true. If the credentials are incorrect returns a JSON with the currentUser as undefined and success as false
+- **Type**: POST
+- **Body**:
+    - {Username: the username inputted by the user
+       Password: the password inputted by the user}
+    - **Example**: {Username: admin,  Password: admin}
+- **Response**:
+    - Example: if credentials are Username: admin, Password: admin
+        - If the user is logged in successfully:
+            - {currentUser: admin, success: true} (200 status code)
+        - If the credentials are incorrect:
+            - {currentUser: undefined, success: false} (200 status code) 
 
 ### /logout
-**Description **: Logout the user and destroys the session that is stored in the database
-**Type**: GET
-**Response**: If the user is successfully logged out sends 200. Otherwise sends 500.
+- **Description **: Logout the user and destroys the session that is stored in the database
+- **Type**: GET
+- **Response**: If the user is successfully logged out sends 200. Otherwise sends 500.
 
 ### /addUser
-**Description** : Add a new user to the database.
-**Type**: POST
-**Body**:
-{Username: the username inputted by the user
- firstName: First name that is inputted by the user
- lastName: Last name that is inputted by the user
- Password: the password inputted by the user}
-** Example **: {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}
-**Response**: 
-If the new user was successfully added, then a JSON with Username set to the username of the newly created account, and userFound set to true will be sent. 
-**Example**:  If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was successfully created then the response would be:
+- **Description** : Add a new user to the database.
+- **Type**: POST
+- **Body**:
+    -{Username: the username inputted by the user
+    firstName: First name that is inputted by the user
+    lastName: Last name that is inputted by the user
+    Password: the password inputted by the user}
+    -** Example **: {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}
+-**Response**: 
+-If the new user was successfully added, then a JSON with Username set to the username of the newly created account, and userFound set to true will be sent. 
+-**Example**:  If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was successfully created then the response would be:
 {Username: Jack123, userFound: true}
 If the account was not successfully created (i.e. the account already existed), then a JSON with  Username set to null and the userFound set to false will be sent
 **Example**:  If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was not successfully created then the response would be:
