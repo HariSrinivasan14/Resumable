@@ -20,6 +20,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import ENV from './../config.js'
+const API_HOST = ENV.api_host;
 
 const useStyles = makeStyles((width) => ({
   root: {
@@ -114,7 +116,7 @@ function CardComponent({post, user, width}){
 
         <CardActionArea className="preview">
    
-            <PdfDisplay url={`http://localhost:5000/files/${post.file}`} width={0.3} ></PdfDisplay>
+            <PdfDisplay url={`${API_HOST}/files/${post.file}`} width={0.3} ></PdfDisplay>
           
         </CardActionArea>
         

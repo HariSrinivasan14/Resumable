@@ -19,7 +19,8 @@ import {updateFileUserInfo ,updateUserInfo, fetchUsersData} from '../actions/use
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
 import { Document, Page, pdfjs } from 'react-pdf';
 import PdfDisplay from '../PdfDisplay/PdfDisplay'
-
+import ENV from './../config.js'
+const API_HOST = ENV.api_host;
 
 
   const GreenButton_explore = styled(Button)({
@@ -171,7 +172,7 @@ export default function Profile1(propss){
 					<div className="Apps">
 				
 					{post ? (
-					<PdfDisplay url={`http://localhost:5000/files/${pd}`} width={0.4} ></PdfDisplay>) : (null)}
+					<PdfDisplay url={`${API_HOST}/files/${pd}`} width={0.4} ></PdfDisplay>) : (null)}
 					</div>
 				</div>
 				</div>

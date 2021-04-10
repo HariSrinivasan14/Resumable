@@ -4,7 +4,8 @@ import PdfHighlight from '../PdfHighlight/PdfHighlight';
 import {newComment} from '../actions/post'
 import './HighlightFeedback.css';
 import { Link } from 'react-router-dom';
-
+import ENV from './../config.js'
+const API_HOST = ENV.api_host;
 
 class HighlightFeedBack extends React.Component{
 	constructor(props) {
@@ -39,7 +40,7 @@ class HighlightFeedBack extends React.Component{
 				<div className="highlight-feedback-container">
 					<div className="highlight-feedback-document">
 						<PdfHighlight 
-							url={`http://localhost:5000/files/${this.props.location.state.post.file}`} 
+							url={`${API_HOST}/files/${this.props.location.state.post.file}`} 
 							onFeedbackSubmit={this.addFeedback}>
 						</PdfHighlight>
 					</div>

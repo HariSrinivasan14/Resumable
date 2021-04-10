@@ -4,7 +4,8 @@ import PdfDisplay from '../PdfDisplay/PdfDisplay';
 import Highlight from '../Highlight/Highlight';
 import { fetchHighlights } from '../actions/post'
 import './HighlightFeedbackView.css';
-
+import ENV from './../config.js'
+const API_HOST = ENV.api_host;
 
 
 class HighlightFeedBackView extends React.Component{
@@ -52,7 +53,7 @@ class HighlightFeedBackView extends React.Component{
 		return(
 				<div className="highlight-feedback-view-container">
                     <div className="pdf-container-view">
-                        <PdfDisplay url={`http://localhost:5000/files/${this.props.location.state.post.file}`} width={0.68}></PdfDisplay>
+                        <PdfDisplay url={`${API_HOST}/files/${this.props.location.state.post.file}`} width={0.68}></PdfDisplay>
                     </div>
 
                     <div className="highlight-feedback-sidebar">

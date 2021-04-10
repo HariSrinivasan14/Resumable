@@ -10,7 +10,8 @@ import {TextField, OutlinedInput, Box, Button} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PdfDisplay from '../PdfDisplay/PdfDisplay'
 import TextFieldInput from '../TextFieldInput';
-
+import ENV from './../config.js'
+const API_HOST = ENV.api_host;
 var res;
 const App = ({ children}) => (
     <Container style={{ margin: 20 }}>
@@ -123,7 +124,7 @@ function ResumeView(props) {
                     <p className="pp">{post.desc}</p>
                 </div>
                 <div className = "border-box">
-                  <PdfDisplay url={`http://localhost:5000/files/${post.file}`} width={0.5} ></PdfDisplay>
+                  <PdfDisplay url={`${API_HOST}/files/${post.file}`} width={0.5} ></PdfDisplay>
                 </div>
                 
               </div>
