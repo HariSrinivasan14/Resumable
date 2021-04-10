@@ -9,20 +9,13 @@ import ground from '../images/ground.jpg'
 import acount from '../images/acount.png'
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import SinglePagePDFViewer from "../pdf-viewer";
-/* This is required only if the project file is located 
-inside the app. Otherwise you can use the external link of the pdf file*/
+
 import {NavExplore} from "../NavBar/NavBar"
 import CardComponent from '../CardComponent/CardComponent';
 import resume1 from '../images/resume_samantha.jpg'
-import resume2 from '../images/resume_angela.webp'
-import resume3 from '../images/resume_emma.png'
 import "../styles.css";
 import Modal from 'react-bootstrap/Modal'
-import PostPage from '../Postpage/PostPage'
-import newPDF from '../images/sampleResume.pdf'
 import {fetchPostsData} from '../actions/post.js';
 import {updateFileUserInfo ,updateUserInfo, fetchUsersData} from '../actions/user.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
@@ -175,8 +168,7 @@ export default function Profile1(propss){
 								
 
 				</div>
-				{console.log(pd)}
-				{console.log(post)}
+				
 				<div>
 					{post ? (<h4 id='h4'>Resume</h4>) : (null)}
 					<div className="Apps">
@@ -276,7 +268,6 @@ export default function Profile1(propss){
 	  function UpdateInterface(props) {
 		const [file, setFile] = React.useState('');
 		const handleFileChange = (f) => {
-			console.log(f);
 			setFile(f);
 		};
 		const [title, setTitle] = React.useState('');
@@ -306,8 +297,7 @@ export default function Profile1(propss){
 			const user = propss.app.state.currentUser;
 		
 				setModalShow(false)
-				console.log(name)
-				console.log(lastname)
+			
 				const np = {
 					Username: user,
 					Program: title,

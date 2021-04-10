@@ -1,6 +1,4 @@
 import React, {Suspense, useEffect} from 'react';
-import Toolbar from '@material-ui/core/Toolbar'
-import AppBar from '@material-ui/core/AppBar'
 import { styled, withTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,35 +6,23 @@ import Typography from '@material-ui/core/Typography'
 import camera from '../images/camera.png'
 import ground from '../images/ground.jpg'
 import './admin.css'
-import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import {
   Chart,
   ArgumentAxis,
   ValueAxis,
   LineSeries,
-  Legend,
-  Title,
 } from '@devexpress/dx-react-chart-material-ui';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
-import Explore from '../Explore/Explore';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import {NavExplore} from "../NavBar/NavBar"
 import {newPosti, fetchPostsData} from '../actions/post.js';
 import {fetchSessions, fetchUsersData} from '../actions/user.js';
 import { useHistory } from "react-router"
-import ReactScrollableList from '../Components/scroll'
 import {Link} from 'react-router-dom';
 
 var data = [
@@ -83,12 +69,7 @@ const useStyles1 = makeStyles((theme) => ({
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
   },
-  list:{
-    // width: "100%",
-    // maxWidth: 360,
-    // backgroundColor: theme.palette.background.paper
-  },
- 
+
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -149,7 +130,6 @@ export default function Admin(props) {
               ) :
               (
                               got_posts.map((item,index)=>{
-                                console.log(item.date.slice(8,11))
                                 count_comment += item.comments.length
                                 count_post = count_post +1
                                   })
@@ -256,7 +236,6 @@ const resour = fetchUsersData();
           <h1>List of Users</h1>
           <div className = "feedback-box">
           {user_list.map((item, selectedIndex) =>{
-            console.log(item)
           return(
             <List aria-label="main mailbox folders">
               <ListItem
