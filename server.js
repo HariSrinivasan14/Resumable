@@ -132,7 +132,6 @@ app.get("/checkSession", (req, res) => {
 
 
 app.post('/loginUser', (req, res) => {
-	console.log(env)
 	if (mongoose.connection.readyState != 1) {
 		log('Issue with mongoose connection')
 		res.status(500).send('Internal mongoose server error');
@@ -223,7 +222,6 @@ app.post('/addPost', gfsUpload.single('file'),authenticate, (req, res) => {
 		res.status(500).send('Internal server error')
 		return;
 	}  
-	console.log("ADD POST REQUEST", req);
 
 	// Create a new student using the Student mongoose model
 	const newPost = new Post({
@@ -262,7 +260,6 @@ app.post('/addPost/:id',(req, res) => {
 		return;
 	}  
 
-	console.log(req.body);
 
 	let comment = {
 		_id: ObjectID(),
@@ -289,7 +286,6 @@ app.post('/addPost/:id',(req, res) => {
 	})  
 		 
 	if (req.body.type == "HIGHLIGHT") {
-		console.log("here");
 		Post.findOne({_id:req.params.id}).then((p)=>{  
 			p.highlights.push(comment)  
 			p.save().then((rest)=> {  
@@ -369,13 +365,11 @@ app.get('/highlights/:pid/:hid', (req, res) => {
 		res.status(500).send('Internal mongoose server error');
 		return;
 	}
-	console.log("in highlights");
 	Post.findById(req.params.pid).then((post) => {
 		if (!post) {
 			res.status(404).send('Post not found')
 		} else {
 			let highlights = post.highlights.id(req.params.hid);
-			console.log(highlights);
 			res.send(highlights)
 
 		}
@@ -394,7 +388,6 @@ app.put('/updateInfo', (req, res) => {
 		return;
 	}
 
-	console.log("anything")
 	let dateOfBirth= req.body.dateOfBirth
 	let Program= req.body.Program
 	let firstName = req.body.firstName

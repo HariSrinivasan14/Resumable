@@ -10,16 +10,13 @@ import acount from '../images/acount.png'
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
 import {NavExplore} from "../NavBar/NavBar"
 import CardComponent from '../CardComponent/CardComponent';
-import resume1 from '../images/resume_samantha.jpg'
 import "../styles.css";
 import Modal from 'react-bootstrap/Modal'
 import {fetchPostsData} from '../actions/post.js';
 import {updateFileUserInfo ,updateUserInfo, fetchUsersData} from '../actions/user.js';
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
-import { Document, Page, pdfjs } from 'react-pdf';
 import PdfDisplay from '../PdfDisplay'
 
 

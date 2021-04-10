@@ -2,7 +2,6 @@ import './NavBar.css';
 import React from 'react';
 import logo from '../images/Logo.png'
 import {Link} from 'react-router-dom';
-import { Divider } from '@material-ui/core';
 import {Navbar, Nav, Button} from 'react-bootstrap'
 import {logoutUser} from '../actions/user.js';
 

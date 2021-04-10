@@ -8,9 +8,7 @@
     height: 80px;
     padding: 0px;
   }
-  .logo{
-    background-image: url(../resume.png);
-  }
+
   #head{
     margin-left: 30px;
     color: #7c795d; 
