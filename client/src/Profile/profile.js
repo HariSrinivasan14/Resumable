@@ -28,7 +28,7 @@ import {updateFileUserInfo ,updateUserInfo, fetchUsersData} from '../actions/use
 import {TextField, OutlinedInput, Box} from '@material-ui/core';
 import { Document, Page, pdfjs } from 'react-pdf';
 import Dropzone from '../Dropzone/Dropzone';
-import PdfDisplay from '../PdfDisplay'
+import PdfDisplay from '../PdfDisplay/PdfDisplay'
 
 
 

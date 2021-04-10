@@ -1,5 +1,5 @@
 import './ResumeView.css'
-import React, {useState, useEffect, Suspense} from 'react'
+import React, {Suspense} from 'react'
 import { useHistory } from "react-router"
 import {NavExplore} from "../NavBar/NavBar"
 import { Container, List } from "semantic-ui-react";
@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import {newComment, fetchCommentsData, fetchPostsData} from '../actions/post.js';
 import {TextField, OutlinedInput, Box, Button} from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import PdfDisplay from '../PdfDisplay'
+import PdfDisplay from '../PdfDisplay/PdfDisplay'
 import TextFieldInput from '../TextFieldInput';
 
 var res;

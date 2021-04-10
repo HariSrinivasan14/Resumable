@@ -1,9 +1,8 @@
 import React from 'react';
-import pdf from './images/sampleResume.pdf';
-import HighlightSidebar from './HighlightSidebar';
-import PdfDisplay from './PdfDisplay';
-import Highlight from './Highlight';
-import { fetchHighlights } from './actions/post'
+import HighlightSidebar from '../HighlightSidebar/HighlightSidebar';
+import PdfDisplay from '../PdfDisplay/PdfDisplay';
+import Highlight from '../Highlight/Highlight';
+import { fetchHighlights } from '../actions/post'
 import './HighlightFeedbackView.css';
 
 

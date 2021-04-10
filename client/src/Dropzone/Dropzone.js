@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useMemo} from 'react';
 import {useDropzone} from 'react-dropzone';
-import PdfDisplay from '../PdfDisplay'
+import PdfDisplay from '../PdfDisplay/PdfDisplay'
 
 const baseStyle = {
   flex: 1,

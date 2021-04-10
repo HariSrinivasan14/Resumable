@@ -1,7 +1,7 @@
 import React from 'react';
-import PdfDisplay from './PdfDisplay';
-import FeedbackModal from './FeedbackModal';
-import Highlight from './Highlight';
+import PdfDisplay from '../PdfDisplay/PdfDisplay';
+import FeedbackModal from '../FeedbackModal/FeedbackModal';
+import Highlight from '../Highlight/Highlight';
 
 class PdfHighlight extends React.Component{
 

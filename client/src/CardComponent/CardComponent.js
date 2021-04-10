@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Link } from 'react-router-dom';
-import PdfDisplay from '../PdfDisplay'
+import PdfDisplay from '../PdfDisplay/PdfDisplay'
 import {updateLikes, deletePost, fetchPostsData} from '../actions/post.js';
 import "./CardComponent.css"
 import DeleteIcon from '@material-ui/icons/Delete';

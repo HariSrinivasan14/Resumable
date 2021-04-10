@@ -1,9 +1,7 @@
 import React from 'react';
-import pdf from './images/sampleResume.pdf';
-import HighlightSidebar from './HighlightSidebar';
-// import PdfDisplay from './PdfDisplay';
-import PdfHighlight from './PdfHighlight';
-import {newComment} from './actions/post'
+import HighlightSidebar from '../HighlightSidebar/HighlightSidebar';
+import PdfHighlight from '../PdfHighlight/PdfHighlight';
+import {newComment} from '../actions/post'
 import './HighlightFeedback.css';
 import { Link } from 'react-router-dom';
 
