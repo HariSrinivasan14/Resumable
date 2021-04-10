@@ -23,7 +23,6 @@ function GetPosts(pos, user){
     }else if(pos.pos === 1){
         got_posts = resourceLikes.posts.read();
     }
-
     return(
         <div className="resumes">
 
