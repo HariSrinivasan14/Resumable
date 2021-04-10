@@ -95,7 +95,7 @@ A User can create a new post and upload your resume as follows :
 5. Click on the box that states “drag ‘n’ drop your Resume pdf in here or click to select it” to upload a resume. A user can also drag and drop a pdf into the box to upload a resume. NOTE: This is required, if this is missing, the user will not be able to make a new post. 
 6. Then press the post button to create a new post.
 
-** Note **: The user will not be able to view the new post created on the Explore page. Users can only view/comment on other users’ posts.
+**Note**: The user will not be able to view the new post created on the Explore page. Users can only view/comment on other users’ posts.
 
 A user can also browse posts and checkout a specific post by clicking a post. If a user clicks a post it will redirect them to the Resume View, where they can view the resume and any comments left by other users. Users can add comments. Moreover, a user can easily return to the Explore page by clicking the Home button that is located in the Navigation bar (which is located at the top of the page).
 
@@ -179,7 +179,7 @@ Otherwise:
         firstName: First name that is inputted by the user
         lastName: Last name that is inputted by the user
         Password: the password inputted by the user}
-    - ** Example **: {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}
+    - **Example**: {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}
 - **Response**: 
     - If the new user was successfully added, then a JSON with Username set to the username of the newly created account, and userFound set to true will be sent. 
         - **Example**: If the account, {Username: Jack123,  firstName: Jack, lastName: Nicholson, Password: jack444}, was successfully created then the response would be:
@@ -204,7 +204,7 @@ Otherwise:
     desc: description of the post
     Likes: number of likes
     comments: comments under a post (empty list when we just create it)}
-    - ** Example **: {Username: user,  title: New title, subtitle: New subtitle, date: current data, file: pdf file, fileUrl: url of the preview of pdf file, description: “this is my desc”, comments: []}
+    - **Example**: {Username: user,  title: New title, subtitle: New subtitle, date: current data, file: pdf file, fileUrl: url of the preview of pdf file, description: “this is my desc”, comments: []}
 - **Response**: 
     - If there is a Mongodb server error, 500 status code will be sent
     - If the request is bad then 400 status code will be sent 
@@ -218,7 +218,7 @@ Otherwise:
 - **Type**: POST
 - **Body**:
     - {comment: user comment on post}
-    - ** Example **: {comment: {Username: “user”, text: “this is my comment”, time: the date of comment, type: “TEXT”}}
+    - **Example**: {comment: {Username: “user”, text: “this is my comment”, time: the date of comment, type: “TEXT”}}
 - **Response**: 
     - If there is a Mongodb server error, 500 status code will be sent
     - If the request is bad then 400 status code will be sent 
@@ -230,7 +230,7 @@ Otherwise:
 - **Type**: GET
 - **Body**:
 - **Response**: list of all of the posts in a json format
-    - Example: {
+    - **Example**: {
         likes: '0',
         Username: 'user',
         title: 'resume',
@@ -246,7 +246,7 @@ Otherwise:
 - **Type**: GET
 - **Body**:
 - **Response**: list of all of the posts sorted by number of likes in a json format
-    - Example: {
+    - **Example**: {
         likes: '0',
         Username: 'user',
         title: 'resume',
@@ -262,7 +262,7 @@ Otherwise:
 - **Type**: GET
 - **Body**:
 - **Response**: list of all of the users in a json format
-    - Example: {
+    - **Example**: {
         id: 6068f6e62b019d37f898628c
         dateOfBirth:""
         Program:""
