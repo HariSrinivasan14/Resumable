@@ -14,7 +14,6 @@ class PdfDisplay extends React.Component{
 
     componentDidMount() {
         const url = this.props.url;
-        // console.log(url);
         let loadingTask =  pdfjs.getDocument(url);
         loadingTask.promise.then(pdf => {
             this.setState({ pdf });

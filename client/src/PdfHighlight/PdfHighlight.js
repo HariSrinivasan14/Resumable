@@ -41,12 +41,12 @@ class PdfHighlight extends React.Component{
             let canvasRect = canvas[0].getBoundingClientRect();
             this.setState({canvasDim:canvasRect});
             let text = window.getSelection();
-            console.log(text);
+
             if (text && text.baseNode) {
                 if (text.baseNode.textContent.trim() !== "" && text.baseNode.length > 0) {
-                    console.log(text.baseNode.length);
+
                     let textRect = text.getRangeAt(0).getBoundingClientRect();
-                    console.log(textRect);
+
                     if (textRect.x <= canvasRect.width && textRect.y <= canvasRect.height) {
                         let textRectCoords = {
                             x: textRect.x,
@@ -61,9 +61,7 @@ class PdfHighlight extends React.Component{
                     }
                 }
             } 
-        } else {
-            console.log("open");
-        }   
+        } 
         
     }
 
@@ -72,9 +70,6 @@ class PdfHighlight extends React.Component{
             let currHighlightCoord = this.state.highlightCoords[this.state.highlightCoords.length -1]
             this.setState({ highlightID: this.state.highlightID + 1 });
 
-            console.log(this.state.highlightCoords);
-            console.log(this.state.highlightID);
-
             this.setState({ highlights: [...this.state.highlights, <Highlight
                 key ={this.state.highlightID}
                 highlightID={this.state.highlightID}
@@ -82,8 +77,6 @@ class PdfHighlight extends React.Component{
                 y={currHighlightCoord.y - this.state.canvasDim.y}
                 h={currHighlightCoord.h}
                 w={currHighlightCoord.w} />]});
-
-            console.log(this.state.highlights);
 
 
             this.setState({feedbackComment: e.target.value});
@@ -110,7 +103,6 @@ class PdfHighlight extends React.Component{
     }
             
     render(){
-        console.log(this.state.feedback)
 		return(
             <div className="pdf-container" onMouseUp={this.handleTextSelection}>
                 <PdfDisplay url={this.props.url} width={0.68}></PdfDisplay>

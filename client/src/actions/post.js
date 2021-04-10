@@ -51,15 +51,8 @@ function wrapPromise(promise) {
   
 
 function fetchPosts() {
-//   let posts = []
   const request = `${API_HOST}/getPost`
-//   const request = new Request(`${API_HOST}/getPost`, {
-//     method: "GET",
-//     headers: {
-//         'Cache-Control': 'no-cache'
-//     }
-// });
-  console.log("Fetch Posts...");
+
   return new Promise(resolve => {
       resolve(fetch(request)
       .then(res => {
@@ -81,15 +74,8 @@ function fetchPosts() {
   });
 }
 function fetchPostsByLikes() {
-    //   let posts = []
       const request = `${API_HOST}/getPostByLikes`
-    //   const request = new Request(`${API_HOST}/getPost`, {
-    //     method: "GET",
-    //     headers: {
-    //         'Cache-Control': 'no-cache'
-    //     }
-    // });
-      console.log("Fetch Posts...");
+
       return new Promise(resolve => {
           resolve(fetch(request)
           .then(res => {
@@ -153,9 +139,7 @@ export const newComment = (postid, comment) => {
 
 
 function fetchComments(id) {
-    //   let posts = []
       const request = `${API_HOST}/getPost/${id}`
-      console.log("Fetch Comments...");
       return new Promise(resolve => {
           resolve(fetch(request)
           .then(res => {
@@ -199,27 +183,27 @@ export const fetchHighlights = (pid, hid) => {
 }
         
 export const fetchPostsByUsername = (posts) => {
-//   let posts = []
-const request = `${API_HOST}/getPostByUsername`
-console.log("Fetch Posts...");
-fetch(request)
-    .then(res => {
-        if (res.status === 200) {
-            return res.json();
-        } else {
-            alert("Could not get posts");
-        }
-    })
-    .then(json => {
-        // the resolved promise with the JSON body
-        // post = json[0];
-        posts = json;
-        return json;
-    })
-    .catch(error => {
-        console.log(error);
-    });
+
+    const request = `${API_HOST}/getPostByUsername`
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                alert("Could not get posts");
+            }
+        })
+        .then(json => {
+            // the resolved promise with the JSON body
+            // post = json[0];
+            posts = json;
+            return json;
+        })
+        .catch(error => {
+            console.log(error);
+        });
   }
+  
 export const updateLikes = (like, postId) => {
     // Create our request constructor with all the parameters we need
     const request = new Request(`${API_HOST}/updatePost/${postId}/${like}`, {

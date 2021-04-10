@@ -159,7 +159,6 @@ app.post('/loginUser', (req, res) => {
 })
 
 app.get("/logout", (req, res) => {
-    console.log("logging user out......");
     req.session.destroy(error => {
         if (error) {
             res.status(500).send(error);

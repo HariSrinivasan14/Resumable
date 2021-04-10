@@ -60,7 +60,6 @@ class NavSignUp extends React.Component{
 
 class NavExplore extends React.Component{
 	handleChangeLogoutUser = (event) => {
-		console.log("printing this", this.props.log);
 		this.props.log.push('/Login');
 		logoutUser(this.props.app);
 	}

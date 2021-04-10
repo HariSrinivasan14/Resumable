@@ -125,7 +125,6 @@ function Explore(props){
 
             function postit(){
                 if(title === ''){
-                    console.log("empty title");
                     emptyTitle(1);
                     
                 }else if(file === ''){

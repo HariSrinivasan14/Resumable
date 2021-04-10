@@ -56,12 +56,12 @@ export const loginAccount = (account, loginPage, app) => {
 			}
         })
 		.then(json => {
-			console.log("login Account", json);
+
 			if (json.currentUser !== undefined){
                 app.setState({
                     currentUser: json.currentUser
                 });
-                console.log("rechecking", app.state.currentUser);
+
 				return;
 			}else{
 				loginPage.setState({
@@ -77,7 +77,6 @@ export const loginAccount = (account, loginPage, app) => {
 
 export const checkUserSession = (app) => {
     const url = `${API_HOST}/checkSession`;
-    console.log("logging current user in react", ENV.use_frontend_test_user);
 
     if(!ENV.use_frontend_test_user){
         fetch(url)
@@ -117,7 +116,6 @@ export const updateUserInfo = (website) => {
             }
         })
         .catch(error => {
-            console.log("error PUT");
             console.log(error);
         });
 };
@@ -139,27 +137,10 @@ export const updateFileUserInfo = (website) => {
           }
       })
       .catch(error => {
-          console.log("error PUT");
           console.log(error);
       });
 };
-// export const getUser = () => {
 
-//     const request = new Request(`${API_HOST}/getUser`, {
-//         method: "get"
-       
-//     });
-//     fetch(request)
-// 		.then(res => {
-//             if (res.status === 200) {
-//                 return res.json();
-//             }
-//         })
-//         .catch(error => {
-//             console.log("error PUT");
-//             console.log(error);
-//         });
-//     }
 export const logoutUser = (app) => {
     const url = `${API_HOST}/logout`;
     fetch(url)
@@ -207,9 +188,7 @@ function wrapPromise(promise) {
   }
 
 function fetchUsers() {
-//   let posts = []
   const request = `${API_HOST}/getUser`
-  console.log("Fetch Posts...");
   return new Promise(resolve => {
       resolve(fetch(request)
       .then(res => {
@@ -265,9 +244,7 @@ function wrapPromises(promise) {
   }
 
 function fetchUsersession() {
-//   let posts = []
   const request = `${API_HOST}/getSession`
-  console.log("Fetch sessions...");
   return new Promise(resolve => {
       resolve(fetch(request)
       .then(res => {

@@ -80,7 +80,6 @@ class SignUp extends React.Component{
 					togglePassword: 1
 				});
 			}
-			console.log(this.state.Toggle);
 		}
 		
 		

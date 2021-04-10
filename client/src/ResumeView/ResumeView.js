@@ -21,16 +21,7 @@ const App = ({ children}) => (
   let post = null;
 function GetComments(){
       
-    // const gotComments = resource(post._id).comments.read(); 
-
-    // const [cvc, setCvc] = useState([])
-    // useEffect(() => {
-    //   fetchPostsData().then(
-    //     setCvc(res.posts.read())
-    //     )      
-    // }, [])
     const cvc = res.posts.read();
-    console.log(cvc);
 
          return(
            <div>
@@ -111,7 +102,7 @@ function ResumeView(props) {
     const CommentSection = () => (
         
         <Comment.Group>
-          {/* {console.log("comment section") */}
+
           <Header as='h3' dividing>
             Comments
           </Header>
@@ -119,34 +110,6 @@ function ResumeView(props) {
           <Suspense fallback={<h2>Loading Comments...</h2>}>
             <GetComments/>
           </Suspense>
-
-
-          {/* <Form onSubmit={(e)=>{
-              console.log(ct);
-              if(ct !=''){
-                let nComment = {
-                    Username: username,
-                    text: ct,
-                    time: Date().toLocaleString(),
-                    type: "TEXT"
-                };
-                newComment(post._id, nComment)
-                window.location.reload(false);  
-              }
-
-          }} reply>
-         
-            <Bt content='Add Reply'  secondary />
-            <Link
-              to={{
-                pathname: `/highlight-feedback/${post._id}`,
-                state: { user: username, postId: post._id, post: post }
-              }}
-            >
-            <Bt color='teal'> Add Highlight </Bt>
-
-            </Link>
-          </Form> */}
 
         </Comment.Group>
       )
@@ -176,7 +139,7 @@ function ResumeView(props) {
                 <div className="feedback-add-section">
                   <div className="feedback-add-buttons">
                   <Form onSubmit={(e)=>{
-                    console.log(ct);
+
                     if(ct !=''){
                       let nComment = {
                           Username: username,

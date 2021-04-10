@@ -21,7 +21,6 @@ class HighlightFeedBack extends React.Component{
 	}
 
 	postFeedback(e) {
-		console.log(this.state.feedback);
 		let postId = this.props.location.state.postId
 		let newHighlightComment = {
 			type: "HIGHLIGHT",

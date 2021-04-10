@@ -107,7 +107,6 @@ export default function Admin(props) {
   var user_list = [];
   var new_list = [];
   var count = 0;
-  console.log("welcome to BHD")
   const classes = useStyles1();
   const history = useHistory();
   useEffect(() =>{

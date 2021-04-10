@@ -9,7 +9,6 @@ class TextFieldInput extends React.Component {
   
     update = (e) => {
       this.setState({value: e.target.value});
-    //   console.log(this.state.value);
       this.handleSubmit(e.target.value);
       
     }
